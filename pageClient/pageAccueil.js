@@ -1,25 +1,17 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", function() {
+  const burgerMenu = document.querySelector('.navbar-burger');
+  const navbarItems = document.getElementById('navbarItems');
 
-  // Get all "navbar-burger" elements
-  const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+  burgerMenu.addEventListener('click', function() {
+    navbarItems.classList.toggle('slide-in');
+    navbarItems.classList.toggle('slide-out');
+  });
 
-  // Check if there are any navbar burgers
-  if ($navbarBurgers.length > 0) {
-
-    // Add a click event on each of them
-    $navbarBurgers.forEach(el => {
-      el.addEventListener('click', () => {
-
-        // Get the target from the "data-target" attribute
-        const target = el.dataset.target;
-        const $target = document.getElementById(target);
-
-        // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-        el.classList.toggle('is-active');
-        $target.classList.toggle('is-active');
-
-      });
-    });
-  }
-
+  document.addEventListener('click', function(event) {
+    const isClickInside = navbarItems.contains(event.target) || burgerMenu.contains(event.target);
+    if (!isClickInside && navbarItems.classList.contains('slide-in')) {
+      navbarItems.classList.remove('slide-in');
+      navbarItems.classList.add('slide-out');
+    }
+  });
 });

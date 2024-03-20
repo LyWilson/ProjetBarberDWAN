@@ -6,66 +6,79 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Website Page</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  <link rel="stylesheet" href="pageAccueil.css">
 </head>
 
 <body>
-  <!-- Navigation Bar -->
-  <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+<!-- Navigation Bar -->
+<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+  <!-- Logo on the left side -->
+  <div class="navbar-brand">
+    <a class="navbar-item" href="pageAccueil.html">
+      <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+    </a>
+  </div>
 
-    <!-- Logo on the left side -->
-    <div class="navbar-brand">
-        <a class="navbar-item" href="pageAccueil.html">
-            <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
-        </a>
+  <!-- Search bar in the middle -->
+  <div class="navbar-item">
+    <div class="control">
+      <input class="input" type="text" placeholder="Recherche des salons de coiffure">
     </div>
+  </div>
 
-    <!-- Search bar in the middle -->
-      <div class="navbar-item">
-          <div class="control">
-            <input class="input" type="text" placeholder="Recherche des salons de coiffure">
-          </div>
-      </div>
+  <!-- Navigation Burger to the left -->
+  <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+    <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+  </a>
 
-      <div class="navbar-end">
-        <!-- Right-aligned items -->
-        <div class="navbar-item">
-          <!-- User Profile Circle -->
-          <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link">
-              <figure class="image is-32x32">
-                <img class="is-rounded" src="https://bulma.io/images/placeholders/32x32.png" alt="User Profile">
-              </figure>
-            </a>
-            <div class="navbar-dropdown is-right">
-              <a class="navbar-item" href="./profil.html">
-                Mon Profil
-              </a>
-              <a class="navbar-item">
-                Mes Rendez-vous
-              </a>
-              <a class="navbar-item">
-                Mes Favoris
-              </a>
-              <a class="navbar-item" href="./mesAvis.html">
-                Mes Avis
-              </a>
-              <a class="navbar-item">
-                Mes Paramètres
-              </a>
-              <a class="navbar-item">
-                Déconnexion
-              </a>
-              <hr class="navbar-divider">
-              <a class="navbar-item">
-                Aide
-              </a>
-          </div>
-        </div>
-
-      </div>
+  <!-- Navigation Items (Initially Hidden) -->
+  <div class="navbar-end slide-out" id="navbarItems">
+    <div class="navbar-item">
+      <a class="navbar-item" href="./profil.html">
+        Mon Profil
+      </a>
+      <a class="navbar-item" href="./rendezVous.html">
+        Mes Rendez-vous
+      </a>
+      <a class="navbar-item" href="./favoris.html">
+        Mes Favoris
+      </a>
+      <a class="navbar-item" href="./parametres.html">
+        Mes Paramètres
+      </a>
+      <a class="navbar-item" href="./login/connexion.html">
+        Déconnexion
+      </a>
+      <hr class="navbar-divider">
+      <a class="navbar-item">
+        Aide
+      </a>
     </div>
-  </nav>
-  <script src="pageAccueil.js"></script>
+  </div>
+</nav>
+
+<!-- Map Section -->
+<section class="section">
+  <div class="container">
+    <h1 class="title">Map Section</h1>
+    <!-- Placeholder for map using Google Maps API -->
+    <!-- Replace this with your actual map implementation -->
+    <div id="map" style="height: 400px;"></div>
+  </div>
+</section>
+
+<!-- Nearby Shops Section -->
+<section class="section">
+  <div class="container">
+    <h1 class="title">Nearby Shops</h1>
+    <!-- Placeholder for nearby shops -->
+    <div id="shopsContainer" class="columns"></div>
+  </div>
+</section>
+
+<script src="pageAccueil.js"></script>
 </body>
 
 </html>

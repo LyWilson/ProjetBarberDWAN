@@ -10,75 +10,77 @@
 </head>
 
 <body>
-<!-- Navigation Bar -->
-<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
-  <!-- Logo on the left side -->
-  <div class="navbar-brand">
-    <a class="navbar-item" href="pageAccueil.html">
-      <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
-    </a>
-  </div>
-
-  <!-- Search bar in the middle -->
-  <div class="navbar-item">
-    <div class="control">
-      <input class="input" type="text" placeholder="Recherche des salons de coiffure">
+  <!-- Navigation Bar -->
+  <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+    <!-- Logo on the left side -->
+    <div class="navbar-brand">
+      <a class="navbar-item" href="pageAccueil.html">
+        <img src="https://bulma.io/images/bulma-logo.png" width="200" height="28" alt="DWAN Coiffure">
+      </a>
     </div>
-  </div>
 
-  <!-- Navigation Burger to the left -->
-  <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-    <span aria-hidden="true"></span>
-    <span aria-hidden="true"></span>
-    <span aria-hidden="true"></span>
-  </a>
-
-  <!-- Navigation Items (Initially Hidden) -->
-  <div class="navbar-end slide-out" id="navbarItems">
+    <!-- Search bar in the middle -->
     <div class="navbar-item">
-      <a class="navbar-item" href="./profil.html">
-        Mon Profil
-      </a>
-      <a class="navbar-item" href="./rendezVous.html">
-        Mes Rendez-vous
-      </a>
-      <a class="navbar-item" href="./favoris.html">
-        Mes Favoris
-      </a>
-      <a class="navbar-item" href="./parametres.html">
-        Mes Paramètres
-      </a>
-      <a class="navbar-item" href="./login/connexion.html">
-        Déconnexion
-      </a>
-      <hr class="navbar-divider">
-      <a class="navbar-item">
-        Aide
-      </a>
+      <div class="control">
+        <label>
+          <input class="input" type="text" placeholder="Recherche des salons de coiffure">
+        </label>
+      </div>
     </div>
-  </div>
-</nav>
 
-<!-- Map Section -->
-<section class="section">
-  <div class="container">
-    <h1 class="title">Map Section</h1>
-    <!-- Placeholder for map using Google Maps API -->
-    <!-- Replace this with your actual map implementation -->
-    <div id="map" style="height: 400px;"></div>
-  </div>
-</section>
+    <!-- Navigation Burger to the right -->
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
 
-<!-- Nearby Shops Section -->
-<section class="section">
-  <div class="container">
-    <h1 class="title">Nearby Shops</h1>
-    <!-- Placeholder for nearby shops -->
-    <div id="shopsContainer" class="columns"></div>
-  </div>
-</section>
+    <!-- Navigation Items (Initially Hidden) -->
+    <div class="navbar-end slide-out" id="navbarItems">
+      <div class="navbar-item">
+        <a class="navbar-item" href="./profil.html">
+          Mon Profil
+        </a>
+        <a class="navbar-item" href="./rendezVous.html">
+          Mes Rendez-vous
+        </a>
+        <a class="navbar-item" href="./favoris.html">
+          Mes Favoris
+        </a>
+        <a class="navbar-item" href="./parametres.html">
+          Mes Paramètres
+        </a>
+        <a class="navbar-item" href="./login/connexion.html">
+          Déconnexion
+        </a>
+        <hr class="navbar-divider">
+        <a class="navbar-item">
+          Aide
+        </a>
+      </div>
+    </div>
+  </nav>
 
-<script src="pageAccueil.js"></script>
+  <!-- Map Section -->
+  <section class="section">
+    <div class="container">
+      <h1 class="title">Map Section</h1>
+      <!-- Placeholder for map using Google Maps API -->
+      <!-- Replace this with your actual map implementation -->
+      <div id="map" style="height: 400px;"></div>
+    </div>
+  </section>
+
+  <!-- Nearby Shops Section -->
+  <section class="section">
+    <div class="container">
+      <h1 class="title">Nearby Shops</h1>
+      <!-- Placeholder for nearby shops -->
+      <div id="shopsContainer" class="columns"></div>
+    </div>
+  </section>
+
+  <script src="pageAccueil.js"></script>
 </body>
 
 </html>

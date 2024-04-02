@@ -19,7 +19,7 @@ const config = {
     user: 'admin',
     password: 'admin',
     server: 'localhost',
-    database: 'barbier',
+    database: 'Barbier_v3',
     port: 1390,
     options: {
         trustServerCertificate: true,

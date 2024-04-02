@@ -1,0 +1,30 @@
+/* Initially hide navbar items */
+.navbar-end {
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+    width: 80vw;
+    max-width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+/* Always show navbar items for burger menu */
+.navbar-end.slide-in {
+    transform: translateX(0%);
+}
+
+.navbar-end.slide-out {
+    transform: translateX(100%);
+}
+
+/* Always show burger menu */
+.navbar-burger {
+    position: fixed;
+    top: 0.5rem;
+    right: 1rem;
+    z-index: 1001; /* Ensure it's above the navbar */
+}

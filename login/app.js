@@ -19,7 +19,7 @@ const config = {
     user: 'admin',
     password: 'admin',
     server: 'localhost',
-    database: 'Barbier_v3',
+    database: 'Barbier',
     port: 1390,
     options: {
         trustServerCertificate: true,
@@ -35,10 +35,24 @@ pool.connect();
 const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-        user: "your_email@gmail.com",
-        pass: "your_email_password",
+        user: "doe089432@gmail.com",
+        pass: "asffafAASDA_kjfkaj123",
     },
 });
+
+async function sendResetPassword(courriel) {
+    // send mail with defined transport object
+    const info = await transporter.sendMail({
+        from: '"Dwan inc." <doe089432@gmail.com>', // sender address
+        to: courriel, // list of receivers
+        subject: "Reset your password?", // Subject line
+        text: "Did u try to reset your password?, if yes click on the link below",
+        html: "<a href='http://localhost:3000/update-password-page'>Click here to reset your password</a>", // html body
+    });
+
+    console.log("Message sent: %s", info.messageId);
+    // Message sent: <d786aa62-4e0a-070a-47ed-0b0666549519@ethereal.email>
+}
 
 //page d'accueil dans dossier public et connexion.html
 app.use(express.static(__dirname + "/Public"));
@@ -95,6 +109,10 @@ app.post("/register-client", async (req, res) => {
     }
 });
 
+app.get("/update-password-page", (req, res) => {
+    res.sendFile(path.join(__dirname + '/Public', 'update-password.html'));
+});
+
 app.post("/login", async (req, res) => {
     const { email, motDePasse } = req.body;
 
@@ -105,7 +123,6 @@ app.post("/login", async (req, res) => {
         `);
 
         if (result.recordset.length === 0) {
-            // Si l'email n'existe pas dans la base de données
             return res.status(401).json({ message: "Email ou mot de passe incorrect." });
         }
 
@@ -127,6 +144,57 @@ app.post("/login", async (req, res) => {
         console.error("SQL error", error);
         res.status(500).json({ message: "Erreur interne du serveur." });
     }
+});
+
+app.post("/reset-password", async (req, res) => {
+    const { email } = req.body;
+
+    try {
+        const request = pool.request();
+        const result = await request.query(`
+            SELECT * FROM Client WHERE email = '${email}'
+        `);
+
+        if (result.recordset.length === 0) {
+            return res.status(401).json({ message: "Email non trouvé." });
+        }
+
+        // Send reset password email
+        await sendResetPassword(email);
+
+        console.log({ message: "Email de réinitialisation envoyé." });
+        res.json({ message: "Email de réinitialisation envoyé." });
+    } catch (error) {
+        console.error("SQL error", error);
+        res.status(500).json({ message: "Erreur interne du serveur." });
+    }
+});
+
+app.post("/update-password", async (req, res) => {
+    const { email, motDePasse } = req.body;
+
+    // Hash the password
+    const encryptedPassword = await bcrypt.hash(motDePasse, 10);
+
+    try {
+        const request = pool.request();
+        const result = await request.query(`
+            UPDATE Client
+            SET motDePasse = '${encryptedPassword}'
+            WHERE email = '${email}'
+        `);
+
+        console.log({ message: "Mot de passe mis à jour." });
+        res.json({ message: "Mot de passe mis à jour." });
+    } catch (error) {
+        console.error("SQL error", error);
+        res.status(500).json({ message: "Erreur interne du serveur." });
+    }
+});
+
+app.post("/MDPoublier.html", (req, res) => {
+    const { email } = req.body;
+    sendResetPassword(email);
 });
 
 // Assuming other endpoints like login, reset password, etc., are already implemented

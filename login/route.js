@@ -1,5 +1,5 @@
 const express = require('express');
-const {join} = require("path");
+const { join } = require("path");
 const router = express.Router();
 
 //page d'accueil dans dossier public et connexion.html

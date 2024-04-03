@@ -36,32 +36,15 @@ router.post("/register-client", async (req, res) => {
 
     try {
         const request = pool.request();
-        const result = await request.query(`
+        await request.query(`
             INSERT INTO Client (nom, prenom, motDePasse, email, numeroTelephone)
             VALUES ('${nom}', '${prenom}', '${encryptedPassword}', '${email}', '${numeroTelephone}')
         `);
 
         // Generate JWT token
         const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '1d' });
+        console.log({ token, message: "Registration successful." });
 
-        // Send confirmation email
-        const mailOptions = {
-            from: "your_email@gmail.com",
-            to: email,
-            subject: "Registration Confirmation",
-            text: `Welcome, ${prenom} ${nom}! You have successfully registered.`,
-        };
-
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                console.error("Error sending email:", error);
-                res.json({ status: "ok", token, message: "Registration successful. Error sending confirmation email." });
-            } else {
-                console.log("Email sent:", info.response);
-                console.log({ status: "ok", token, message: "Registration successful. Confirmation email sent." });
-                res.redirect("/");
-            }
-        });
     } catch (error) {
         console.error("SQL error", error);
         res.json({ status: "error", message: "Registration failed. Internal server error." });
@@ -100,3 +83,5 @@ router.post("/login", async (req, res) => {
         res.status(500).json({ message: "Erreur interne du serveur." });
     }
 });
+
+module.exports = router;

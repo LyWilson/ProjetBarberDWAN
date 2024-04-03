@@ -1,3 +1,5 @@
+const { ConnectionPool } = require('mssql');
+
 // MSSQL Connection Config
 const config = {
   user: 'admin',
@@ -14,36 +16,33 @@ const config = {
 // Create MSSQL pool
 const pool = new ConnectionPool(config);
 
+// Fonction pour récupérer les salons de la base de données
 async function fetchShopsFromDatabase() {
   try {
     await pool.connect();
     const request = pool.request();
-    const result = await request.query('SELECT nomSalon, adresse FROM Salon');
+    const result = await request.query('SELECT nomSalon, adresse, horairesOuverture, evaluation FROM Salon');
     return result.recordset;
   } catch (error) {
     console.error('Error fetching shops from database:', error);
     return [];
   } finally {
-    pool.close();
+    await pool.close(); // Await closing the connection pool
   }
 }
 
-function displayShops(shops) {
-  const shopsContainer = document.getElementById('shopsContainer');
-  shopsContainer.innerHTML = '';
-
-  shops.forEach(shop => {
-    const shopElement = document.createElement('div');
-    shopElement.classList.add('column');
-    shopElement.innerHTML = `
-            <div class="shop">
-                <h2>${shop.nomSalon}</h2>
-                <p>${shop.adresse}</p>
-            </div>
-        `;
-    shopsContainer.appendChild(shopElement);
-  });
+// Example usage
+async function exampleUsage() {
+  try {
+    const shops = await fetchShopsFromDatabase();
+    console.log('Shops:', shops);
+  } catch (error) {
+    console.error('Error:', error);
+  }
 }
+
+exampleUsage(); // Call the function to retrieve shops
+
 
 
 
@@ -51,12 +50,12 @@ function setupNavbar() {
   const burgerMenu = document.querySelector('.navbar-burger');
   const navbarItems = document.getElementById('navbarItems');
 
-  burgerMenu.addEventListener('click', function() {
+  burgerMenu.addEventListener('click', function () {
     navbarItems.classList.toggle('slide-in');
     navbarItems.classList.toggle('slide-out');
   });
 
-  document.addEventListener('click', function(event) {
+  document.addEventListener('click', function (event) {
     const isClickInside = navbarItems.contains(event.target) || burgerMenu.contains(event.target);
     if (!isClickInside && navbarItems.classList.contains('slide-in')) {
       navbarItems.classList.remove('slide-in');
@@ -67,7 +66,7 @@ function setupNavbar() {
 
 
 
-document.addEventListener("DOMContentLoaded", async function() {
+document.addEventListener("DOMContentLoaded", async function () {
   setupNavbar();
   const shops = await fetchShopsFromDatabase();
   displayShops(shops);

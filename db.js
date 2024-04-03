@@ -1,37 +1,36 @@
-const { Router } = require('express');
-const { ConnectionPool } = require('mssql');
+const sql = require('mssql');
+const config = {
+  user: 'admin',
+  password: 'admin',
+  server: 'localhost',
+  database: 'Barbier_v3',
+  options: {
+    trustServerCertificate: true,
+    encrypt: true
+  }
+};
 
-// Create MSSQL Connection Pool
-function createMSSQLPool() {
-  const config = {
-    user: 'admin',
-    password: 'admin',
-    server: 'localhost',
-    database: 'Barbier_v3',
-    port: 1390,
-    options: {
-      trustServerCertificate: true,
-      encrypt: true
-    }
-  };
+// Fonction pour obtenir les salons de coiffure de la base de données
+async function getSalonDeCoiffure() {
+  try {
+    await sql.connect(config);
+    const resultat = await sql.query`SELECT nomSalon, adresse, numeroTelephoneSalon, horairesOuverture FROM Salon`;
 
-  // Create MSSQL pool
-  const pool = new ConnectionPool(config);
-
-  // Connect to the database
-  pool.connect();
-
-  return pool;
+    return resultat.recordset;
+  } catch (err) {
+    console.error('Error:', err.message);
+  } finally {
+    sql.close();
+  }
 }
 
-// Create Express Router
-const mssqlRouter = Router();
-
-// Middleware to attach MSSQL pool to each request
-mssqlRouter.use((req, res, next) => {
-  req.sqlPool = createMSSQLPool();
-  next();
+// Route pour obtenir les salons de coiffure
+app.get("/getSalonDeCoiffure", async (req, res) => {
+  try {
+    const salons = await getSalonDeCoiffure();
+    res.json(salons);
+  } catch (error) {
+    console.error(error)
+    res.status(500).send("Erreur lors de la récupération des salons de coiffure.");
+  }
 });
-
-// Export the router
-module.exports = pool;

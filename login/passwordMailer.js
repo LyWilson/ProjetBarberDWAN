@@ -25,28 +25,31 @@ pool.connect();
 
 // Nodemailer configuration
 const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
+    host: 'smtp.gmail.com',
     port: 587,
-    secure: false,
     auth: {
-        user: "doe089432@gmail.com",
-        pass: "asffafAASDA_kjfkaj123",
-    },
+        user: 'incdwan@gmail.com',
+        pass: 'PZD-xfg-wyd*tra6cwv'
+    }
 });
 
 async function sendResetPassword(courriel) {
-    // send mail with defined transport object
-    const info = await transporter.sendMail({
-        from: '"Dwan inc." <doe089432@gmail.com>', // sender address
-        to: courriel, // list of receivers
-        subject: "Reset your password?", // Subject line
-        text: "Did u try to reset your password?, if yes click on the link below",
-        html: "<a href='http://localhost:3000/update-password-page'>Click here to reset your password</a>", // html body
-    });
+    try {
+        await transporter.sendMail({
+            to: '"Dwan inc." <matteo.bosco41@ethereal.email>',
+            from: ["lywilson01@gmail.com"],
+            subject: "Reset your password?",
+            text: "Did you try to reset your password? If yes, click on the link below",
+            html: "<a href='http://localhost:3000/update-password-page'>Click here to reset your password</a>"
+        });
 
-    console.log("Message sent: %s", info.messageId);
-    // Message sent: <d786aa62-4e0a-070a-47ed-0b0666549519@ethereal.email>
+        console.log("Message sent to:", courriel);
+    } catch (error) {
+        console.error("Error sending email:", error);
+        throw error; // Re-throw the error to handle it in the calling function
+    }
 }
+
 
 router.post("/reset-password", async (req, res) => {
     const { email } = req.body;
@@ -64,8 +67,7 @@ router.post("/reset-password", async (req, res) => {
         // Send reset password email
         await sendResetPassword(email);
 
-        console.log({ message: "Email de réinitialisation envoyé." });
-        res.json({ message: "Email de réinitialisation envoyé." });
+        res.redirect("/")
     } catch (error) {
         console.error("SQL error", error);
         res.status(500).json({ message: "Erreur interne du serveur." });
@@ -96,9 +98,10 @@ router.post("/update-password", async (req, res) => {
 
 router.post("/MDPoublier.html", (req, res) => {
     const { email } = req.body;
-    sendResetPassword(email).then(r => {
-        res.json({ message: "Email de réinitialisation envoyé.", r });
-    });
+    sendResetPassword(email)
+        .then(() => {
+            res.redirect("/")
+        });
 });
 
 module.exports = router;

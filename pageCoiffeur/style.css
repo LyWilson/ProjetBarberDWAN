@@ -1,0 +1,24 @@
+.navbar {
+    box-shadow: 0 2px 3px rgba(0,0,0,.1);
+}
+
+.navbar-item img {
+    max-height: 4rem; /* Adjust the size of your logo accordingly */
+}
+
+.box {
+    border-radius: 10px;
+    box-shadow: 0 2px 3px rgba(0,0,0,.1);
+}
+
+.title.is-3 {
+    color: #4a4a4a;
+}
+
+.input {
+    border-radius: 20px;
+}
+
+.navbar-burger span {
+    background-color: #fff; /* Adjust if you have a different color scheme */
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page de Connexion</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+</head>
+<body>
+
+<section class="hero is-fullheight-with-navbar">
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="box" style=" margin: auto;">
+                <div class="columns is-vcentered shadow">
+                    <div class="column is-6">
+                        <img style="max-width: 100%" src="../images/image-login.png">
+                    </div>
+                    <div class="column is-6 p-5">
+                        <!-- Validation Errors -->
+                        <h3 class="has-text-left is-size-4">
+                            <strong>Bonjour,
+                                <br>
+                                Connectez-vous pour continuer
+                            </strong>
+                        </h3>
+                        <form method="POST" action="">
+                            <input type="hidden" name="_token" value="7XnDAPyFI7Zi5DCqneKiYfBdDAb6kZXMTEi98BFi">
+                            <!-- Email Address -->
+                            <div class="field">
+                                <label class="label" for="email">Email</label>
+                                <div class="control">
+                                    <input id="email" class="input is-left" style="background-color: rgb(220, 178, 178);" type="email" name="email" required autofocus placeholder="e123456@email.com">
+
+                                </div>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="field">
+                                <label class="label" for="password">Mot de passe</label>
+                                <div class="control">
+                                    <input id="password" class="input" style="background-color: rgb(220, 178, 178);" type="password" name="password" required autocomplete="current-password" placeholder="Password">
+                                </div>
+                                <p class="control has-text-left is-danger">
+                                    <a class="underline has-text-danger" href="/MDPoublier.html">Mot de passe oublié ?</a>
+                                </p>
+                            </div>
+                            <!-- captcha -->
+                            <input type="hidden" name="url" value="">
+                            <!-- Remember Me -->
+
+                            <div class="field">
+                                <div class="block">
+                                    <label for="remember_me" class="checkbox">
+                                        <input id="remember_me" type="checkbox" name="remember">
+                                        <span class="ml-2">Se souvenir de moi</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="control">
+                                <button type="submit" class="button is-info">Se connecter</button>
+                            </div>
+                            <div class="columns has-text-centered">
+                                        <p class="control has-text-centered">
+                                            <a class="underline" href="./inscription.html">S'inscrire</a>
+                                        </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

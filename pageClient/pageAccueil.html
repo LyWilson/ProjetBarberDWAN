@@ -10,74 +10,85 @@
 </head>
 
 <body>
-  <!-- Navigation Bar -->
-  <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
-    <!-- Logo on the left side -->
-    <div class="navbar-brand" style="border-radius: 75px">
-      <a class="navbar-item" href="pageAccueil.html">
-        <img src="logo.png" alt="DWAN Coiffure">
+<!-- Navigation Bar -->
+<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+  <!-- Logo on the left side -->
+  <div class="navbar-brand">
+    <a class="navbar-item" href="pageAccueil.html">
+      <img src="logo.png" alt="DWAN Coiffure" style="border-radius: 50%; width: 42px">
+    </a>
+  </div>
+
+  <!-- Search bar in the middle -->
+  <div class="navbar-item">
+    <div class="control">
+      <label>
+        <input class="input" type="text" placeholder="Recherche des salons de coiffure">
+      </label>
+    </div>
+  </div>
+
+  <!-- Navigation Items -->
+  <div class="navbar-menu">
+    <div class="navbar-end">
+      <a class="navbar-item" href="./profil.html">
+        Mon Profil
+      </a>
+      <a class="navbar-item" href="./rendezVous.html">
+        Mes Rendez-vous
+      </a>
+      <a class="navbar-item" href="./favoris.html">
+        Mes Favoris
+      </a>
+      <a class="navbar-item" href="../login/Public/connexion.html">
+        Déconnexion
+      </a>
+      <hr class="navbar-divider">
+      <a class="navbar-item">
+        Aide
       </a>
     </div>
+  </div>
+</nav>
 
-    <!-- Search bar in the middle -->
-    <div class="navbar-item">
-      <div class="control">
-        <label>
-          <input class="input" type="text" placeholder="Recherche des salons de coiffure">
-        </label>
+<!-- Main Content -->
+<section class="section">
+  <div class="container">
+    <!-- Nearby Shops Section -->
+    <h1 class="title">Liste des salons de coiffure</h1>
+    <!-- Placeholder for nearby shops -->
+    <div id="shopsContainer" class="columns is-multiline is-centered">
+      <!-- Sample shop cards -->
+      <div class="column is-4-desktop is-6-tablet is-12-mobile">
+        <!-- Your shop card content goes here -->
       </div>
-    </div>
-
-    <!-- Navigation Burger to the right -->
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-
-    <!-- Navigation Items (Initially Hidden) -->
-    <div class="navbar-end slide-out" id="navbarItems">
-      <div class="navbar-item">
-        <a class="navbar-item" href="./profil.html">
-          Mon Profil
-        </a>
-        <a class="navbar-item" href="./rendezVous.html">
-          Mes Rendez-vous
-        </a>
-        <a class="navbar-item" href="./favoris.html">
-          Mes Favoris
-        </a>
-        <a class="navbar-item" href="../login/connexion.html">
-          Déconnexion
-        </a>
-        <hr class="navbar-divider">
-        <a class="navbar-item">
-          Aide
-        </a>
+      <div class="column is-4-desktop is-6-tablet is-12-mobile">
+        <!-- Your shop card content goes here -->
       </div>
+      <div class="column is-4-desktop is-6-tablet is-12-mobile">
+        <!-- Your shop card content goes here -->
+      </div>
+      <!-- Add more shop cards as needed -->
     </div>
-  </nav>
+  </div>
+</section>
 
-  <!-- Nearby Shops Section -->
-  <section class="section">
-    <div class="container">
-      <h1 class="title">Liste des salons de coiffure</h1>
-      <!-- Placeholder for nearby shops -->
-      <div id="shopsContainer" class="columns"></div>
-    </div>
-  </section>
+<!-- Map Section -->
+<section class="section">
+  <div class="container">
+    <h1 class="title">Map</h1>
+    <!-- Placeholder for map using Google Maps API -->
+    <!-- Replace this with your actual map implementation -->
+    <div id="map" style="height: 400px;"></div>
+  </div>
+</section>
 
-  <!-- Map Section -->
-  <section class="section">
-    <div class="container">
-      <h1 class="title">Map</h1>
-      <!-- Placeholder for map using Google Maps API -->
-      <!-- Replace this with your actual map implementation -->
-      <div id="map" style="height: 400px;"></div>
-    </div>
-  </section>
-
-  <script src="pageAccueil.js"></script>
+<script src="pageAccueil.js"></script>
 </body>
 
+<<<<<<< HEAD
 </html>
+=======
+</html>
+
+>>>>>>> 656b8f61c177ff460aebdd7b9d478d9b74caf92c

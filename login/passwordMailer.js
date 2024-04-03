@@ -2,7 +2,10 @@ const express = require("express");
 const router = express.Router();
 const {ConnectionPool} = require("mssql");
 const nodemailer = require("nodemailer");
+const bodyParser = require("body-parser");
 
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: true }));
 
 const config = {
     user: 'admin',
@@ -77,7 +80,7 @@ router.post("/update-password", async (req, res) => {
 
     try {
         const request = pool.request();
-        const result = await request.query(`
+        await request.query(`
             UPDATE Client
             SET motDePasse = '${encryptedPassword}'
             WHERE email = '${email}'
@@ -94,7 +97,7 @@ router.post("/update-password", async (req, res) => {
 router.post("/MDPoublier.html", (req, res) => {
     const { email } = req.body;
     sendResetPassword(email).then(r => {
-        res.json({ message: "Email de réinitialisation envoyé." });
+        res.json({ message: "Email de réinitialisation envoyé.", r });
     });
 });
 

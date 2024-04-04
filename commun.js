@@ -1,5 +1,5 @@
 // Navigation Bar
-export function getNavbar() {
+function getNavbar() {
   return `
   <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
     <!-- Logo on the left side -->
@@ -41,4 +41,10 @@ export function getNavbar() {
     </div>
   </nav>
   `;
+}
+
+// Fonction pour générer la barre de navigation
+export function generateNavBar() {
+  const navBar = document.getElementById('navigationBar');
+  navBar.innerHTML = getNavbar();
 }

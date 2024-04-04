@@ -1,17 +1,15 @@
-import { getNavbar } from '../../commun.js';
+import { generateNavBar } from '../../commun.js';
 
+// Fonction pour afficher les salons
 async function showSalons() {
   const lesSalons = document.getElementById('listeSalons');
   try {
-    // Fetch salon data from the server
     const response = await fetch('/salon');
     if (!response.ok) {
       throw new Error('Failed to fetch salon data');
     }
-    // Parse the JSON response
     const salons = await response.json();
 
-    // Iterate over salon data and generate HTML for each salon
     salons.forEach(s => {
       const carteSalons = generateCarteSalons(s.nomSalon, s.adresse, s.numeroTelephoneSalon, s.horairesOuverture);
       lesSalons.insertAdjacentHTML('beforeend', carteSalons);
@@ -41,13 +39,10 @@ function generateCarteSalons(nomSalon, adresse, numeroTelephoneSalon, horairesOu
   `;
 }
 
-function generateNavBar() {
-  const navBar = document.getElementById('navigationBar');
-  navBar.innerHTML = getNavbar();
-}
 
-// Wait for the DOM content to be loaded, then call showSalons
+
+// Initialisation de la page d'accueil du client
 document.addEventListener("DOMContentLoaded", () => {
+  generateNavBar();
   showSalons();
-  generateNavBar()
 });

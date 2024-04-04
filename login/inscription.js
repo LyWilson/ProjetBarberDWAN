@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-
 const { ConnectionPool } = require("mssql");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");

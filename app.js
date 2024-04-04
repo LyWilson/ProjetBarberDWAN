@@ -1,9 +1,16 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const { sql, config } = require('./db');
 const { getSalonData } = require('./fonctionDb');
-const port = 3000;
+
+const route = require('./login/route');
+const passwordMailer = require('./login/passwordMailer');
+const inscription = require('./login/inscription');
+
+app.use("/", route)
+app.use("/", passwordMailer)
+app.use("/", inscription)
+
 
 app.use(express.json());
 
@@ -15,10 +22,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'applicationClient', 'accueil', 'accueil.html'));
 });
 
-// Define endpoint to fetch salon data from the database
-app.get('/salon', getSalonData); // Use the imported function
-
-// Start the server
-app.listen(port, () => {
-  console.log("Server is running on port", port);
+app.get('/salon', getSalonData);
+app.listen(3000, () => {
+  console.log(`Server started on port 3000`);
 });

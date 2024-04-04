@@ -2,7 +2,6 @@ const express = require('express');
 const { join } = require("path");
 const router = express.Router();
 
-//page d'accueil dans dossier public et connexion.html
 router.use(express.static(__dirname + "/Public"));
 router.get("/", (req, res) => {
     res.sendFile(join(__dirname + '/Public', 'connexion.html'));

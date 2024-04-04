@@ -1,11 +1,11 @@
 // Navigation Bar
-function getNavbar() {
+export function getNavbar() {
   return `
   <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
     <!-- Logo on the left side -->
     <div class="navbar-brand">
       <a class="navbar-item" href="pageAccueil.html">
-        <img src="logo.png" alt="DWAN Coiffure" style="border-radius: 50%; width: 42px">
+        <img src="/logo.png" alt="DWAN Coiffure" style="border-radius: 50%; width: 42px">
       </a>
     </div>
 
@@ -42,8 +42,3 @@ function getNavbar() {
   </nav>
   `;
 }
-
-// Export the setupNavbar function
-module.exports = {
-  getNavbar,
-};

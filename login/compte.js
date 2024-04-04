@@ -4,28 +4,14 @@ const { ConnectionPool } = require("mssql");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
+const {config} = require("../db");
+const {sql} = require("../db");
 
-const config = {
-    user: 'admin',
-    password: 'admin',
-    server: 'localhost',
-    database: 'Barbier',
-    port: 1390,
-    options: {
-        trustServerCertificate: true,
-        encrypt: true
-    }
-};
 const JWT_SECRET = "hvdvay6ert72839289()aiyg8t87qt72393293883uhefiuh78ttq3ifi78272jbkj?[]]pou89ywe";
 
 router.use(express.json());
 router.use(cors());
 router.use(express.urlencoded({ extended: false }));
-
-
-// Create MSSQL pool
-const pool = new ConnectionPool(config);
-pool.connect();
 
 router.post("/register-client", async (req, res) => {
     const { nom, prenom, motDePasse, email, numeroTelephone } = req.body;
@@ -35,8 +21,8 @@ router.post("/register-client", async (req, res) => {
     const encryptedPassword = await bcrypt.hash(motDePasse, 10);
 
     try {
-        const request = pool.request();
-        await request.query(`
+        let pool = await sql.connect(config);
+        await pool.request().query(`
             INSERT INTO Client (nom, prenom, motDePasse, email, numeroTelephone)
             VALUES ('${nom}', '${prenom}', '${encryptedPassword}', '${email}', '${numeroTelephone}')
         `);
@@ -55,8 +41,8 @@ router.post("/login", async (req, res) => {
     const { email, motDePasse } = req.body;
 
     try {
-        const request = pool.request();
-        const result = await request.query(`
+        let pool = await sql.connect(config);
+        const result = await pool.request().query(`
             SELECT * FROM Client WHERE email = '${email}'
         `);
 

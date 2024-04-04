@@ -1,11 +1,10 @@
 const express = require('express');
 const app = express();
-const path = require('path');
 const { getSalonData } = require('./fonctionDb');
 
-const route = require('./login/route');
+const route = require('./route');
 const passwordMailer = require('./login/passwordMailer');
-const inscription = require('./login/inscription');
+const inscription = require('./login/compte');
 
 app.use("/", route)
 app.use("/", passwordMailer)
@@ -13,14 +12,6 @@ app.use("/", inscription)
 
 
 app.use(express.json());
-
-// Serve static files from the 'accueil' directory inside 'applicationClient'
-app.use(express.static(path.join(__dirname, 'applicationClient', 'accueil')));
-
-// Serve accueil.html for the root URL
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'applicationClient', 'accueil', 'accueil.html'));
-});
 
 app.get('/salon', getSalonData);
 app.listen(3000, () => {

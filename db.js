@@ -2,15 +2,14 @@ const sql = require('mssql');
 const config = {
   user: 'admin',
   password: 'admin',
-  server: 'LAPtop', //LAPtop, DESKTOP-LAP
-  database: 'Barbier_v3',
-  port: 1433,
+  server: 'localhost',
+  database: 'Barbier',
+  port: 1390,
   options: {
-    trustedConnection: true,
-    encrypt: false
+    trustServerCertificate: true,
+    encrypt: true
   }
 };
-
 
 module.exports = {
   sql, config

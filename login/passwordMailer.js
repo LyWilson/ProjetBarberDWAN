@@ -3,25 +3,14 @@ const router = express.Router();
 const {ConnectionPool} = require("mssql");
 const nodemailer = require("nodemailer");
 const bodyParser = require("body-parser");
+const config = require("../db");
+const {sql} = require("../db");
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
-const config = {
-    user: 'admin',
-    password: 'admin',
-    server: 'localhost',
-    database: 'Barbier',
-    port: 1390,
-    options: {
-        trustServerCertificate: true,
-        encrypt: true
-    }
-};
-
 // Create MSSQL pool
-const pool = new ConnectionPool(config);
-pool.connect();
+
 
 // Nodemailer configuration
 const transporter = nodemailer.createTransport({
@@ -55,8 +44,8 @@ router.post("/reset-password", async (req, res) => {
     const { email } = req.body;
 
     try {
-        const request = pool.request();
-        const result = await request.query(`
+        let pool = await sql.connect(config);
+        const result = await pool.request().query(`
             SELECT * FROM Client WHERE email = '${email}'
         `);
 
@@ -81,8 +70,8 @@ router.post("/update-password", async (req, res) => {
     const encryptedPassword = await bcrypt.hash(motDePasse, 10);
 
     try {
-        const request = pool.request();
-        await request.query(`
+        let pool = await sql.connect(config);
+        await pool.request().query(`
             UPDATE Client
             SET motDePasse = '${encryptedPassword}'
             WHERE email = '${email}'

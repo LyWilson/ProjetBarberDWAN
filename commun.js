@@ -4,8 +4,8 @@ export function getNavbar() {
   <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
     <!-- Logo on the left side -->
     <div class="navbar-brand">
-      <a class="navbar-item" href="pageAccueil.html">
-        <img src="/logo.png" alt="DWAN Coiffure" style="border-radius: 50%; width: 42px">
+      <a class="navbar-item" href="AccueilClient">
+        <img src="/logo.png" alt="DWAN Coiffure" style="border-radius: 75%; width: auto; height: auto">
       </a>
     </div>
 
@@ -21,16 +21,16 @@ export function getNavbar() {
     <!-- Navigation Items -->
     <div class="navbar-menu">
       <div class="navbar-end">
-        <a class="navbar-item" href="./profil.html">
+        <a class="navbar-item" href="profil">
           Mon Profil
         </a>
-        <a class="navbar-item" href="./rendezVous.html">
+        <a class="navbar-item" href="rendezVous">
           Mes Rendez-vous
         </a>
-        <a class="navbar-item" href="./favoris.html">
+        <a class="navbar-item" href="favoris">
           Mes Favoris
         </a>
-        <a class="navbar-item" href="../login/Public/connexion.html">
+        <a class="navbar-item" href="connexion">
           Déconnexion
         </a>
         <hr class="navbar-divider">

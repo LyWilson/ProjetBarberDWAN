@@ -3,7 +3,7 @@ function getNavbar() {
   return `
   <nav class="navbar custom-color" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <a class="navbar-item" href="#">
+        <a class="navbar-item" href="/">
             <img src="logo.png" alt="DWAN Coiffure" style="border-radius: 75%; width: auto; height: auto ">
         </a>
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
@@ -21,11 +21,11 @@ function getNavbar() {
         </div>
 
         <div class="navbar-end">
-            <a class="navbar-item text-white" href="profil">Mon Profil</a>
-            <a class="navbar-item text-white" href="rendezVous">Mes Rendez-vous</a>
-            <a class="navbar-item text-white" href="favoris">Mes Favoris</a>
-            <a class="navbar-item text-white" href="connexion">Déconnexion</a>
-            <a class="navbar-item text-white" href="aide">Aide</a>
+            <a class="navbar-item text-white" href="profil" id="profil">Mon Profil</a>
+            <a class="navbar-item text-white" href="rendezVous" id="rdv">Mes Rendez-vous</a>
+            <a class="navbar-item text-white" href="favoris" id="favoris">Mes Favoris</a>
+            <a class="navbar-item text-white" href="connexion" id="deconnexion">Déconnexion</a>
+            <a class="navbar-item text-white" href="aide" id="aide">Aide</a>
         </div>
     </div>
 </nav>
@@ -55,5 +55,48 @@ function generateFooter() {
     footer.innerHTML = getFooter();
 
 }
+function getNavBarNonAuth() {
+return `
+  <nav class="navbar custom-color" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+            <img src="logo.png" alt="DWAN Coiffure" style="border-radius: 75%; width: auto; height: auto ">
+        </a>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div class="navbar-menu">
+        <div class="navbar-start">
+            <div class="navbar-item">
+                <input class="input" type="text" style="width: 500px" placeholder="Recherche des salons de coiffure">
+            </div>
+        </div>
+
+        <div class="navbar-end">
+            <a class="navbar-item text-white" href="connexion" id="connexion">Connexion</a>
+            <a class="navbar-item text-white" href="inscription" id="inscription">Inscription</a>
+            <a class="navbar-item text-white" href="aide" id="aide">Aide</a>
+        </div>
+    </div>
+</nav>
+    `;
+}
+
+function generateNavBarNonAuth() {
+    const navBar = document.getElementById('navigationBar');
+    navBar.innerHTML = getNavBarNonAuth();
+}
+
+function generateNavBarWithAuth() {
+    if (sessionStorage.getItem("token")) {
+        generateNavBar();
+    } else {
+        generateNavBarNonAuth();
+    }
+}
 // Function to generate the navigation bar
-export {generateNavBar, generateFooter}
+export {generateNavBarWithAuth, generateFooter}

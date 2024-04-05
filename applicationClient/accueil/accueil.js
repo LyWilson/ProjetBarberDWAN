@@ -1,4 +1,4 @@
-import {generateFooter, generateNavBar} from '../../commun.js';
+import {generateFooter, generateNavBarWithAuth} from '../../commun.js';
 
 // Fonction pour afficher les salons
 async function showSalons() {
@@ -47,7 +47,7 @@ function Auth() {
 Auth();
 document.addEventListener("DOMContentLoaded", () => {
   Auth();
-  generateNavBar();
+  generateNavBarWithAuth();
   generateFooter();
   showSalons();
 });

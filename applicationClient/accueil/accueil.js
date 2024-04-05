@@ -1,4 +1,4 @@
-import { generateNavBar } from '../../commun.js';
+import {generateFooter, generateNavBar} from '../../commun.js';
 
 // Fonction pour afficher les salons
 async function showSalons() {
@@ -39,10 +39,15 @@ function generateCarteSalons(nomSalon, adresse, numeroTelephoneSalon, horairesOu
   `;
 }
 
-
-
-// Initialisation de la page d'accueil du client
+function Auth() {
+  if (!sessionStorage.getItem('token')) {
+    window.location.href = '/connexion';
+  }
+}
+Auth();
 document.addEventListener("DOMContentLoaded", () => {
+  Auth();
   generateNavBar();
+  generateFooter();
   showSalons();
 });

@@ -16,7 +16,7 @@ function getNavbar() {
     <div class="navbar-menu">
         <div class="navbar-start">
             <div class="navbar-item">
-                <input class="input" type="text" placeholder="Recherche des salons de coiffure">
+                <input class="input" type="text" style="width: 500px" placeholder="Recherche des salons de coiffure">
             </div>
         </div>
 
@@ -32,8 +32,28 @@ function getNavbar() {
   `;
 }
 
-// Function to generate the navigation bar
-export function generateNavBar() {
+function generateNavBar() {
   const navBar = document.getElementById('navigationBar');
   navBar.innerHTML = getNavbar();
 }
+
+function getFooter() {
+  return `
+  <footer class="footer " style="background-color: black">
+    <div class="content has-text-centered">
+            <p>
+                <strong>© 2024</strong>
+                Wilson Ly | Daniel To | Nicolas Fauteux | Andy Ly Phok
+            </p>
+        </div>
+</footer>
+    `;
+    }
+
+function generateFooter() {
+    const footer = document.getElementById('footer');
+    footer.innerHTML = getFooter();
+
+}
+// Function to generate the navigation bar
+export {generateNavBar, generateFooter}

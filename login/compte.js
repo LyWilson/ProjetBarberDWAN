@@ -56,15 +56,15 @@ router.post("/login", async (req, res) => {
         const passwordMatch = await bcrypt.compare(motDePasse, user.motDePasse);
 
         if (!passwordMatch) {
-            // Si le mot de passe ne correspond pas
             return res.status(401).json({ message: "Email ou mot de passe incorrect." });
         }
 
-        // Si l'email et le mot de passe sont corrects, générer un jeton JWT
         const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '1d' });
 
         console.log({ token, message: "Connexion réussie." });
-        res.redirect("/AccueilClient");
+
+        // Send token in response body
+        res.redirect(`/?token=${token}`);
     } catch (error) {
         console.error("SQL error", error);
         res.status(500).json({ message: "Erreur interne du serveur." });

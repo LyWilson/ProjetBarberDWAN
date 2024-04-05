@@ -1,6 +1,7 @@
 const express = require('express');
 const { join } = require("path");
 const router = express.Router();
+const Authentification = require('./Function/Authentification');
 
 router.use(express.static(__dirname + "/login/Public"));
 router.get("/connexion", (req, res) => {
@@ -46,6 +47,14 @@ router.get("/rendezVous", (req, res) => {
 
 router.get("/rendezVous.js", (req, res) => {
     res.sendFile(join(__dirname + '/applicationClient/rendezVous', 'rendezVous.js'));
+});
+
+router.get("/", (req, res) => {
+    res.sendFile(join(__dirname + '/', 'home.html'));
+});
+
+router.get("/home.js", (req, res) => {
+    res.sendFile(join(__dirname + '/', 'home.js'));
 });
 
 module.exports = router;

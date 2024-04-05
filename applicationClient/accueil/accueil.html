@@ -6,33 +6,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Website Page</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  <style>
+    /* Additional CSS to fix the white contour issue */
+    body,
+    html {
+      overflow-x: hidden; /* Prevent horizontal scrollbar */
+    }
+  </style>
+  <!-- Navigation Bar -->
+  <div class="section" id="navigationBar">
+    <!-- The navigation bar will be inserted here -->
+  </div>
 </head>
 
 <body>
-  <!-- Navigation Bar -->
-  <section class="section" id="navigationBar">
-    <!-- The navigation bar will be inserted here -->
-  </section>
 
-  <!-- Liste des salons de coiffure -->
-  <section class="section">
-    <div class="container">
-      <h1 class="title">Liste des salons de coiffure:</h1>
-      <div id="listeSalons" class="columns is-multiline"></div>
-    </div>
-  </section>
+<!-- Liste des salons de coiffure -->
+<section class="section">
+  <div class="container">
+    <h1 class="title">Liste des salons de coiffure:</h1>
+    <div id="listeSalons" class="columns is-multiline"></div>
+  </div>
+</section>
 
-  <!-- Map Section -->
-  <section class="section">
-    <div class="container">
-      <h1 class="title">Map</h1>
-      <!-- Placeholder for map using Google Maps API -->
-      <!-- Replace this with your actual map implementation -->
-      <div id="map" style="height: 400px;"></div>
-    </div>
-  </section>
+<!-- Map Section -->
+<section class="section">
+  <div class="container">
+    <h1 class="title">Map</h1>
+    <!-- Placeholder for map using Google Maps API -->
+    <!-- Replace this with your actual map implementation -->
+    <div id="map" style="height: 400px;"></div>
+  </div>
+</section>
 
-  <script src="accueil.js" type="module"></script>
+<script src="accueil.js" type="module"></script>
 </body>
 
 </html>

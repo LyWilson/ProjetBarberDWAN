@@ -10,6 +10,6 @@
     background-color: rgb(19,41,149);
 }
 
-#nabar-end {
+.navbar-item.text-white {
     color: white;
 }

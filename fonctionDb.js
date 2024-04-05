@@ -1,5 +1,6 @@
 const { sql, config } = require('./db');
 
+// Salon data
 async function getSalonData(req, res) {
   try {
     let pool = await sql.connect(config);

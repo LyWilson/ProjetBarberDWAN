@@ -4,7 +4,7 @@ const { ConnectionPool } = require("mssql");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
-const {config} = require("../db");
+const { config} = require("../db");
 const {sql} = require("../db");
 
 const JWT_SECRET = "hvdvay6ert72839289()aiyg8t87qt72393293883uhefiuh78ttq3ifi78272jbkj?[]]pou89ywe";
@@ -30,7 +30,8 @@ router.post("/register-client", async (req, res) => {
         // Generate JWT token
         const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '1d' });
         console.log({ token, message: "Registration successful." });
-
+        res.redirect("/connexion");
+        Alert("Inscription réussie");
     } catch (error) {
         console.error("SQL error", error);
         res.json({ status: "error", message: "Registration failed. Internal server error." });

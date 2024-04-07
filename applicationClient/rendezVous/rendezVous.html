@@ -1,39 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vos rendez-vous</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation Information</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.10.5/css/bulma.min.css">
 </head>
-
 <body>
-  <section class="section">
-    <div class="container">
-      <h1 class="title">Vos rendez-vous</h1>
-      <table class="table is-bordered is-fullwidth" id="tableau">
-        <thead>
-          <tr>
-            <th>Salon de coiffure</th>
-            <th>Coiffeur</th>
-            <th>Date et heure</th>
-            <th>Style de coiffure</th>
-            <th>Heure de départ</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Les données seront affichées ici -->
-        </tbody>
-      </table>
-      <div class="field is-grouped">
-        <div class="control">
-          <a href="./accueil.html" class="button is-text">Retour au Menu</a>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Reservation Information</h1>
+            <table class="table is-fullwidth is-striped is-hoverable">
+                <thead>
+                    <tr>
+                        <th>Reservation ID</th>
+                        <th>Date/Time</th>
+                        <th>Duration</th>
+                        <th>Client Name</th>
+                        <th>Coiffeur Name</th>
+                        <th>Coiffure</th>
+                        <th>Description</th>
+                        <th>Estimated Duration</th>
+                    </tr>
+                </thead>
+                <tbody id="reservationBody">
+                    <!-- Reservation data will be inserted here dynamically -->
+                </tbody>
+            </table>
         </div>
-      </div>
-    </div>
-  </section>
-  <script src="./rendezVous.js"></script>
-</body>
+    </section>
 
+    <script src="rendezVous.js"></script>
+</body>
 </html>

@@ -19,6 +19,7 @@ const { getReservationData } = require('./fonctionDb');
 app.get('/getSalonData', getSalonData);
 app.get('/getReservationData', getReservationData);
 
+
 // Start the server
 app.listen(3000, () => {
   console.log(`Server started on port 3000`);

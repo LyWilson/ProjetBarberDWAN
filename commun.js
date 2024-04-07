@@ -1,4 +1,4 @@
-// Navigation Bar
+// Fonction de la barre de navigation
 function getNavbar() {
   return `
   <nav class="navbar custom-color" role="navigation" aria-label="main navigation">
@@ -41,8 +41,9 @@ function getNavbar() {
   `;
 }
 
-// Function to generate the navigation bar
+// Fonction pour générer la barre 
 export function generateNavBar() {
   const navBar = document.getElementById('navigationBar');
   navBar.innerHTML = getNavbar();
 }
+

@@ -6,6 +6,7 @@ async function getSalonData(req, res) {
     let pool = await sql.connect(config);
     let result = await pool.request().query(`
     SELECT
+      salonId,
       nomSalon,
       adresse,
       numeroTelephoneSalon,

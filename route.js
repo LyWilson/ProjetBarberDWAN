@@ -45,6 +45,14 @@ router.get("/rendezVous.js", (req, res) => {
     res.sendFile(join(__dirname + '/applicationClient/rendezVous', 'rendezVous.js'));
 });
 
+router.get("/salonDetails", (req, res) => {
+    res.sendFile(join(__dirname + '/applicationClient/salonDetails', 'salonDetails.html'));
+});
+
+router.get("/salonDetails.js", (req, res) => {
+    res.sendFile(join(__dirname + '/applicationClient/salonDetails', 'salonDetails.html'));
+});
+
 
 // les routes dans /image
 router.get("/logo.png", (req, res) => {

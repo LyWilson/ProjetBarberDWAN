@@ -11,31 +11,40 @@ const config = {
   }
 };
 
-// testing the connection to the database to the terminal
-async function fetchDataFromDatabase() {
+// Function to fetch data from a specific table
+async function fetchDataFromTable(tableName) {
   try {
       await sql.connect(config);
-      const result = await sql.query`SELECT * FROM Salon`;
+      const request = new sql.Request();
+      request.input('tableName', sql.VarChar, tableName);
+      const result = await request.query(`SELECT * FROM ${tableName}`);
       return result.recordset;
   } catch (err) {
-      console.error('Error fetching data from database:', err);
+      console.error(`Error fetching data from table ${tableName}:`, err);
       throw err;
   } finally {
       await sql.close();
   }
 }
 
-async function displayDataInTerminal() {
+
+
+// Function to display data from all tables
+async function displayAllDataInTerminal() {
   try {
-      const data = await fetchDataFromDatabase();
+      const tables = ['Salon', 'Client', 'Coiffeur', 'Reservation'];
       console.log('Data from the database:');
-      console.table(data); 
+      for (const table of tables) {
+          const data = await fetchDataFromTable(table);
+          console.log(`Table: ${table}`);
+          console.table(data);
+      }
   } catch (err) {
       console.error('Error displaying data in terminal:', err);
   }
 }
 
-displayDataInTerminal();
+displayAllDataInTerminal();
 
 module.exports = {
   sql, config

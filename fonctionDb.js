@@ -20,6 +20,29 @@ async function getSalonData(req, res) {
   }
 }
 
+// Salon data by salonId
+async function getSalonDataBySalonId(req, res) {
+  try {
+    let pool = await sql.connect(config);
+    let result = await pool.request()
+      .input('salonId', sql.Int, req.query.salonId)
+      .query(`
+      SELECT
+        salonId,
+        nomSalon,
+        adresse,
+        numeroTelephoneSalon,
+        horairesOuverture
+      FROM Salon
+      WHERE salonId = @salonId
+    `);
+    res.json(result.recordset);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
+}
+
 // Reservation data
 async function getReservationData(req, res) {
   try {
@@ -50,5 +73,6 @@ async function getReservationData(req, res) {
 
 module.exports = {
   getSalonData,
-  getReservationData
+  getSalonDataBySalonId,
+  getReservationData,
 };

@@ -3,15 +3,13 @@ function getNavbar() {
   return `
   <nav class="navbar custom-color" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <a class="navbar-item" href="#">
+        <a class="navbar-item" href="AccueilClient">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-                <!-- Define a clipping path as a circle -->
                 <defs>
                     <clipPath id="circleClip">
                         <circle cx="32" cy="32" r="32"/>
                     </clipPath>
                 </defs>
-                <!-- Apply the clipping path to the image -->
                 <image xlink:href="logo.png" width="64" height="64" clip-path="url(#circleClip)"/>
             </svg>
         </a>

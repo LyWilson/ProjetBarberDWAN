@@ -15,9 +15,12 @@ app.use(express.json());
 // Importation des fonctions de la base de données
 const { getSalonData } = require('./fonctionDb');
 const { getReservationData } = require('./fonctionDb');
+const { getSalonDataBySalonId } = require('./fonctionDb');	
 
 app.get('/getSalonData', getSalonData);
 app.get('/getReservationData', getReservationData);
+app.get('/getSalonDataBySalonId', getSalonDataBySalonId);
+
 
 
 // Start the server

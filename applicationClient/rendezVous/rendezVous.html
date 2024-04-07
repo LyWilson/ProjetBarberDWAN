@@ -4,31 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reservation Information</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.10.5/css/bulma.min.css">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
-    <section class="section">
-        <div class="container">
-            <h1 class="title">Reservation Information</h1>
-            <table class="table is-fullwidth is-striped is-hoverable">
-                <thead>
-                    <tr>
-                        <th>Reservation ID</th>
-                        <th>Date/Time</th>
-                        <th>Duration</th>
-                        <th>Client Name</th>
-                        <th>Coiffeur Name</th>
-                        <th>Coiffure</th>
-                        <th>Description</th>
-                        <th>Estimated Duration</th>
-                    </tr>
-                </thead>
-                <tbody id="reservationBody">
-                    <!-- Reservation data will be inserted here dynamically -->
-                </tbody>
-            </table>
-        </div>
-    </section>
+    <h1>Reservation Information</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Reservation ID</th>
+                <th>Date/Time</th>
+                <th>Duration</th>
+                <th>Client Name</th>
+                <th>Coiffeur Name</th>
+                <th>Coiffure</th>
+                <th>Description</th>
+                <th>Estimated Duration</th>
+            </tr>
+        </thead>
+        <tbody id="reservationBody">
+            <!-- Reservation data will be inserted here dynamically -->
+        </tbody>
+    </table>
 
     <script src="rendezVous.js"></script>
 </body>

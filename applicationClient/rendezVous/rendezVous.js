@@ -1,3 +1,5 @@
+import { generateNavBar } from '../../commun.js';
+
 // Fetch reservation data from the server
 async function fetchReservationData() {
     try {
@@ -33,5 +35,9 @@ async function displayReservationData() {
     });
 }
 
-// Display reservation data when the page loads
-window.onload = displayReservationData;
+// Initialisation de la page d'accueil du client
+document.addEventListener("DOMContentLoaded", () => {
+    generateNavBar();
+    displayReservationData();
+  });
+

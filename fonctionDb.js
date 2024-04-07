@@ -20,7 +20,6 @@ async function getSalonData(req, res) {
 }
 
 // Reservation data
-// Reservation data
 async function getReservationData(req, res) {
   try {
     let pool = await sql.connect(config);
@@ -47,7 +46,6 @@ async function getReservationData(req, res) {
     res.status(500).send('Internal Server Error');
   }
 }
-
 
 module.exports = {
   getSalonData,

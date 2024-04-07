@@ -35,7 +35,7 @@ async function displayReservationData() {
     });
 }
 
-// Initialisation de la page d'accueil du client
+// Initialisation de la page de réservation du client
 document.addEventListener("DOMContentLoaded", () => {
     generateNavBar();
     displayReservationData();

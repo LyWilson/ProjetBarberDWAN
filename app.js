@@ -1,7 +1,6 @@
+// Importation des modules
 const express = require('express');
 const app = express();
-const { getSalonData } = require('./fonctionDb');
-
 const route = require('./route');
 const passwordMailer = require('./login/passwordMailer');
 const inscription = require('./login/compte');
@@ -13,7 +12,14 @@ app.use("/", inscription)
 
 app.use(express.json());
 
-app.get('/salon', getSalonData);
+// Importation des fonctions de la base de données
+const { getSalonData } = require('./fonctionDb');
+const { getReservationData } = require('./fonctionDb');
+
+app.get('/getSalonData', getSalonData);
+app.get('/getReservationData', getReservationData);
+
+// Start the server
 app.listen(3000, () => {
   console.log(`Server started on port 3000`);
 });

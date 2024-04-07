@@ -4,7 +4,7 @@ import { generateNavBar } from '../../commun.js';
 async function showSalons() {
   const lesSalons = document.getElementById('listeSalons');
   try {
-    const response = await fetch('/salon');
+    const response = await fetch('/getSalonData');
     if (!response.ok) {
       throw new Error('Failed to fetch salon data');
     }

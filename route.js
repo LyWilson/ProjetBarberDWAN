@@ -3,7 +3,9 @@ const { join } = require("path");
 const router = express.Router();
 const Authentification = require('./Function/Authentification');
 
+// les routes dans /login
 router.use(express.static(__dirname + "/login/Public"));
+
 router.get("/connexion", (req, res) => {
     res.sendFile(join(__dirname + '/login/Public', 'connexion.html'));
 });
@@ -15,6 +17,8 @@ router.get("/update-password-page", (req, res) => {
     res.sendFile(join(__dirname + '/login/Public', 'update-password.html'));
 });
 
+
+// les routes dans /applicationClient
 router.use(express.static(__dirname + "/applicationClient"));
 
 router.get("/AccueilClient", (req, res) => {
@@ -23,14 +27,6 @@ router.get("/AccueilClient", (req, res) => {
 
 router.get("/accueil.js", (req, res) => {
     res.sendFile(join(__dirname + '/applicationClient/accueil', 'accueil.js'));
-});
-
-router.get("/commun.js", (req, res) => {
-    res.sendFile(join(__dirname + '/', 'commun.js'));
-});
-
-router.get("/logo.png", (req, res) => {
-    res.sendFile(join(__dirname + '/Image', 'img.png'));
 });
 
 router.get("/profil", (req, res) => {
@@ -49,6 +45,18 @@ router.get("/rendezVous.js", (req, res) => {
     res.sendFile(join(__dirname + '/applicationClient/rendezVous', 'rendezVous.js'));
 });
 
+
+// les routes dans /image
+router.get("/logo.png", (req, res) => {
+    res.sendFile(join(__dirname + '/Image', 'img.png'));
+});
+
+
+// les routes au root
+router.get("/commun.js", (req, res) => {
+    res.sendFile(join(__dirname + '/', 'commun.js'));
+});
+
 router.get("/", (req, res) => {
     res.sendFile(join(__dirname + '/', 'home.html'));
 });
@@ -57,4 +65,6 @@ router.get("/home.js", (req, res) => {
     res.sendFile(join(__dirname + '/', 'home.js'));
 });
 
+
+// exportation du module
 module.exports = router;

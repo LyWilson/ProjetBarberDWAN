@@ -13,15 +13,20 @@ app.use("/", inscription)
 app.use(express.json());
 
 // Importation des fonctions de la base de données
-const { getSalonData } = require('./fonctionDb');
-const { getReservationData } = require('./fonctionDb');
-const { getSalonDataBySalonId } = require('./fonctionDb');	
+const functionDb = require('./fonctionDb');
 
-app.get('/getSalonData', getSalonData);
-app.get('/getReservationData', getReservationData);
-app.get('/getSalonDataBySalonId', getSalonDataBySalonId);
-
-
+app.get('/getSalonData', functionDb.getSalonData);
+app.get('/getReservationData', functionDb.getReservationData);
+app.get('/getSalonDataBySalonId', async (req, res) => {
+  const salonId = req.query.salonId;
+  try {
+      const salonDetails = await functionDb.getSalonDataBySalonId(salonId);
+      res.json(salonDetails);
+  } catch (error) {
+      console.error('Error fetching salon details:', error);
+      res.status(500).send('Error fetching salon details');
+  }
+});
 
 // Start the server
 app.listen(3000, () => {

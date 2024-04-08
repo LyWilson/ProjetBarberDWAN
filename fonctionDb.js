@@ -1,6 +1,7 @@
 const { sql, config } = require('./db');
+const { get } = require('./route');
 
-// Salon data
+// 1) Salon data
 async function getSalonData(req, res) {
   try {
     let pool = await sql.connect(config);
@@ -20,30 +21,20 @@ async function getSalonData(req, res) {
   }
 }
 
-// Salon data by salonId
-async function getSalonDataBySalonId(req, res) {
-  try {
-    let pool = await sql.connect(config);
-    let result = await pool.request()
-      .input('salonId', sql.Int, req.query.salonId)
-      .query(`
-      SELECT
-        salonId,
-        nomSalon,
-        adresse,
-        numeroTelephoneSalon,
-        horairesOuverture
-      FROM Salon
-      WHERE salonId = @salonId
-    `);
-    res.json(result.recordset);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Internal Server Error');
-  }
+// 2) Fonction pour obtenir les données du salon par salonId
+async function getSalonDataBySalonId(salonId) {
+    try {
+        await sql.connect(config);
+        const result = await sql.query`SELECT * FROM Salon WHERE salonId = ${salonId}`;
+        return result.recordset[0]; // Assuming you expect only one result
+    } catch (error) {
+        throw error;
+    } finally {
+        await sql.close();
+    }
 }
 
-// Reservation data
+// 3) Reservation data
 async function getReservationData(req, res) {
   try {
     let pool = await sql.connect(config);
@@ -71,6 +62,7 @@ async function getReservationData(req, res) {
   }
 }
 
+// Exportation des fonctions de la base de données 
 module.exports = {
   getSalonData,
   getSalonDataBySalonId,

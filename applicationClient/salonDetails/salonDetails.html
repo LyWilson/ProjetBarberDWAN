@@ -4,19 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Salon Details</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="styles.css"> <!-- Custom CSS file for modal styling -->
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <div id="navigationBar"></div>
-    
     <!-- Salon Details Section -->
     <section class="section">
         <div class="container">
-            <div id="salonDetails" class="columns is-centered"></div>
+            <div class="box">
+                <h1 class="title has-text-centered">Salon Details</h1>
+                <div id="salonDetails">
+                    <p><strong>Name:</strong> <span id="salonName"></span></p>
+                    <p><strong>Address:</strong> <span id="salonAddress"></span></p>
+                    <p><strong>Phone Number:</strong> <span id="salonPhoneNumber"></span></p>
+                    <p><strong>Opening Hours:</strong> <span id="salonOpeningHours"></span></p>
+                    <!-- Add more information here -->
+                    <button id="reservationButton" class="button is-primary">Make a Reservation</button>
+                </div>
+            </div>
         </div>
     </section>
     
-    <script src="salonDetails.js" type="module"></script>
+    <!-- Reservation Popup -->
+    <div id="reservationPopup" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <!-- Reservation slots -->
+            <p class="has-text-centered">Select a reservation time:</p>
+            <div id="reservationSlots" class="buttons has-addons is-centered"></div>
+            <button id="closePopup" class="button is-light">Cancel</button>
+        </div>
+        <button id="closePopup" class="modal-close is-large" aria-label="close"></button>
+    </div>
+
+    <!-- Include your JavaScript file -->
+    <script src="salonDetails.js"></script>
 </body>
 </html>

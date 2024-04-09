@@ -1,95 +1,82 @@
-// salonDetails.js
+// Fonction pour afficher ou masquer la popup de réservation selon l'état actuel de la popup
+function togglePopup(active) {
+    const popup = document.getElementById('reservationPopup');
+    popup.classList.toggle('is-active', active);
+}
+document.getElementById('reservationButton').addEventListener('click', () => togglePopup(true));
+document.querySelectorAll('.modal-close, .modal-background, #closePopup')
+    .forEach(element => element.addEventListener('click', () => togglePopup(false)));
 
-// Function to generate reservation slots based on opening hours
-const generateReservationSlots = (openingHours) => {
-    const slots = [];
-    let startTime = new Date(openingHours.start);
-    const endTime = new Date(openingHours.end);
 
-    while (startTime < endTime) {
-        const slot = startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        slots.push(slot);
-        startTime.setMinutes(startTime.getMinutes() + 15); // Increment by 15 minutes
-    }
-
-    return slots;
-};
-
-// Function to display reservation slots in the popup
-const displayReservationSlots = (slots) => {
-    const reservationSlotsContainer = document.getElementById('reservationSlots');
-    reservationSlotsContainer.innerHTML = '';
-
-    slots.forEach(slot => {
-        const button = document.createElement('button');
-        button.classList.add('button', 'is-light');
-        button.textContent = slot;
-        button.addEventListener('click', () => {
-            // Handle slot selection (e.g., make reservation)
-            console.log('Selected slot:', slot);
-            // Close the popup
-            closeModal();
-        });
-        reservationSlotsContainer.appendChild(button);
-    });
-};
-
-// Function to open the reservation popup
-const openPopup = () => {
-    document.getElementById('reservationPopup').classList.add('is-active');
-};
-
-// Function to close the reservation popup
-const closeModal = () => {
-    document.getElementById('reservationPopup').classList.remove('is-active');
-};
-
-const fetchSalonDetails = async (salonId) => {
+// Fonction pour afficher les détails du salon selon l'ID du salon dans l'URL de la page
+async function fetchAndDisplaySalonDetails() {
     try {
-        const response = await fetch(`/getSalonDataBySalonId?salonId=${salonId}`);
-        if (!response.ok) {
-            throw new Error('Failed to fetch salon details');
-        }
-        const salonDetails = await response.json();
-        return salonDetails;
-    } catch (error) {
-        console.error('Error fetching salon details:', error);
-        throw error;
-    }
-};
-
-// Function to display salon details on the page
-const displaySalonDetails = (salonDetails) => {
-    document.getElementById('salonName').innerHTML = salonDetails.nomSalon;
-    document.getElementById('salonAddress').innerHTML = salonDetails.adresse;
-    document.getElementById('salonPhoneNumber').innerHTML = salonDetails.numeroTelephoneSalon;
-    document.getElementById('salonOpeningHours').innerHTML = salonDetails.horairesOuverture;
-};
-
-// Initialize the page by fetching and displaying salon details
-const initPage = async () => {
-    try {
-        // Get the salonId from the URL query parameters
         const urlParams = new URLSearchParams(window.location.search);
         const salonId = urlParams.get('salonId');
-
-        // Fetch salon details using the salonId
-        const salonDetails = await fetchSalonDetails(salonId);
-
-        // Display salon details on the page
-        displaySalonDetails(salonDetails);
+        const response = await fetch(`/getSalonDataBySalonId?salonId=${salonId}`);
+        if (!response.ok) throw new Error('Failed to fetch salon details');
+        const salonDetails = await response.json();
+        document.getElementById('salonName').textContent = salonDetails.nomSalon;
+        document.getElementById('salonAddress').textContent = salonDetails.adresse;
+        document.getElementById('salonPhoneNumber').textContent = salonDetails.numeroTelephoneSalon;
+        document.getElementById('salonOpeningHours').textContent = salonDetails.horairesOuverture;
     } catch (error) {
-        console.error('Error initializing page:', error);
+        console.error('Error fetching or displaying salon details:', error);
+    }
+}
+
+// Fonction pour ajouter des photos du salon à la page
+async function fetchAndDisplaySalonPhotos() {
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const salonId = urlParams.get('salonId');
+        const response = await fetch(`/getSalonPhotosBySalonId?salonId=${salonId}`);
+        if (!response.ok) throw new Error('Failed to fetch salon photos');
+        const salonPhotos = await response.json();
+        const gallery = document.getElementById('salonGallery');
+        salonPhotos.forEach(photo => {
+            const img = document.createElement('img');
+            img.src = photo.urlPhoto;
+            img.alt = photo.descriptionPhoto;
+            gallery.appendChild(img);
+        });
+    } catch (error) {
+        console.error('Error fetching or displaying salon photos:', error);
+    }
+}
+
+// Fonction pour ajouter des photos du salon à la page selon l'ID du salon dans l'URL de la page
+const fetchAndDisplaySalonPhotos = async (salonId) => {
+    try {
+        const photosFolder = `/applicationClient/salonDetails/photos"${salonId}/`;
+
+        // Fetch list of photo file names for the given salonId
+        const response = await fetch(`/getSalonPhotos?salonId=${salonId}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch salon photos');
+        }
+        const photoFiles = await response.json();
+
+        // Display salon photos in the photo gallery section
+        const photoGallery = document.getElementById('photoGallery');
+        photoFiles.forEach(photoFile => {
+            const photoElement = document.createElement('div');
+            photoElement.classList.add('column', 'is-3');
+
+            const img = document.createElement('img');
+            img.src = `${photosFolder}${photoFile}`;
+            img.alt = 'image'; 
+
+            photoElement.appendChild(img);
+            photoGallery.appendChild(photoElement);
+        });
+    } catch (error) {
+        console.error('Error fetching and displaying salon photos:', error);
     }
 };
 
-// Call initPage when the DOM content is loaded
-document.addEventListener('DOMContentLoaded', initPage);
 
-// Open the reservation popup when "Make a Reservation" button is clicked
-document.getElementById('reservationButton').addEventListener('click', openPopup);
-
-// Close the reservation popup when "Cancel" button or outside the popup is clicked
-document.querySelectorAll('.modal-close, .modal-background, #closePopup').forEach(element => {
-    element.addEventListener('click', closeModal);
+// Initialisation de la page de détails du salon
+document.addEventListener('DOMContentLoaded', () => {
+    fetchAndDisplaySalonDetails()
 });

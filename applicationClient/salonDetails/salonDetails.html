@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Salon Details</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    <link rel="stylesheet" href="styles.css"> <!-- Custom CSS file for modal styling -->
+    <link rel="stylesheet" href="../appClient.css"> <!-- Custom CSS file for modal styling -->
 </head>
 <body>
     <!-- Salon Details Section -->
@@ -25,12 +25,22 @@
         </div>
     </section>
     
+    <!-- Photo Gallery Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="title">Photo Gallery</h2>
+            <div id="photoGallery" class="columns is-multiline">
+                <!-- Add photos dynamically using JavaScript -->
+            </div>
+        </div>
+    </section>
+
     <!-- Reservation Popup -->
     <div id="reservationPopup" class="modal">
         <div class="modal-background"></div>
         <div class="modal-content">
             <!-- Reservation slots -->
-            <p class="has-text-centered">Select a reservation time:</p>
+            <p class="has-text-centered">Please select a reservation time:</p>
             <div id="reservationSlots" class="buttons has-addons is-centered"></div>
             <button id="closePopup" class="button is-light">Cancel</button>
         </div>

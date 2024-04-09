@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<section class="hero is-fullheight-with-navbar">
+<section class="hero is-fullheight">
     <div class="hero-body">
         <div class="container has-text-centered">
             <div class="box" style=" margin: auto;">
@@ -47,8 +47,10 @@
                             </div>
                             <!-- captcha -->
                             <input type="hidden" name="url" value="">
-                            <!-- Remember Me -->
+                            <!-- Token -->
+                            <input type="hidden" name="token" id="token" value="YOUR_TOKEN_HERE"> <!-- Replace YOUR_TOKEN_HERE with your actual token value -->
 
+                            <!-- Remember Me -->
                             <div class="field">
                                 <div class="block">
                                     <label for="remember_me" class="checkbox">
@@ -77,4 +79,14 @@
 </section>
 
 </body>
+<script src="/connexion.js"></script>
+<footer class="">
+    <div class="container">
+        <div class="content has-text-centered">
+            <p>
+                <strong>© 2024</strong>
+            </p>
+        </div>
+    </div>
+</footer>
 </html>

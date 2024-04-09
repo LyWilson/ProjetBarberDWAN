@@ -1,4 +1,4 @@
-import {generateFooter, generateNavBarWithAuth} from '../../commun.js';
+import {deconnexion, generateFooter, generateNavBarWithAuth} from '../../commun.js';
 
 // Fonction pour afficher les salons
 async function showSalons() {
@@ -44,10 +44,17 @@ function Auth() {
     window.location.href = '/connexion';
   }
 }
+
+
 Auth();
 document.addEventListener("DOMContentLoaded", () => {
   Auth();
   generateNavBarWithAuth();
   generateFooter();
   showSalons();
+  deconnexion();
 });
+
+
+
+

@@ -3,7 +3,7 @@ function getNavbar() {
   return `
   <nav class="navbar custom-color" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <a class="navbar-item" href="/">
+        <a class="navbar-item" href="/AccueilClient">
             <img src="logo.png" alt="DWAN Coiffure" style="border-radius: 75%; width: auto; height: auto ">
         </a>
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
@@ -24,7 +24,7 @@ function getNavbar() {
             <a class="navbar-item text-white" href="profil" id="profil">Mon Profil</a>
             <a class="navbar-item text-white" href="rendezVous" id="rdv">Mes Rendez-vous</a>
             <a class="navbar-item text-white" href="favoris" id="favoris">Mes Favoris</a>
-            <a class="navbar-item text-white" href="connexion" id="deconnexion">Déconnexion</a>
+            <a class="navbar-item text-white" id="deconnexion">Déconnexion</a>
             <a class="navbar-item text-white" href="aide" id="aide">Aide</a>
         </div>
     </div>
@@ -98,5 +98,14 @@ function generateNavBarWithAuth() {
         generateNavBarNonAuth();
     }
 }
+
+function deconnexion() {
+  const btnDeconnexion = document.getElementById('deconnexion');
+  btnDeconnexion.addEventListener('click', () => {
+    sessionStorage.removeItem('token');
+    window.location.href = '/connexion';
+  });
+}
+
 // Function to generate the navigation bar
-export {generateNavBarWithAuth, generateFooter}
+export {generateNavBarWithAuth, generateFooter, deconnexion};

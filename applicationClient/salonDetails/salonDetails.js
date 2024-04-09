@@ -1,4 +1,4 @@
-// Fonction pour afficher ou masquer la popup de réservation selon l'état actuel de la popup
+// Function to toggle the reservation popup
 function togglePopup(active) {
     const popup = document.getElementById('reservationPopup');
     popup.classList.toggle('is-active', active);
@@ -7,8 +7,7 @@ document.getElementById('reservationButton').addEventListener('click', () => tog
 document.querySelectorAll('.modal-close, .modal-background, #closePopup')
     .forEach(element => element.addEventListener('click', () => togglePopup(false)));
 
-
-// Fonction pour afficher les détails du salon selon l'ID du salon dans l'URL de la page
+// Function to fetch and display salon details based on the salonId in the URL
 async function fetchAndDisplaySalonDetails() {
     try {
         const urlParams = new URLSearchParams(window.location.search);
@@ -25,30 +24,12 @@ async function fetchAndDisplaySalonDetails() {
     }
 }
 
-// Fonction pour ajouter des photos du salon à la page
+// Function to fetch and display salon photos based on the salonId in the URL
 async function fetchAndDisplaySalonPhotos() {
     try {
         const urlParams = new URLSearchParams(window.location.search);
         const salonId = urlParams.get('salonId');
-        const response = await fetch(`/getSalonPhotosBySalonId?salonId=${salonId}`);
-        if (!response.ok) throw new Error('Failed to fetch salon photos');
-        const salonPhotos = await response.json();
-        const gallery = document.getElementById('salonGallery');
-        salonPhotos.forEach(photo => {
-            const img = document.createElement('img');
-            img.src = photo.urlPhoto;
-            img.alt = photo.descriptionPhoto;
-            gallery.appendChild(img);
-        });
-    } catch (error) {
-        console.error('Error fetching or displaying salon photos:', error);
-    }
-}
-
-// Fonction pour ajouter des photos du salon à la page selon l'ID du salon dans l'URL de la page
-const fetchAndDisplaySalonPhotos = async (salonId) => {
-    try {
-        const photosFolder = `/applicationClient/salonDetails/photos"${salonId}/`;
+        const photosFolder = `../photos/${salonId}/`;
 
         // Fetch list of photo file names for the given salonId
         const response = await fetch(`/getSalonPhotos?salonId=${salonId}`);
@@ -73,10 +54,10 @@ const fetchAndDisplaySalonPhotos = async (salonId) => {
     } catch (error) {
         console.error('Error fetching and displaying salon photos:', error);
     }
-};
+}
 
-
-// Initialisation de la page de détails du salon
+// Initialize the salon details page
 document.addEventListener('DOMContentLoaded', () => {
-    fetchAndDisplaySalonDetails()
+    fetchAndDisplaySalonDetails();
+    fetchAndDisplaySalonPhotos();
 });

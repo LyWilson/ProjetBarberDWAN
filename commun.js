@@ -4,7 +4,14 @@ function getNavbar() {
   <nav class="navbar custom-color" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="/AccueilClient">
-            <img src="logo.png" alt="DWAN Coiffure" style="border-radius: 75%; width: auto; height: auto ">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+                <defs>
+                    <clipPath id="circleClip">
+                        <circle cx="32" cy="32" r="32"/>
+                    </clipPath>
+                </defs>
+                <image xlink:href="logo.png" width="64" height="64" clip-path="url(#circleClip)"/>
+            </svg>
         </a>
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
             <span aria-hidden="true"></span>
@@ -60,7 +67,14 @@ return `
   <nav class="navbar custom-color" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="/">
-            <img src="logo.png" alt="DWAN Coiffure" style="border-radius: 75%; width: auto; height: auto ">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+                <defs>
+                    <clipPath id="circleClip">
+                        <circle cx="32" cy="32" r="32"/>
+                    </clipPath>
+                </defs>
+                <image xlink:href="logo.png" width="64" height="64" clip-path="url(#circleClip)"/>
+            </svg>
         </a>
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
             <span aria-hidden="true"></span>

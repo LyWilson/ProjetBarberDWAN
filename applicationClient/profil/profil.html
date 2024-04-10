@@ -11,30 +11,42 @@
 <body>
   <section class="section">
     <div class="container">
-      <h1 class="title">Edit Profile</h1>
+      <h1 class="title">Modification du profile</h1>
       <form id="profileForm" class="box">
         <div class="field">
-          <label class="label" for="firstName">First Name:</label>
+          <label class="label" for="prenom">Prénom:</label>
           <div class="control">
-            <input class="input" type="text" id="firstName" name="firstName">
+            <input class="input" type="text" id="prenom" name="prenom">
           </div>
         </div>
         <div class="field">
-          <label class="label" for="lastName">Last Name:</label>
+          <label class="label" for="nom">Nom:</label>
           <div class="control">
-            <input class="input" type="text" id="lastName" name="lastName">
+            <input class="input" type="text" id="nom" name="nom">
           </div>
         </div>
         <div class="field">
-          <label class="label" for="email">Email:</label>
+          <label class="label" for="email">Adresse courriel:</label>
           <div class="control">
             <input class="input" type="email" id="email" name="email">
           </div>
         </div>
         <div class="field">
-          <label class="label" for="phoneNumber">Phone Number:</label>
+          <label class="label" for="phoneNumber">Numéro de téléphone:</label>
           <div class="control">
             <input class="input" type="tel" id="phoneNumber" name="phoneNumber">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label" for="password">Ancien mot de passe:</label>
+          <div class="control">
+            <input class="input" type="password" id="oldPassword" name="oldPassword">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label" for="password">Nouveau mot de passe:</label>
+          <div class="control">
+            <input class="input" type="password" id="newPassword" name="newPassword">
           </div>
         </div>
         <div class="field is-grouped">
@@ -58,8 +70,8 @@
           throw new Error('Failed to fetch client profile');
         }
         const client = await response.json();
-        document.getElementById('firstName').value = client.nom;
-        document.getElementById('lastName').value = client.prenom;
+        document.getElementById('prenom').value = client.nom;
+        document.getElementById('nom').value = client.prenom;
         document.getElementById('email').value = client.email;
         document.getElementById('phoneNumber').value = client.numeroTelephone;
 

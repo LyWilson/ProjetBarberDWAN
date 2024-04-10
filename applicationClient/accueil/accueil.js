@@ -1,10 +1,10 @@
-import {deconnexion, generateFooter, generateNavBarWithAuth} from '../../commun.js';
+import { deconnexion, generateFooter, generateNavBarWithAuth } from '../../commun.js';
 
 // Fonction pour afficher les salons
 async function showSalons() {
   const lesSalons = document.getElementById('listeSalons');
   try {
-    const response = await fetch('/salon');
+    const response = await fetch('/getSalonData');
     if (!response.ok) {
       throw new Error('Failed to fetch salon data');
     }

@@ -1,6 +1,6 @@
-// Navigation Bar
+// Fonction de la barre de navigation
 function getNavbar() {
-  return `
+    return `
   <nav class="navbar custom-color" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="/AccueilClient">
@@ -39,13 +39,15 @@ function getNavbar() {
   `;
 }
 
+// Fonction pour générer la barre de navigation
 function generateNavBar() {
-  const navBar = document.getElementById('navigationBar');
-  navBar.innerHTML = getNavbar();
+    const navBar = document.getElementById('navigationBar');
+    navBar.innerHTML = getNavbar();
 }
 
+// Fonction du pied de page
 function getFooter() {
-  return `
+    return `
   <footer class="footer " style="background-color: black">
     <div class="content has-text-centered">
             <p>
@@ -55,15 +57,18 @@ function getFooter() {
         </div>
 </footer>
     `;
-    }
+}
 
+// Fonction pour générer le pied de page
 function generateFooter() {
     const footer = document.getElementById('footer');
     footer.innerHTML = getFooter();
 
 }
+
+// Fonction pour la barre de navigation sans authentification
 function getNavBarNonAuth() {
-return `
+    return `
   <nav class="navbar custom-color" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="/">
@@ -100,11 +105,13 @@ return `
     `;
 }
 
+// Fonction pour générer la barre de navigation sans authentification
 function generateNavBarNonAuth() {
     const navBar = document.getElementById('navigationBar');
     navBar.innerHTML = getNavBarNonAuth();
 }
 
+// Fonction pour générer la barre de navigation avec authentification 
 function generateNavBarWithAuth() {
     if (sessionStorage.getItem("token")) {
         generateNavBar();
@@ -113,13 +120,14 @@ function generateNavBarWithAuth() {
     }
 }
 
+// Fonction pour la déconnexion de l'utilisateur
 function deconnexion() {
-  const btnDeconnexion = document.getElementById('deconnexion');
-  btnDeconnexion.addEventListener('click', () => {
-    sessionStorage.removeItem('token');
-    window.location.href = '/connexion';
-  });
+    const btnDeconnexion = document.getElementById('deconnexion');
+    btnDeconnexion.addEventListener('click', () => {
+        sessionStorage.removeItem('token');
+        window.location.href = '/connexion';
+    });
 }
 
-// Function to generate the navigation bar
-export {generateNavBarWithAuth, generateFooter, deconnexion};
+// Exportation des fonctions
+export { generateNavBarWithAuth, generateFooter, deconnexion };

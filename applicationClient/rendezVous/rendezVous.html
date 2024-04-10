@@ -6,28 +6,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reservation Information</title>
   <link rel="stylesheet" href="../appClient.css">
-  <div id="navigationBar"></div>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 </head>
 
 <body>
-  <h1>Reservation Information</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Reservation ID</th>
-        <th>Date/Time</th>
-        <th>Duration</th>
-        <th>Client Name</th>
-        <th>Coiffeur Name</th>
-        <th>Coiffure</th>
-        <th>Description</th>
-        <th>Estimated Duration</th>
-      </tr>
-    </thead>
-    <tbody id="reservationBody">
-      <!-- Données de la réservations  -->
-    </tbody>
-  </table>
+  <div id="navigationBar"></div>
+
+  <section class="section">
+    <div class="container">
+      <h1 class="title">Reservation Information</h1>
+      <div class="columns is-multiline">
+        <div class="column is-6">
+          <div class="box">
+            <p class="subtitle">Reservation Details</p>
+            <div class="content">
+              <table class="table is-fullwidth">
+                <tbody>
+                  <tr>
+                    <td><strong>Reservation ID:</strong></td>
+                    <td><span id="reservationId"></span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Date/Time:</strong></td>
+                    <td><span id="dateTime"></span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Duration:</strong></td>
+                    <td><span id="duration"></span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Client Name:</strong></td>
+                    <td><span id="clientName"></span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Coiffeur Name:</strong></td>
+                    <td><span id="coiffeurName"></span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Coiffure:</strong></td>
+                    <td><span id="coiffure"></span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Description:</strong></td>
+                    <td><span id="description"></span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Estimated Duration:</strong></td>
+                    <td><span id="estimatedDuration"></span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
   <script src="rendezVous.js"></script>
 </body>
 

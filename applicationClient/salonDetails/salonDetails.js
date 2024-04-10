@@ -1,3 +1,5 @@
+import { deconnexion, generateFooter, generateNavBarWithAuth } from '../../commun.js';
+
 // Function to toggle the reservation popup
 function togglePopup(active) {
   const popup = document.getElementById('reservationPopup');
@@ -6,6 +8,8 @@ function togglePopup(active) {
 document.getElementById('reservationButton').addEventListener('click', () => togglePopup(true));
 document.querySelectorAll('.modal-close, .modal-background, #closePopup')
   .forEach(element => element.addEventListener('click', () => togglePopup(false)));
+
+
 // Function to fetch and display salon details based on the salonId in the URL
 async function fetchAndDisplaySalonDetails() {
   try {
@@ -22,6 +26,8 @@ async function fetchAndDisplaySalonDetails() {
     console.error('Error fetching or displaying salon details:', error);
   }
 }
+
+
 // Function to fetch and display salon photos based on the salonId in the URL
 async function fetchAndDisplaySalonPhotos() {
   try {
@@ -49,10 +55,52 @@ async function fetchAndDisplaySalonPhotos() {
   } catch (error) {
     console.error('Error fetching and displaying salon photos:', error);
   }
-};
+}
 
-// Initialize the salon details page
+
+// Function to toggle the favorite status of the salon
+function toggleFavorite() {
+  const icon = document.getElementById('favoriteIcon');
+  if (icon.classList.contains('far')) {
+    icon.classList.remove('far');
+    icon.classList.add('fas', 'has-text-warning'); // Change to solid star and yellow color
+    addToFavorites(); // Add salon to favorites
+  } else {
+    icon.classList.remove('fas', 'has-text-warning');
+    icon.classList.add('far');
+    removeFromFavorites(); // Remove salon from favorites
+  }
+}
+
+// Function to add salon to favorites (you can replace this with your actual logic)
+function addToFavorites() {
+  console.log('Salon added to favorites');
+}
+
+// Function to remove salon from favorites (you can replace this with your actual logic)
+function removeFromFavorites() {
+  console.log('Salon removed from favorites');
+}
+
+
+// Function for authentication
+function Auth() {
+  if (!sessionStorage.getItem('token')) {
+    window.location.href = '/connexion';
+  }
+}
+
+
+// Initialization of the salonDetails page
 document.addEventListener('DOMContentLoaded', () => {
+  Auth();
+  generateNavBarWithAuth();
+  generateFooter();
+  deconnexion();
+
   fetchAndDisplaySalonDetails();
   fetchAndDisplaySalonPhotos();
+
+  // Add click event listener to the star icon
+  document.getElementById('favoriteIcon').addEventListener('click', toggleFavorite);
 });

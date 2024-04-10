@@ -71,3 +71,39 @@ th {
     background-color: transparent;
     color: #000;
 }
+
+/* profil */
+body {
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 500px;
+    margin: auto;
+    padding-top: 50px;
+}
+
+.title {
+    color: #363636;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-card .field:not(:last-child) {
+    margin-bottom: 25px;
+}
+
+.form-card .control {
+    border-radius: 5px;
+}
+
+.form-card .button.is-primary {
+    width: 100%;
+}

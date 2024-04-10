@@ -1,0 +1,50 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
+
+.navbar {
+    box-shadow: 0 2px 3px rgba(0,0,0,.1);
+}
+
+.custom-color {
+    background-color: rgb(19,41,149);
+}
+
+.box {
+    margin-bottom: 1rem; /* Add space between the boxes */
+    border-radius: 8px; /* Rounded corners for the boxes */
+    box-shadow: 0 2px 3px rgba(0,0,0,.1);
+}
+
+.title.is-3 {
+    color: #4a4a4a;
+}
+
+.input {
+    border-radius: 20px;
+}
+
+.icon.is-small.is-left {
+    left: 5px; /* Align icon inside input */
+}
+
+.navbar-item {
+    color: white;
+}
+
+.profile-image {
+    border-radius: 50%; /* Makes the image round */
+    object-fit: cover; /* Ensures the image covers the area */
+    width: 256px; /* Example width, must be equal to height for a perfect circle */
+    height: 256px; /* Example height, must be equal to width for a perfect circle */
+}
+
+.equal-height-columns {
+    display: flex;
+}
+
+.equal-height-columns > .column {
+    min-height: 100%; /* This ensures that the column's height won't exceed the parent's height */
+}
+
+.title-margin-adjust {
+    margin-top: 0; /* Adjust the value as needed */
+}

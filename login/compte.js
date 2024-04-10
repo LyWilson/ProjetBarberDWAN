@@ -23,7 +23,7 @@ router.post("/register-client", async (req, res) => {
     try {
         let pool = await sql.connect(config);
         await pool.request().query(`
-            INSERT INTO Client (nom, prenom, motDePasse, email, numeroTelephone)
+            INSERT INTO Client (nom, prenom, motDePasseEncrypte, email, numeroTelephone)
             VALUES ('${nom}', '${prenom}', '${encryptedPassword}', '${email}', '${numeroTelephone}')
         `);
 
@@ -31,7 +31,6 @@ router.post("/register-client", async (req, res) => {
         const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '1d' });
         console.log({ token, message: "Registration successful." });
         res.redirect("/connexion");
-        Alert("Inscription réussie");
     } catch (error) {
         console.error("SQL error", error);
         res.json({ status: "error", message: "Registration failed. Internal server error." });
@@ -53,7 +52,7 @@ router.post("/login", async (req, res) => {
 
         const user = result.recordset[0];
 
-        const passwordMatch = await bcrypt.compare(motDePasse, user.motDePasse);
+        const passwordMatch = await bcrypt.compare(motDePasse, user.motDePasseEncrypte);
 
         if (!passwordMatch) {
             return res.status(401).json({ message: "Email ou mot de passe incorrect." });

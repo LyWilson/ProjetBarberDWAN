@@ -49,6 +49,18 @@ router.get("/rendezVous.js", (req, res) => {
     res.sendFile(join(__dirname + '/applicationClient/rendezVous', 'rendezVous.js'));
 });
 
+router.get("/favoris", (req, res) => {
+    res.sendFile(join(__dirname + '/applicationClient/favoris', 'favoris.html'));
+});
+
+router.get("/favoris.js", (req, res) => {
+    res.sendFile(join(__dirname + '/applicationClient/favoris', 'favoris.js'));
+});
+
+router.get("/appClient.css", (req, res) => {
+    res.sendFile(join(__dirname + '/applicationClient', 'appClient.css'));
+});
+
 router.get("/", (req, res) => {
     res.sendFile(join(__dirname + '/', 'home.html'));
 });

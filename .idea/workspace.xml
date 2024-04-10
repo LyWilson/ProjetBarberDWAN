@@ -4,8 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d25c6996-1a7d-40aa-aa96-b2671b1c5796" name="Changes" comment="PageCoiffeurAccueil">
+    <list default="true" id="ad81fee6-98c0-484d-9d01-381a41249465" name="Changes" comment="passwordMailer.js update">
+      <change afterPath="$PROJECT_DIR$/login/Public/inscription.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/login/Public/connexion.html" beforeDir="false" afterPath="$PROJECT_DIR$/login/Public/connexion.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/login/Public/connexion.js" beforeDir="false" afterPath="$PROJECT_DIR$/login/Public/connexion.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/login/Public/inscription.html" beforeDir="false" afterPath="$PROJECT_DIR$/login/Public/inscription.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/login/compte.js" beforeDir="false" afterPath="$PROJECT_DIR$/login/compte.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,27 +20,25 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JavaScript File" />
         <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
+  &quot;lastFilter&quot;: {}
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/LyWilson/ProjetBarberDWAN.git&quot;,
+    &quot;accountId&quot;: &quot;066265b0-47a5-404d-9553-42cf9ca83722&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">
-    <option name="selectedUrlAndAccountId">
-      <UrlAndAccount>
-        <option name="accountId" value="066265b0-47a5-404d-9553-42cf9ca83722" />
-        <option name="url" value="https://github.com/LyWilson/ProjetBarberDWAN.git" />
-      </UrlAndAccount>
-    </option>
-  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -59,7 +62,7 @@
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;19.7.0&quot;,
     &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;20.12.7&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Admin/WebstormProjects/ProjetBarberDWAN/applicationCoiffeur/Profil&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/wilso/OneDrive/Documents/appli web1/TP_ServiceWilsonLy&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
@@ -68,12 +71,7 @@
   }
 }</component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Admin\WebstormProjects\ProjetBarberDWAN\applicationCoiffeur\Profil" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Admin\WebstormProjects\ProjetBarberDWAN\applicationCoiffeur\Profil" />
-      <recent name="C:\Users\Admin\WebstormProjects\ProjetBarberDWAN\applicationCoiffeur" />
       <recent name="C:\Users\wilso\WebstormProjects\ProjetBarberDWAN" />
       <recent name="C:\Users\wilso\WebstormProjects\ProjetBarberDWAN\login\Public" />
       <recent name="C:\Users\wilso\WebstormProjects\ProjetBarberDWAN\login\node_modules" />
@@ -89,10 +87,17 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-WS-241.14494.235" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="d25c6996-1a7d-40aa-aa96-b2671b1c5796" name="Changes" comment="PageCoiffeurAccueil" />
+      <changelist id="ad81fee6-98c0-484d-9d01-381a41249465" name="Changes" comment="test" />
       <created>1710941170633</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -107,9 +112,7 @@
       <workItem from="1712147199654" duration="7116000" />
       <workItem from="1712247764386" duration="4688000" />
       <workItem from="1712253564107" duration="6482000" />
-      <workItem from="1712702930265" duration="4484000" />
-      <workItem from="1712749243418" duration="1739000" />
-      <workItem from="1712753016200" duration="2768000" />
+      <workItem from="1712754228536" duration="722000" />
     </task>
     <task id="LOCAL-00001" summary="commit npm install module pour app.js">
       <option name="closed" value="true" />

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>historique</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="../appCoiffeur.css">
+</head>
+
+<body>
+<nav class="navbar custom-color" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="index">
+            <img src="img.png" alt="DWAN Coiffure Logo">
+        </a>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div class="navbar-menu">
+        <div class="navbar-start">
+            <div class="navbar-item">
+                <input class="input" type="text" placeholder="Recherche des salons de coiffure">
+            </div>
+        </div>
+
+        <div class="navbar-end">
+            <a class="navbar-item" href="profil">Mon Profil</a>
+            <a class="navbar-item" href="rendezVous">Mes Rendez-vous</a>
+            <a class="navbar-item" href="favoris">Mes Favoris</a>
+            <a class="navbar-item" href="connexion">Déconnexion</a>
+            <a class="navbar-item" href="aide">Aide</a>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="column is multiline">
+        <div class="column is-one-fifth">
+            <!-- Client history box -->
+            <div class="box">
+                <p class="menu-label">
+                    Historique des clients, rendez-vous
+                </p>
+                <!-- Content for client history -->
+            </div>
+            <!-- Client feedback box -->
+            <div class="box">
+                <p class="menu-label">
+                    Avis des clients
+                </p>
+                <!-- Content for client feedback -->
+            </div>
+
+            <div class="column is-one-fifth">
+                <div class="box content">
+                    <p>Consultation de l'historique</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

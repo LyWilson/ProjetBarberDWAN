@@ -4,15 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad81fee6-98c0-484d-9d01-381a41249465" name="Changes" comment="passwordMailer.js update">
-      <change afterPath="$PROJECT_DIR$/login/Public/connexion.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/login/Public/connexion.html" beforeDir="false" afterPath="$PROJECT_DIR$/login/Public/connexion.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/login/app.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/login/inscription.js" beforeDir="false" afterPath="$PROJECT_DIR$/login/compte.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/login/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/login/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/login/passwordMailer.js" beforeDir="false" afterPath="$PROJECT_DIR$/login/passwordMailer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/login/route.js" beforeDir="false" />
+    <list default="true" id="d25c6996-1a7d-40aa-aa96-b2671b1c5796" name="Changes" comment="PageCoiffeurAccueil">
+      <change beforePath="$PROJECT_DIR$/pageCoiffeur/AccueilCoiffeur.html" beforeDir="false" afterPath="$PROJECT_DIR$/pageCoiffeur/AccueilCoiffeur.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pageCoiffeur/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/pageCoiffeur/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,8 +16,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="JavaScript File" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -54,26 +48,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "DefaultHtmlFileTemplate": "HTML File",
-    "Node.js.app.js.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "javascript.nodejs.core.library.configured.version": "19.7.0",
-    "javascript.nodejs.core.library.typings.version": "20.12.2",
-    "last_opened_file_path": "C:/Users/wilso/OneDrive/Documents/appli web1/TP_ServiceWilsonLy",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Node.js.app.js.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;19.7.0&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;20.12.2&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/wilso/OneDrive/Documents/appli web1/TP_ServiceWilsonLy&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\wilso\WebstormProjects\ProjetBarberDWAN" />

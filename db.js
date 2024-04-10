@@ -4,7 +4,6 @@ const config = {
   password: 'admin',
   server: 'localhost',
   database: 'Barbier',
-  port: 1390,
   options: {
     trustServerCertificate: true,
     encrypt: true

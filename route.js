@@ -74,7 +74,6 @@ router.get("/logo.png", (req, res) => {
 });
 
 
-
 // les routes dans /home
 router.get("/", (req, res) => {
     res.sendFile(join(__dirname + '/', 'home.html'));
@@ -84,18 +83,36 @@ router.get("/home.js", (req, res) => {
     res.sendFile(join(__dirname + '/', 'home.js'));
 });
 
+
+//Route fichier applicationCoiffeur
 router.use(express.static(__dirname + "/applicationCoiffeur"));
 
 router.get("/dashboard", (req, res) => {
-    res.sendFile(join(__dirname + '/applicationCoiffeur/dashboard', 'dashboard.html'));
+    res.sendFile(join(__dirname + '/applicationCoiffeur/accueil', 'dashboard.html'));
+});
+
+router.get("/dashboardPC.js", (req, res) => {
+    res.sendFile(join(__dirname + '/applicationCoiffeur/accueil', 'dashboardPC.js'));
 });
 
 router.get("/RdvPC", (req, res) => {
-    res.sendFile(join(__dirname + '/applicationCoiffeur/RdvPC', 'RdvPC.html'));
+    res.sendFile(join(__dirname + '/applicationCoiffeur/historique', 'RdvPC.html'));
+});
+
+router.get("/RdvPC.js", (req, res) => {
+   res.sendFile(join(__dirname + '/applicationCoiffeur/historique', 'RdvPC.js'));
 });
 
 router.get("/ProfilPC", (req, res) => {
-    res.sendFile(join(__dirname + '/applicationCoiffeur/ProfilPC', 'ProfilPC.html'));
+    res.sendFile(join(__dirname + '/applicationCoiffeur/Profil', 'ProfilPC.html'));
+});
+
+router.get("/ProfilPC.js", (req, res) => {
+    res.sendFile(join(__dirname + '/applicationCoiffeur/Profil', 'ProfilPC.js'));
+});
+
+router.get("/appCoiffeur.css", (req, res) => {
+    res.sendFile(join(__dirname + '/applicationCoiffeur', 'appCoiffeur.css'));
 });
 
 module.exports = router;

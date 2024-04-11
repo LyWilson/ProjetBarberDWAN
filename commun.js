@@ -84,11 +84,7 @@ return `
     </div>
 
     <div class="navbar-menu">
-        <div class="navbar-start">
-            <div class="navbar-item">
-                <input class="input" type="text" style="width: 500px" placeholder="Recherche des salons de coiffure">
-            </div>
-        </div>
+        
 
         <div class="navbar-end">
             <a class="navbar-item text-white" href="connexion" id="connexion">Connexion</a>

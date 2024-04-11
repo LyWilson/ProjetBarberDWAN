@@ -69,4 +69,19 @@ router.get("/home.js", (req, res) => {
     res.sendFile(join(__dirname + '/', 'home.js'));
 });
 
+router.use(express.static(__dirname + "/applicationCoiffeur"));
+
+router.get("/dashboard", (req, res) => {
+    res.sendFile(join(__dirname + '/applicationCoiffeur/dashboard', 'dashboard.html'));
+});
+
+router.get("/RdvPC", (req, res) => {
+    res.sendFile(join(__dirname + '/applicationCoiffeur/RdvPC', 'RdvPC.html'));
+});
+
+router.get("/ProfilPC", (req, res) => {
+    res.sendFile(join(__dirname + '/applicationCoiffeur/ProfilPC', 'ProfilPC.html'));
+});
+
 module.exports = router;
+

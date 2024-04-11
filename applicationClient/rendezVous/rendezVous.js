@@ -1,3 +1,5 @@
+import {deconnexion, generateFooter, generateNavBarWithAuth} from "../../commun.js";
+
 async function fetchAndPopulateReservationData() {
   try {
     const reservations = await fetchReservationData();
@@ -38,4 +40,7 @@ function populateReservationDetails(reservations) {
 
 document.addEventListener("DOMContentLoaded", () => {
   fetchAndPopulateReservationData();
+  generateFooter();
+  generateNavBarWithAuth()
+  deconnexion()
 });

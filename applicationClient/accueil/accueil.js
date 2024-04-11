@@ -46,6 +46,24 @@ function Auth() {
   }
 }
 
+function filtrerSalons() {
+  const searchInput = document.querySelector('.navbar-item input[type="text"]');
+  const searchValue = searchInput.value.toLowerCase().trim();
+
+  const salons = document.querySelectorAll('.column.is-4');
+
+  salons.forEach(salon => {
+    const salonName = salon.querySelector('.card-header-title').textContent.toLowerCase();
+    const salonAddress = salon.querySelector('.content p:first-child').textContent.toLowerCase();
+
+    // Check if the salon name or address contains the search value
+    if (salonName.includes(searchValue) || salonAddress.includes(searchValue)) {
+      salon.style.display = "block"; // Show the salon if it matches the search
+    } else {
+      salon.style.display = "none"; // Hide the salon if it doesn't match the search
+    }
+  });
+}
 
 Auth();
 document.addEventListener("DOMContentLoaded", () => {
@@ -54,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
   generateFooter();
   showSalons();
   deconnexion();
+  document.addEventListener('input', filtrerSalons)
 });
 
 

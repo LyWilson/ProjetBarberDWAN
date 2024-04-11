@@ -61,9 +61,23 @@ async function getReservationData(req, res) {
   }
 };
 
-// Exportation des fonctions de la base de données 
+async function getProfilData(email) {
+  try {
+    await sql.connect(config);
+    const result = await sql.query`SELECT * FROM Client WHERE email = ${email}`;
+    return result.recordset[0];
+  }
+    catch (error) {
+        throw error;
+    } finally {
+        await sql.close();
+    }
+}
+
+// Exportation des fonctions de la base de données
 module.exports = {
   getSalonData,
   getSalonDataBySalonId,
   getReservationData,
+    getProfilData
 };

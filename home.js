@@ -5,10 +5,10 @@ if (clientToken) {
     window.location.href = '/AccueilClient';
 }
 
-import {deconnexion, generateFooter, generateNavBarWithAuth} from "./commun.js";
+import { generateFooter, generateNavBarWithAuth} from "./commun.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     generateFooter();
     generateNavBarWithAuth()
-    deconnexion();
+
 });

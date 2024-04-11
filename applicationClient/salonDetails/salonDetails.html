@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salon Details</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  <link rel="stylesheet" href="../appClient.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <style>
+    .star {
+      font-size: 24px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Salon Details Section -->
+  <section class="section">
+    <div class="container">
+      <div class="box">
+        <h1 class="title has-text-centered">Salon Details</h1>
+        <div id="salonDetails">
+          <p><strong>Salon de coiffure:</strong> <span id="salonName"></span>
+            <i id="favoriteIcon" class="far fa-star has-text-warning star"></i>
+          </p>
+          <p><strong>Adresse:</strong> <span id="salonAddress"></span></p>
+          <p><strong>Numéro de téléphone:</strong> <span id="salonPhoneNumber"></span></p>
+          <p><strong>Heures d'ouverture:</strong> <span id="salonOpeningHours"></span></p>
+          <!-- Add more information here -->
+          <button id="reservationButton" class="button is-primary">Prendre un rendez-vous</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Photo Gallery Section -->
+  <section class="section">
+    <div class="container">
+      <h2 class="title">Photo Gallery</h2>
+      <div id="photoGallery" class="columns is-multiline">
+        <!-- Add photos dynamically using JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Reservation Popup -->
+  <div id="reservationPopup" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <!-- Reservation slots -->
+      <p class="has-text-centered">Veuillez choisir un temps de réservation:</p>
+      <div id="reservationSlots" class="buttons has-addons is-centered"></div>
+      <button id="closePopup" class="button is-light">Cancel</button>
+    </div>
+    <button id="closePopup" class="modal-close is-large" aria-label="close"></button>
+  </div>
+
+  <!-- Include your JavaScript file -->
+  <script src="salonDetails.js"></script>
+</body>
+
+</html>

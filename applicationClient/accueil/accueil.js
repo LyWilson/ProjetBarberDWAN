@@ -1,17 +1,17 @@
-import {deconnexion, generateFooter, generateNavBarWithAuth} from '../../commun.js';
+import { deconnexion, generateFooter, generateNavBarWithAuth } from '../../commun.js';
 
 // Fonction pour afficher les salons
 async function showSalons() {
   const lesSalons = document.getElementById('listeSalons');
   try {
-    const response = await fetch('/salon');
+    const response = await fetch('/getSalonData');
     if (!response.ok) {
       throw new Error('Failed to fetch salon data');
     }
     const salons = await response.json();
 
     salons.forEach(s => {
-      const carteSalons = generateCarteSalons(s.nomSalon, s.adresse, s.numeroTelephoneSalon, s.horairesOuverture);
+      const carteSalons = generateCarteSalons(s.salonId, s.nomSalon, s.adresse, s.numeroTelephoneSalon, s.horairesOuverture);
       lesSalons.insertAdjacentHTML('beforeend', carteSalons);
     });
   } catch (error) {
@@ -20,10 +20,11 @@ async function showSalons() {
 }
 
 // Function to generate HTML for salon cards
-function generateCarteSalons(nomSalon, adresse, numeroTelephoneSalon, horairesOuverture) {
+function generateCarteSalons(salonId, nomSalon, adresse, numeroTelephoneSalon, horairesOuverture) {
   return `
   <div class="column is-4">
     <div class="card">
+    <a href="salonDetails?salonId=${salonId}">
       <header class="card-header">
         <p class="card-header-title">${nomSalon}</p>
       </header>

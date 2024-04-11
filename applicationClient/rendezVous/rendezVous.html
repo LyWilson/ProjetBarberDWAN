@@ -4,36 +4,65 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vos rendez-vous</title>
+  <title>Reservation Information</title>
+  <link rel="stylesheet" href="../appClient.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 </head>
 
 <body>
+  <div id="navigationBar"></div>
+
   <section class="section">
     <div class="container">
-      <h1 class="title">Vos rendez-vous</h1>
-      <table class="table is-bordered is-fullwidth" id="tableau">
-        <thead>
-          <tr>
-            <th>Salon de coiffure</th>
-            <th>Coiffeur</th>
-            <th>Date et heure</th>
-            <th>Style de coiffure</th>
-            <th>Heure de départ</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Les données seront affichées ici -->
-        </tbody>
-      </table>
-      <div class="field is-grouped">
-        <div class="control">
-          <a href="./accueil.html" class="button is-text">Retour au Menu</a>
+      <h1 class="title">Reservation Information</h1>
+      <div class="columns is-multiline">
+        <div class="column is-6">
+          <div class="box">
+            <p class="subtitle">Reservation Details</p>
+            <div class="content">
+              <table class="table is-fullwidth">
+                <tbody>
+                  <tr>
+                    <td><strong>Reservation ID:</strong></td>
+                    <td><span id="reservationId"></span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Date/Time:</strong></td>
+                    <td><span id="dateTime"></span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Duration:</strong></td>
+                    <td><span id="duration"></span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Client Name:</strong></td>
+                    <td><span id="clientName"></span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Coiffeur Name:</strong></td>
+                    <td><span id="coiffeurName"></span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Coiffure:</strong></td>
+                    <td><span id="coiffure"></span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Description:</strong></td>
+                    <td><span id="description"></span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Estimated Duration:</strong></td>
+                    <td><span id="estimatedDuration"></span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
-  <script src="./rendezVous.js"></script>
+  <script src="rendezVous.js"></script>
 </body>
 
 </html>

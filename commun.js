@@ -1,7 +1,7 @@
 // Fonction de la barre de navigation
 function getNavbar() {
     return `
-  <nav class="navbar custom-color" role="navigation" aria-label="main navigation">
+  <nav class="navbar " style="background-color: rgb(19, 41, 149)" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="/AccueilClient">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
@@ -27,12 +27,12 @@ function getNavbar() {
             </div>
         </div>
 
-        <div class="navbar-end">
-            <a class="navbar-item text-white" href="profil" id="profil">Mon Profil</a>
-            <a class="navbar-item text-white" href="rendezVous" id="rdv">Mes Rendez-vous</a>
-            <a class="navbar-item text-white" href="favoris" id="favoris">Mes Favoris</a>
-            <a class="navbar-item text-white" id="deconnexion">Déconnexion</a>
-            <a class="navbar-item text-white" href="aide" id="aide">Aide</a>
+        <div class="navbar-end" style="color: white">
+            <a class="navbar-item text-white" style="color: white" href="http://localhost:3000/profil" id="profil">Mon Profil</a>
+            <a class="navbar-item text-white" style="color: white" href="http://localhost:3000/rendezVous" id="rdv">Mes Rendez-vous</a>
+            <a class="navbar-item text-white" style="color: white" href="http://localhost:3000/favoris" id="favoris">Mes Favoris</a>
+            <a class="navbar-item text-white" style="color: white" id="deconnexion">Déconnexion</a>
+            <a class="navbar-item text-white" style="color: white" href="http://localhost:3000/contact" id="contact">Contact</a>
         </div>
     </div>
 </nav>
@@ -69,7 +69,7 @@ function generateFooter() {
 // Fonction pour la barre de navigation sans authentification
 function getNavBarNonAuth() {
     return `
-  <nav class="navbar custom-color" role="navigation" aria-label="main navigation">
+  <nav class="navbar" style="background-color: rgb(19, 41, 149)" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="/">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
@@ -92,9 +92,9 @@ function getNavBarNonAuth() {
         
 
         <div class="navbar-end">
-            <a class="navbar-item text-white" href="connexion" id="connexion">Connexion</a>
-            <a class="navbar-item text-white" href="inscription" id="inscription">Inscription</a>
-            <a class="navbar-item text-white" href="aide" id="aide">Aide</a>
+            <a class="navbar-item text-white" style="color: white" href="http://localhost:3000/connexion" id="connexion">Connexion</a>
+            <a class="navbar-item text-white" style="color: white" href="http://localhost:3000/inscription" id="inscription">Inscription</a>
+            <a class="navbar-item text-white" style="color: white" href="http://localhost:3000/contact" id="contact">Contact</a>
         </div>
     </div>
 </nav>
@@ -118,11 +118,14 @@ function generateNavBarWithAuth() {
 
 // Fonction pour la déconnexion de l'utilisateur
 function deconnexion() {
-    const btnDeconnexion = document.getElementById('deconnexion');
-    btnDeconnexion.addEventListener('click', () => {
-        sessionStorage.removeItem('token');
-        window.location.href = '/connexion';
-    });
+    if (sessionStorage.getItem('token')) {
+        const btnDeconnexion = document.getElementById('deconnexion');
+        btnDeconnexion.addEventListener('click', () => {
+            sessionStorage.removeItem('token');
+            window.location.href = '/connexion';
+        });
+    }
+
 }
 
 // Exportation des fonctions

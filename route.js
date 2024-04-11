@@ -68,6 +68,14 @@ router.get("/commun.js", (req, res) => {
     res.sendFile(join(__dirname + '/', 'commun.js'));
 });
 
+router.get("/contact", (req, res) => {
+    res.sendFile(join(__dirname + '/', 'contact.html'));
+});
+
+router.get("/contact.js", (req, res) => {
+    res.sendFile(join(__dirname + '/', 'contact.js'));
+})
+
 router.get("/logo.png", (req, res) => {
     res.sendFile(join(__dirname + '/Image', 'img.png'));
 });

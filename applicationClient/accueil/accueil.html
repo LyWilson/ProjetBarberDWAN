@@ -8,35 +8,27 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
   <link rel="stylesheet" href="../appClient.css">
   <!-- Navigation Bar -->
-  <div id="navigationBar">
-    <!-- The navigation bar will be inserted here -->
-  </div>
+  <div id="navigationBar"></div>
 </head>
 
 <body style="background-image: linear-gradient(darkgrey,black)">
-
-<!-- Liste des salons de coiffure -->
-
-<div class="container">
-  <h1 class="title">Liste des salons de coiffure:</h1>
-  <div id="listeSalons" class="columns is-multiline"></div>
-</div>
+  <!-- Liste des salons de coiffure -->
+  <div class="container">
+    <h1 class="title">Liste des salons de coiffure:</h1>
+    <div id="listeSalons" class="columns is-multiline"></div>
+  </div>
 
 
-<!-- Map Section -->
+  <!-- Map Section -->
+  <div class="container">
+    <h1 class="title">Map</h1>
+    <div id="map" style="height: 400px;"></div>
+  </div>
 
-<div class="container">
-  <h1 class="title">Map</h1>
-  <!-- Placeholder for map using Google Maps API -->
-  <!-- Replace this with your actual map implementation -->
-  <div id="map" style="height: 400px;"></div>
-</div>
+  <!-- Footer -->
+  <div id="footer"></div>
 
-<div id="footer">
-  <!-- The footer will be inserted here -->
-</div>
-<script src="accueil.js" type="module"></script>
+  <script src="accueil.js" type="module"></script>
 </body>
-
 
 </html>

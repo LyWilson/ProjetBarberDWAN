@@ -3,6 +3,7 @@ const { join } = require("path");
 const router = express.Router();
 const Authentification = require('./Function/Authentification');
 
+// les routes dans /login/public
 router.use(express.static(__dirname + "/login/Public"));
 router.get("/connexion", (req, res) => {
     res.sendFile(join(__dirname + '/login/Public', 'connexion.html'));
@@ -15,6 +16,7 @@ router.get("/update-password-page", (req, res) => {
     res.sendFile(join(__dirname + '/login/Public', 'update-password.html'));
 });
 
+// les routes dans /applicationClient
 router.use(express.static(__dirname + "/applicationClient"));
 
 router.get("/AccueilClient", (req, res) => {
@@ -23,14 +25,6 @@ router.get("/AccueilClient", (req, res) => {
 
 router.get("/accueil.js", (req, res) => {
     res.sendFile(join(__dirname + '/applicationClient/accueil', 'accueil.js'));
-});
-
-router.get("/commun.js", (req, res) => {
-    res.sendFile(join(__dirname + '/', 'commun.js'));
-});
-
-router.get("/logo.png", (req, res) => {
-    res.sendFile(join(__dirname + '/Image', 'img.png'));
 });
 
 router.get("/profil", (req, res) => {
@@ -57,10 +51,31 @@ router.get("/favoris.js", (req, res) => {
     res.sendFile(join(__dirname + '/applicationClient/favoris', 'favoris.js'));
 });
 
+router.get("/salonDetails", (req, res) => {
+    res.sendFile(join(__dirname + '/applicationClient/salonDetails', 'salonDetails.html'));
+});
+
+router.get("/salonDetails.js", (req, res) => {
+    res.sendFile(join(__dirname + '/applicationClient/salonDetails', 'salonDetails.js'));
+});
+
 router.get("/appClient.css", (req, res) => {
     res.sendFile(join(__dirname + '/applicationClient', 'appClient.css'));
 });
 
+
+// les routes dans root
+router.get("/commun.js", (req, res) => {
+    res.sendFile(join(__dirname + '/', 'commun.js'));
+});
+
+router.get("/logo.png", (req, res) => {
+    res.sendFile(join(__dirname + '/Image', 'img.png'));
+});
+
+
+
+// les routes dans /home
 router.get("/", (req, res) => {
     res.sendFile(join(__dirname + '/', 'home.html'));
 });

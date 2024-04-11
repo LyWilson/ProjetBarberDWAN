@@ -10,7 +10,7 @@ function getNavbar() {
                         <circle cx="32" cy="32" r="32"/>
                     </clipPath>
                 </defs>
-                <image xlink:href="logo.png" width="64" height="64" clip-path="url(#circleClip)"/>
+                <image xlink:href="http://localhost:3000/logo.png" width="64" height="64" clip-path="url(#circleClip)"/>
             </svg>
         </a>
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
@@ -107,7 +107,7 @@ function generateNavBarNonAuth() {
     navBar.innerHTML = getNavBarNonAuth();
 }
 
-// Fonction pour générer la barre de navigation avec authentification 
+// Fonction pour générer la barre de navigation avec authentification
 function generateNavBarWithAuth() {
     if (sessionStorage.getItem("token")) {
         generateNavBar();

@@ -63,7 +63,6 @@ router.get("/appClient.css", (req, res) => {
     res.sendFile(join(__dirname + '/applicationClient', 'appClient.css'));
 });
 
-
 // les routes dans root
 router.get("/commun.js", (req, res) => {
     res.sendFile(join(__dirname + '/', 'commun.js'));

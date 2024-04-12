@@ -24,7 +24,7 @@ async function loadSalonDetails() {
   }
 }
 
-// 2) Fonction pour afficher les détails du salon
+// 1.1) Fonction pour afficher les détails du salon
 async function displaySalonDetails(nomSalon, adresse, numeroTelephoneSalon, horairesOuverture) {
   const detailsHTML = `
     <div class="card">
@@ -46,7 +46,7 @@ async function displaySalonDetails(nomSalon, adresse, numeroTelephoneSalon, hora
   document.getElementById('favoriteIcon').addEventListener('click', toggleFavorite);
 };
 
-// 3) Fonction toggleFavorite and adds it to favourite.html
+// 2) Fonction toggleFavorite and adds it to favourite.html
 function toggleFavorite() {
   const favoriteIcon = document.getElementById('favoriteIcon');
   favoriteIcon.classList.toggle('fas');
@@ -54,9 +54,7 @@ function toggleFavorite() {
   favoriteIcon.classList.toggle('has-text-warning');
 }
 
-
-
-// 4) Fonction pour afficher le popup de réservation
+// 3) Fonction pour afficher le popup de réservation
 function togglePopup(active) {
   const popup = document.getElementById('reservationPopup');
   popup.classList.toggle('is-active', active);
@@ -67,8 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .forEach(element => element.addEventListener('click', () => togglePopup(false)));
 });
 
-// 5) NEW 
-// Function to load all salon photos
+// 4) Fonction pour charger les photos du salon
 function loadSalonPhotos() {
   const urlParams = new URLSearchParams(window.location.search);
   const salonId = urlParams.get('salonId');
@@ -76,35 +73,43 @@ function loadSalonPhotos() {
       console.error('No salon ID provided for loading photos.');
       return;
   }
-
   displaySalonPhotos(salonId);
 }
 
-// Function to display salon photos assuming a known number of photos or a naming convention
+// 4.1) Fonction pour afficher les photos du salon 
 function displaySalonPhotos(salonId) {
   const container = document.getElementById('salonPhotosContainer');
-  container.innerHTML = '';  // Clear existing content
+  container.innerHTML = ''; 
+  let i = 1; 
 
-  const numberOfPhotos = 10;  // Adjust this number based on actual number of photos available
-  for (let i = 1; i <= numberOfPhotos; i++) {
-    const imageUrl = `/images/salon${salonId}/haircut${i}.png`;
-    const photoHtml = `
-      <div class="column is-4">
-        <div class="card">
-          <div class="card-image">
-            <figure class="image is-4by4">
-              <img src="${imageUrl}" alt="Salon Photo ${i}" style="object-fit: cover;">
-            </figure>
+  function loadNextPhoto() {
+      const imageUrl = `/images/salon${salonId}/haircut${i}.png`;
+      const photoElement = document.createElement('div');
+      photoElement.className = 'column is-4';
+      photoElement.innerHTML = `
+          <div class="card">
+              <div class="card-image">
+                  <figure class="image is-4by3">
+                      <img src="${imageUrl}" alt="Salon Photo ${i}">
+                  </figure>
+              </div>
           </div>
-        </div>
-      </div>
-    `;
-    container.innerHTML += photoHtml; // Append new photo card to the container
+      `;
+
+      const img = photoElement.querySelector('img');
+      img.onload = () => {
+          container.appendChild(photoElement);
+          i++;
+          loadNextPhoto(); 
+      };
+      img.onerror = () => {
+          console.error(`Failed to load image at ${imageUrl}`);
+      };
   }
+
+  // Commencer le chargement des photos
+  loadNextPhoto();
 }
-
-
-
 
 
 // Initialisation des fonctions au chargement de la page

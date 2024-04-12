@@ -95,11 +95,11 @@ router.get("/home.js", (req, res) => {
 router.use(express.static(__dirname + "/applicationCoiffeur"));
 
 router.get("/dashboard", (req, res) => {
-    res.sendFile(join(__dirname + '/applicationCoiffeur/accueil', 'dashboard.html'));
+    res.sendFile(join(__dirname + '/applicationCoiffeur/AccueilCoiffeur', 'dashboard.html'));
 });
 
 router.get("/dashboardPC.js", (req, res) => {
-    res.sendFile(join(__dirname + '/applicationCoiffeur/accueil', 'dashboardPC.js'));
+    res.sendFile(join(__dirname + '/applicationCoiffeur/AccueilCoiffeur', 'dashboardPC.js'));
 });
 
 router.get("/RdvPC", (req, res) => {

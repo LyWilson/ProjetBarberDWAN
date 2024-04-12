@@ -10,7 +10,7 @@ async function getSalonData(req, res) {
     console.error(err);
     res.status(500).send('Internal Server Error');
   }
-};
+}
 
 // 2) Fonction pour obtenir les données du salon par salonId
 async function getSalonDetails(req, res) {
@@ -63,7 +63,7 @@ async function getReservationData(email) {
   } finally {
     await sql.close(); // Ensure that you close the database connection.
   }
-};
+}
 
 // 4) Fonction pour obtenir les données du profil selon l'email
 async function getProfilData(email) {
@@ -77,12 +77,26 @@ async function getProfilData(email) {
     } finally {
         await sql.close();
     }
-};
+}
+
+//Fonction pour obtenir les services
+async function getCoiffureData(coiffureId) {
+  try {
+    await sql.connect(config);
+    const result = await sql.query`SELECT coiffureId, nomCoiffure, descriptionCoiffure, dureeEstimee FROM Coiffures`;
+    return result.recordset[0];
+  } catch (err) {
+    throw err
+  } finally {
+    await sql.close();
+  }
+}
 
 // Exportation des fonctions de la base de données
 module.exports = {
   getSalonData,
   getSalonDetails,
   getReservationData,
-  getProfilData
+  getProfilData,
+  getCoiffureData
 };

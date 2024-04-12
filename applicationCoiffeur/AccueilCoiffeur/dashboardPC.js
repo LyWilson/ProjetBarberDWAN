@@ -19,8 +19,8 @@ function initializeChart() {
                 label: 'All Time Review',
                 data: [reviewScore, maxScore - reviewScore], // Data for pie chart: score and the remaining to make up 5
                 backgroundColor: [
-                    'rgb(255, 99, 132)', // Pink color for the score
-                    'rgb(211, 211, 211)' // Gray color for the remaining
+                    'rgb(255, 99, 132)',
+                    'rgb(211, 211, 211)'
                 ],
                 hoverOffset: 4
             }]

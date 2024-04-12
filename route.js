@@ -102,6 +102,7 @@ router.get("/home.js", (req, res) => {
 });
 
 
+
 //Route fichier applicationCoiffeur
 router.use(express.static(__dirname + "/applicationCoiffeur"));
 

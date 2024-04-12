@@ -52,7 +52,7 @@ function getFooter() {
     <div class="content has-text-centered">
             <p>
                 <strong>© 2024</strong>
-                Wilson Ly | Daniel To | Nicolas Fauteux | Andy Ly Phok
+                Wilson Ly | Daniel To | Nicolas Fauteux | Ly Andy Phok
             </p>
         </div>
 </footer>

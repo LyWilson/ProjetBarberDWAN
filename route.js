@@ -76,9 +76,20 @@ router.get("/contact.js", (req, res) => {
     res.sendFile(join(__dirname + '/', 'contact.js'));
 })
 
+
 router.get("/logo.png", (req, res) => {
     res.sendFile(join(__dirname + '/Image', 'img.png'));
 });
+
+// Route to handle requests for both main and reference images in salon-specific folders
+router.get("/images/:salonFolder/:imageName", (req, res) => {
+    const { salonFolder, imageName } = req.params;
+    const filePath = join(__dirname, 'Image', salonFolder, imageName);
+    res.sendFile(filePath);
+});
+
+
+
 
 
 // les routes dans /home

@@ -67,6 +67,44 @@ document.addEventListener('DOMContentLoaded', () => {
     .forEach(element => element.addEventListener('click', () => togglePopup(false)));
 });
 
+// 5) NEW 
+// Function to load all salon photos
+function loadSalonPhotos() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const salonId = urlParams.get('salonId');
+  if (!salonId) {
+      console.error('No salon ID provided for loading photos.');
+      return;
+  }
+
+  displaySalonPhotos(salonId);
+}
+
+// Function to display salon photos assuming a known number of photos or a naming convention
+function displaySalonPhotos(salonId) {
+  const container = document.getElementById('salonPhotosContainer');
+  container.innerHTML = '';  // Clear existing content
+
+  const numberOfPhotos = 10;  // Adjust this number based on actual number of photos available
+  for (let i = 1; i <= numberOfPhotos; i++) {
+    const imageUrl = `/images/salon${salonId}/haircut${i}.png`;
+    const photoHtml = `
+      <div class="column is-4">
+        <div class="card">
+          <div class="card-image">
+            <figure class="image is-4by4">
+              <img src="${imageUrl}" alt="Salon Photo ${i}" style="object-fit: cover;">
+            </figure>
+          </div>
+        </div>
+      </div>
+    `;
+    container.innerHTML += photoHtml; // Append new photo card to the container
+  }
+}
+
+
+
 
 
 // Initialisation des fonctions au chargement de la page
@@ -76,4 +114,5 @@ document.addEventListener('DOMContentLoaded', () => {
   deconnexion();
   
   loadSalonDetails(); 
+  loadSalonPhotos();
 });

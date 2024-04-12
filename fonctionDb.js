@@ -1,6 +1,6 @@
 const { sql, config } = require('./db');
 
-// 1) Salon data
+// 1) Fonction pour obtenir les données du salon
 async function getSalonData(req, res) {
   try {
     let pool = await sql.connect(config);
@@ -13,20 +13,25 @@ async function getSalonData(req, res) {
 };
 
 // 2) Fonction pour obtenir les données du salon par salonId
-async function getSalonDataBySalonId(salonId) {
-  try {
-    let pool = await sql.connect(config);
-    let result = await pool.request().query`SELECT * FROM Salon WHERE salonId = ${salonId}`;
-    res.json(result.recordset);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
-  } finally {
-    await sql.close();
+async function getSalonDetails(req, res) {
+  const salonId = req.query.salonId;  // Get the salonId from query parameters
+  if (!salonId) {
+    return res.status(400).send('Salon ID is required');
   }
-};
+  try {
+    await sql.connect(config);
+    const result = await sql.query`SELECT * FROM Salon WHERE salonId = ${salonId}`;
+    if (result.recordset.length === 0) {
+      return res.status(404).send('Salon not found');
+    }
+    res.json(result.recordset[0]);  // Send the first record found
+  } catch (err) {
+    console.error('Failed to connect or query database:', err);
+    res.status(500).send('Server error');
+  }
+}
 
-// 3) Reservation data selon le email
+// 3) Fonction pour obtenir les données de réservation selon l'email (ne marche pas)
 async function getReservationData(email) {
   try {
     await sql.connect(config);
@@ -60,9 +65,7 @@ async function getReservationData(email) {
   }
 };
 
-
-
-// 4) Profil data selon l'email
+// 4) Fonction pour obtenir les données du profil selon l'email
 async function getProfilData(email) {
   try {
     await sql.connect(config);
@@ -79,7 +82,7 @@ async function getProfilData(email) {
 // Exportation des fonctions de la base de données
 module.exports = {
   getSalonData,
-  getSalonDataBySalonId,
+  getSalonDetails,
   getReservationData,
   getProfilData
 };

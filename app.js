@@ -17,7 +17,8 @@ app.use(express.json());
 // Route pour obtenir les données
 const fonctionDb = require('./fonctionDb');
 app.get('/getSalonData', fonctionDb.getSalonData);
-app.get('/getSalonDataBySalonId', fonctionDb.getSalonDataBySalonId);
+app.get('/getSalonDetails', fonctionDb.getSalonDetails);
+
 
 // Serveur en écoute sur le port 3000
 app.listen(3000, () => {

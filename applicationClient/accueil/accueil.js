@@ -1,7 +1,7 @@
 import { deconnexion, generateFooter, generateNavBarWithAuth } from '../../commun.js';
 
 // Fonction pour afficher les salons
-async function showSalons() {
+async function loadSalons() {
   const lesSalons = document.getElementById('listeSalons');
   try {
     const response = await fetch('/getSalonData');
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
   Auth();
   generateNavBarWithAuth();
   generateFooter();
-  showSalons();
+  loadSalons();
   deconnexion();
   document.addEventListener('input', filtrerSalons)
 });

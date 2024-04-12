@@ -81,7 +81,3 @@ document.addEventListener("DOMContentLoaded", () => {
   deconnexion();
   document.addEventListener('input', filtrerSalons)
 });
-
-
-
-

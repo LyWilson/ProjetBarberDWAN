@@ -18,7 +18,6 @@ app.use(express.json());
 const fonctionDb = require('./fonctionDb');
 app.get('/getSalonData', fonctionDb.getSalonData);
 app.get('/getSalonDataBySalonId', fonctionDb.getSalonDataBySalonId);
-app.get('/getReservationData', fonctionDb.getReservationData);
 
 // Serveur en écoute sur le port 3000
 app.listen(3000, () => {

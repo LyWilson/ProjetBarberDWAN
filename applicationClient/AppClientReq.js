@@ -15,7 +15,7 @@ router.get('/getSalonPhotos', (req, res) => {
 });
 
 
-router.get('/getSalonDataBySalonId', (req, res) => {
+/*router.get('/getSalonDataBySalonId', (req, res) => {
     const salonId = req.query
     getSalonDataBySalonId(salonId)
         .then((result) => {
@@ -25,8 +25,20 @@ router.get('/getSalonDataBySalonId', (req, res) => {
             console.error(error);
             res.status(500).send('Internal Server Error');
         });
-});
+});*/
 
+
+router.get('/getReservationData', (req, res) => {
+    const info = req.query
+    getReservationData(info.email)
+        .then((result) => {
+            res.json(result);
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('Internal Server Error');
+        });
+})
 
 
 router.get('/getProfilData', (req, res) => {
@@ -42,3 +54,4 @@ router.get('/getProfilData', (req, res) => {
 })
 
 module.exports = router;
+

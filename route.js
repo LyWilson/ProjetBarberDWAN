@@ -81,26 +81,11 @@ router.get("/logo.png", (req, res) => {
     res.sendFile(join(__dirname + '/Image', 'img.png'));
 });
 
-// les routes dans /Image/salon
-router.get("/photoSalon/:imageName", (req, res) => {
-    const imageName = req.params.imageName;
-    const filePath = join(__dirname, 'Image', 'salon', imageName);
-
-    // Ensure the requested imageName is in the format you expect, e.g., "1.png"
-    if (/^\d+\.png$/.test(imageName)) {
-        res.sendFile(filePath, (err) => {
-            if (err) {
-                console.log(err);
-                if (err.code === 'ENOENT') {
-                    res.status(404).send('Image not found');
-                } else {
-                    res.status(500).send('Server error');
-                }
-            }
-        });
-    } else {
-        res.status(400).send("Invalid image format requested");
-    }
+// Route to handle requests for both main and reference images in salon-specific folders
+router.get("/images/:salonFolder/:imageName", (req, res) => {
+    const { salonFolder, imageName } = req.params;
+    const filePath = join(__dirname, 'Image', salonFolder, imageName);
+    res.sendFile(filePath);
 });
 
 

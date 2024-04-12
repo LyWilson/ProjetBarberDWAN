@@ -29,33 +29,26 @@ async function fetchAndDisplaySalonDetails() {
 
 
 // Function to fetch and display salon photos based on the salonId in the URL
-async function fetchAndDisplaySalonPhotos() {
-  try {
-    const urlParams = new URLSearchParams(window.location.search);
-    const salonId = urlParams.get('salonId');
-    const photosFolder = `../photos/${salonId}/`;
+async function displaySalonPhotos(salonId, photoFiles) {
+  const salonPhotosContainer = document.getElementById('salonPhotosContainer');
+  const salonFolder = `salon${salonId}`;
+  let galleryHTML = `<div class="columns is-multiline">`;
 
-    // Fetch list of photo file names for the given salonId
-    const response = await fetch(`/getSalonPhotos?salonId=${salonId}`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch salon photos');
-    }
-    const photoFiles = await response.json();
-    // Display salon photos in the photo gallery section
-    const photoGallery = document.getElementById('photoGallery');
-    photoFiles.forEach(photoFile => {
-      const photoElement = document.createElement('div');
-      photoElement.classList.add('column', 'is-3');
-      const img = document.createElement('img');
-      img.src = `${photosFolder}${photoFile}`;
-      img.alt = 'image';
-      photoElement.appendChild(img);
-      photoGallery.appendChild(photoElement);
-    });
-  } catch (error) {
-    console.error('Error fetching and displaying salon photos:', error);
-  }
+  photoFiles.forEach(photo => {
+      const imageUrl = `/images/${salonFolder}/${photo}`;
+      galleryHTML += `
+          <div class="column is-4">
+              <figure class="image is-4by3">
+                  <img src="${imageUrl}" alt="Salon Photo">
+              </figure>
+          </div>
+      `;
+  });
+
+  galleryHTML += `</div>`;
+  salonPhotosContainer.innerHTML = galleryHTML;
 }
+
 
 
 // Function to toggle the favorite status of the salon
@@ -99,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
   deconnexion();
 
   fetchAndDisplaySalonDetails();
-  fetchAndDisplaySalonPhotos();
+  displaySalonPhotos();
 
   // Add click event listener to the star icon
   document.getElementById('favoriteIcon').addEventListener('click', toggleFavorite);

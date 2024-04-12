@@ -17,16 +17,24 @@ router.get('/getSalonPhotos', (req, res) => {
 
 
 router.get('/getReservationData', (req, res) => {
-    const info = req.query
-    getReservationData(info.email)
-        .then((result) => {
-            res.json(result);
+    const email = req.query.email;
+    if (!email) {
+        return res.status(400).send('Email parameter is required');
+    }
+
+    getReservationData(email)
+        .then(result => {
+            if (result) {
+                res.json(result);
+            } else {
+                res.status(404).send('No reservations found for this email');
+            }
         })
-        .catch((error) => {
-            console.error(error);
+        .catch(error => {
+            console.error('Database access error:', error);
             res.status(500).send('Internal Server Error');
         });
-})
+});
 
 
 router.get('/getProfilData', (req, res) => {

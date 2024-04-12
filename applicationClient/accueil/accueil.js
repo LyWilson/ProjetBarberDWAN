@@ -1,7 +1,7 @@
 import { deconnexion, generateFooter, generateNavBarWithAuth } from '../../commun.js';
 
 // Fonction pour afficher les salons
-async function loadSalons() {
+async function showSalons() {
   const lesSalons = document.getElementById('listeSalons');
   try {
     const response = await fetch('/getSalonData');
@@ -11,7 +11,7 @@ async function loadSalons() {
     const salons = await response.json();
 
     salons.forEach(s => {
-      const carteSalons = generateCarteSalons(s.salonId, s.nomSalon, s.adresse, s.horairesOuverture);
+      const carteSalons = generateCarteSalons(s.salonId, s.nomSalon, s.adresse, s.numeroTelephoneSalon, s.horairesOuverture);
       lesSalons.insertAdjacentHTML('beforeend', carteSalons);
     });
   } catch (error) {
@@ -20,33 +20,25 @@ async function loadSalons() {
 }
 
 // Function to generate HTML for salon cards
-function generateCarteSalons(salonId, nomSalon, adresse, horairesOuverture) {
-  const imageUrl = `/images/salon${salonId}/${salonId}.png`;
+function generateCarteSalons(salonId, nomSalon, adresse, numeroTelephoneSalon, horairesOuverture) {
   return `
-  <div class="column is-3">
+  <div class="column is-4">
     <div class="card">
-      <a href="salonDetails?salonId=${salonId}">
-        <div class="card-image">
-          <figure class="image is-4by3">
-            <img src="${imageUrl}" alt="Photo du salon: ${nomSalon}">
-          </figure>
+    <a href="salonDetails?salonId=${salonId}">
+      <header class="card-header">
+        <p class="card-header-title">${nomSalon}</p>
+      </header>
+      <div class="card-content">
+        <div class="content">
+          <p><b>Adresse:</b> ${adresse}</p>
+          <p><b>Numéro de téléphone:</b> ${numeroTelephoneSalon}</p>
+          <p><b>Heure d'ouverture:</b> ${horairesOuverture}</p>
         </div>
-        <header class="card-header">
-          <p class="card-header-title">${nomSalon}</p>
-        </header>
-        <div class="card-content">
-          <div class="content">
-            <p><b>Adresse:</b> ${adresse}</p>
-            <p><b>Heure d'ouverture:</b> ${horairesOuverture}</p>
-          </div>
-        </div>
-      </a>
+      </div>
     </div>
   </div>
   `;
 }
-
-
 
 function Auth() {
   if (!sessionStorage.getItem('token')) {
@@ -54,30 +46,35 @@ function Auth() {
   }
 }
 
-// Fonction pour filtrer les salons 
 function filtrerSalons() {
   const searchInput = document.querySelector('.navbar-item input[type="text"]');
   const searchValue = searchInput.value.toLowerCase().trim();
 
-  const salons = document.querySelectorAll('.column.is-3');
+  const salons = document.querySelectorAll('.column.is-4');
 
   salons.forEach(salon => {
     const salonName = salon.querySelector('.card-header-title').textContent.toLowerCase();
     const salonAddress = salon.querySelector('.content p:first-child').textContent.toLowerCase();
 
+    // Check if the salon name or address contains the search value
     if (salonName.includes(searchValue) || salonAddress.includes(searchValue)) {
-      salon.style.display = "block"; 
+      salon.style.display = "block"; // Show the salon if it matches the search
     } else {
-      salon.style.display = "none"; 
+      salon.style.display = "none"; // Hide the salon if it doesn't match the search
     }
   });
 }
 
+Auth();
 document.addEventListener("DOMContentLoaded", () => {
   Auth();
   generateNavBarWithAuth();
   generateFooter();
-  loadSalons();
+  showSalons();
   deconnexion();
   document.addEventListener('input', filtrerSalons)
 });
+
+
+
+

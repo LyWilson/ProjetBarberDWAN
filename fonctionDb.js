@@ -80,7 +80,7 @@ async function getProfilData(email) {
 }
 
 //Fonction pour obtenir les services
-async function getCoiffureData(coiffureId) {
+/*async function getCoiffureData(coiffureId) {
   try {
     await sql.connect(config);
     const result = await sql.query`SELECT coiffureId, nomCoiffure, descriptionCoiffure, dureeEstimee FROM Coiffures`;
@@ -91,6 +91,7 @@ async function getCoiffureData(coiffureId) {
     await sql.close();
   }
 }
+*/
 
 // Exportation des fonctions de la base de données
 module.exports = {
@@ -98,5 +99,5 @@ module.exports = {
   getSalonDetails,
   getReservationData,
   getProfilData,
-  getCoiffureData
+  //getCoiffureData
 };

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,10 +8,25 @@
     <link rel="stylesheet" href="../appCoiffeur.css">
     <div id="navigationBar"></div>
 </head>
-
 <body>
-
+<section class="section">
+    <div class="container">
+        <div class="box">
+            <div class="is-flex" style="align-items: center; justify-content: space-between;">
+                <!-- Flex container to hold both pieces of content side by side -->
+                <div>
+                    <p>Avis des clients</p>
+                    <!-- Additional content such as reviews or text can go here -->
+                </div>
+                <div style="margin-left: 20px;"> <!-- Optionally add some spacing -->
+                    <canvas id="chartContainer" style="width: 150%; height:500%"></canvas> <!-- Adjusted width for side-by-side layout -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="dashboardPC.js" type="module"></script>
 </body>
-<script src="dashboardPC.js"></script>
 <div id="footer"></div>
 </html>

@@ -9,7 +9,6 @@ async function getSalonData(req, res) {
       salonId,
       nomSalon,
       adresse,
-      numeroTelephoneSalon,
       horairesOuverture
     FROM Salon
     `);
@@ -79,5 +78,5 @@ module.exports = {
   getSalonData,
   getSalonDataBySalonId,
   getReservationData,
-    getProfilData
+  getProfilData
 };

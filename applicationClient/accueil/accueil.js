@@ -11,7 +11,7 @@ async function showSalons() {
     const salons = await response.json();
 
     salons.forEach(s => {
-      const carteSalons = generateCarteSalons(s.salonId, s.nomSalon, s.adresse, s.numeroTelephoneSalon, s.horairesOuverture);
+      const carteSalons = generateCarteSalons(s.salonId, s.nomSalon, s.adresse, s.horairesOuverture);
       lesSalons.insertAdjacentHTML('beforeend', carteSalons);
     });
   } catch (error) {
@@ -20,25 +20,34 @@ async function showSalons() {
 }
 
 // Function to generate HTML for salon cards
-function generateCarteSalons(salonId, nomSalon, adresse, numeroTelephoneSalon, horairesOuverture) {
+function generateCarteSalons(salonId, nomSalon, adresse, horairesOuverture) {
+  // Update the imageUrl to use the new route pattern
+  const imageUrl = `/photoSalon/${salonId}.png`;
   return `
-  <div class="column is-4">
+  <div class="column is-3">
     <div class="card">
-    <a href="salonDetails?salonId=${salonId}">
-      <header class="card-header">
-        <p class="card-header-title">${nomSalon}</p>
-      </header>
-      <div class="card-content">
-        <div class="content">
-          <p><b>Adresse:</b> ${adresse}</p>
-          <p><b>Numéro de téléphone:</b> ${numeroTelephoneSalon}</p>
-          <p><b>Heure d'ouverture:</b> ${horairesOuverture}</p>
+      <a href="salonDetails?salonId=${salonId}">
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <img src="${imageUrl}" alt="Photo du salon: ${nomSalon}">
+          </figure>
         </div>
-      </div>
+        <header class="card-header">
+          <p class="card-header-title">${nomSalon}</p>
+        </header>
+        <div class="card-content">
+          <div class="content">
+            <p><b>Adresse:</b> ${adresse}</p>
+            <p><b>Heure d'ouverture:</b> ${horairesOuverture}</p>
+          </div>
+        </div>
+      </a>
     </div>
   </div>
   `;
 }
+
+
 
 function Auth() {
   if (!sessionStorage.getItem('token')) {

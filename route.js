@@ -76,6 +76,13 @@ router.get("/contact.js", (req, res) => {
     res.sendFile(join(__dirname + '/', 'contact.js'));
 })
 
+router.get("/fonctionDb.js", (req, res) => {
+    res.sendFile(join(__dirname + '/', 'fonctionDb.js'));
+});
+
+router.get("/db.js", (req, res) => {
+    res.sendFile(join(__dirname + '/', 'db.js'));
+});
 
 router.get("/logo.png", (req, res) => {
     res.sendFile(join(__dirname + '/Image', 'img.png'));

@@ -79,10 +79,24 @@ async function getProfilData(email) {
     }
 };
 
+async function verifieClient(email) {
+  try {
+    await sql.connect(config);
+    const result = await sql.query`SELECT * FROM Client WHERE email = ${email}`;
+    return result.recordset.length === 0;
+  } catch (error) {
+    throw error;
+  } finally {
+    await sql.close();
+  }
+}
+
+
 // Exportation des fonctions de la base de données
 module.exports = {
   getSalonData,
   getSalonDetails,
   getReservationData,
-  getProfilData
+  getProfilData,
+  verifieClient,
 };

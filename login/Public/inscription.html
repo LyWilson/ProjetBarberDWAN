@@ -63,6 +63,31 @@
                                     <input id="numeroTelephone" class="input is-left" type="text" name="numeroTelephone" placeholder="999-999-9999">
                                 </div>
                             </div>
+                            <!-- Checkboxes -->
+                            <div class="field">
+                                <div class="control">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Client" id="option1" value="Client"> Client
+                                    </label>
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Coiffeur" id="option2" value="Coiffeur"> Coiffeur
+                                    </label>
+                                </div>
+                            </div>
+                            <!-- Hidden inputs for salonId and horairesTravail -->
+                            <div class="field" id="DivsalonId" hidden="hidden">
+                                <label class="label" for="salonId">Salon</label>
+                                <div class="control">
+                                    <input class="input is-left" id="salonId" name="salonId" value="" placeholder="1">
+                                </div>
+                            </div>
+                            <div class="field" id="DivhorairesTravail" hidden="hidden">
+                                <label class="label" for="horairesTravail">Votre Horaire de Travail</label>
+                                <div class="control">
+                                    <input class="input is-left" id="horairesTravail" name="horairesTravail" value="" placeholder="10:00 - 19:00">
+                                </div>
+                            </div>
+
                             <!-- Submit Button -->
                             <div class="control">
                                 <a href="connexion.html">

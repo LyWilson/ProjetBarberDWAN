@@ -46,6 +46,42 @@ function generateCarteSalons(salonId, nomSalon, adresse, horairesOuverture) {
   `;
 }
 
+async function loadSponsor(salonId) {
+  try {
+    const response = await fetch(`/getSalonDetails?salonId=${salonId}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch salon details');
+    }
+    const salonDetails = await response.json();
+
+    const sponsorRectangle = generateSponsorRectangle(salonDetails.salonId, salonDetails.nomSalon, salonDetails.numeroTelephoneSalon, salonDetails.adresse);
+    const sponsorContainer = document.getElementById('sponsorContainer');
+    sponsorContainer.innerHTML = sponsorRectangle;
+  } catch (error) {
+    console.error('Error fetching salon details:', error);
+  }
+}
+
+function generateSponsorRectangle(salonId, nomSalon, numeroTelephoneSalon, adresse) {
+  const imageUrl = `./images/salon${salonId}/${salonId}.png`;
+  return `
+    <div class="sponsor-rectangle">
+      <a href="salonDetails?salonId=${salonId}">
+        <div class="columns is-vcentered">
+          <div class="column is-6">
+            <img src="${imageUrl}" alt="Salon Image" style="width: 100%; height: 100px; padding-left: 25px;">
+          </div>
+          <div class="column">
+            <p><strong>Salon Name:</strong> ${nomSalon}</p>
+            <p><strong>Phone Number:</strong> ${numeroTelephoneSalon}</p>
+            <p><strong>Address:</strong> ${adresse}</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  `;
+}
+
 
 
 function Auth() {
@@ -234,6 +270,7 @@ document.addEventListener("DOMContentLoaded", () => {
   generateNavBarWithAuth();
   generateFooter();
   loadSalons();
+  loadSponsor(9);
   deconnexion();
   GenereMap();
   document.addEventListener('input', filtrerSalons)

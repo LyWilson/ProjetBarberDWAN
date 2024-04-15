@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const { ConnectionPool } = require("mssql");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
@@ -14,60 +13,102 @@ router.use(cors());
 router.use(express.urlencoded({ extended: false }));
 
 router.post("/register-client", async (req, res) => {
-    const { nom, prenom, motDePasse, email, numeroTelephone } = req.body;
-    console.log(req.body);
+    const { nom, prenom, motDePasse, email, numeroTelephone, Client, Coiffeur, salonId, horairesTravail } = req.body;
+    console.log({ nom, prenom, motDePasse, email, numeroTelephone, Client, Coiffeur, salonId, horairesTravail });
 
-    // Hash the password
+    // Hashage du mot de passe
     const encryptedPassword = await bcrypt.hash(motDePasse, 10);
 
     try {
         let pool = await sql.connect(config);
-        await pool.request().query(`
-            INSERT INTO Client (nom, prenom, motDePasseEncrypte, email, numeroTelephone)
-            VALUES ('${nom}', '${prenom}', '${encryptedPassword}', '${email}', '${numeroTelephone}')
-        `);
+        let request = pool.request();
 
-        // Generate JWT token
+        if (Client) {
+            // Insérer dans la table Client
+            await request.query(`
+                INSERT INTO Client (nom, prenom, motDePasseEncrypte, email, numeroTelephone)
+                VALUES ('${nom}', '${prenom}', '${encryptedPassword}', '${email}', '${numeroTelephone}')
+            `);
+        } else if (Coiffeur) {
+            // Insérer dans la table Coiffeur
+            await request.query(`
+                INSERT INTO Coiffeur (nom, prenom, motDePasseEncrypte, email, numeroTelephone, salonId, horairesTravail)
+                VALUES ('${nom}', '${prenom}', '${encryptedPassword}', '${email}', '${numeroTelephone}', ${salonId}, '${horairesTravail}')
+            `);
+        } else {
+            // Aucun bouton n'est sélectionné
+            return res.status(400).json({ message: "Veuillez sélectionner un type d'utilisateur." });
+        }
+
+        // Générer le jeton JWT
         const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '1d' });
-        console.log({ token, message: "Registration successful." });
+        console.log({ token, message: "Inscription réussie." });
         res.redirect("/connexion");
     } catch (error) {
-        console.error("SQL error", error);
-        res.json({ status: "error", message: "Registration failed. Internal server error." });
+        console.error("Erreur SQL", error);
+        res.status(500).json({ message: "Échec de l'inscription. Erreur interne du serveur." });
     }
 });
 
+
 router.post("/login", async (req, res) => {
-    const { email, motDePasse } = req.body;
+    const { email, motDePasse, Coiffeur, Client } = req.body;
+    console.log({ email, motDePasse, Coiffeur, Client });
 
     try {
         let pool = await sql.connect(config);
-        const result = await pool.request().query(`
-            SELECT * FROM Client WHERE email = '${email}'
-        `);
+        let user;
 
-        if (result.recordset.length === 0) {
-            return res.status(401).json({ message: "Email ou mot de passe incorrect." });
+        if(Client) {
+            let result = await pool.request().query(`
+                SELECT * FROM Client WHERE email = '${email}'
+            `);
+
+            if (result.recordset.length === 0) {
+                return res.status(401).json({ message: "Email ou mot de passe incorrect." });
+            }
+
+            user = result.recordset[0];
         }
 
-        const user = result.recordset[0];
+        if(Coiffeur) {
+            let result = await pool.request().query(`
+                SELECT * FROM Coiffeur WHERE email = '${email}'
+            `);
 
+            if (result.recordset.length === 0) {
+                return res.status(401).json({ message: "Email ou mot de passe incorrect." });
+            }
+
+            user = result.recordset[0];
+            console.log({user});
+            console.log({result});
+        }
+        console.log({user});
+        // Vérifier le mot de passe
         const passwordMatch = await bcrypt.compare(motDePasse, user.motDePasseEncrypte);
 
         if (!passwordMatch) {
             return res.status(401).json({ message: "Email ou mot de passe incorrect." });
         }
 
+        // Générer le jeton JWT
         const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '1d' });
 
         console.log({ token, message: "Connexion réussie." });
 
-        // Send token in response body
-        res.redirect(`/?token=${token}`);
+        // Envoyer le jeton dans le corps de la réponse
+        if(Client) {
+            res.redirect(`/?token=${token}&user=client`);
+        }
+        if(Coiffeur) {
+            res.redirect(`/?token=${token}&user=coiffeur`);
+        }
     } catch (error) {
         console.error("SQL error", error);
         res.status(500).json({ message: "Erreur interne du serveur." });
     }
 });
+
 
 module.exports = router;

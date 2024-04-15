@@ -5,16 +5,14 @@ const bodyParser = require("body-parser");
 const config = require("../db");
 const { sql } = require("../db");
 const bcrypt = require("bcrypt");
+const apikey = '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';
+const sendGrid = require('@sendgrid/mail');
+sendGrid.setApiKey(apikey);
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
 // Create MSSQL pool
-
-const apikey = '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';
-
-const sendGrid = require('@sendgrid/mail');
-sendGrid.setApiKey(apikey);
 
 async function sendResetPassword(email) {
     const msg = {
@@ -33,6 +31,9 @@ async function sendResetPassword(email) {
     }
 }
 
+// avant d'envoyer le courriel, il faut vérifier si l'adresse courriel existe dans la base de données
+// cette route est utilisée pour vérifier si l'adresse courriel existe dans la base de données avant
+// d'envoyer le courriel de réinitialisation du mot de passe
 router.post("/reset-password", async (req, res) => {
     const { email } = req.body;
 

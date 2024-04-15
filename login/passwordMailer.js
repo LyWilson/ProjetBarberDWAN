@@ -29,7 +29,7 @@ async function sendResetPassword(email) {
         console.log('Courriel envoyé');
     } catch (error) {
         console.log('Erreur lors de l\'envoi du courriel:', error);
-        throw error; // Re-throw the error to handle it in the calling function
+        throw error;
     }
 }
 
@@ -48,8 +48,8 @@ router.post("/reset-password", async (req, res) => {
 
         // Send reset password email
         await sendResetPassword(email);
-
-        res.redirect("/");
+        Alert("Un email de réinitialisation du mot de passe a été envoyé à " + email + "(Vérifiez votre boîte de courriel indésirables si vous ne le trouvez pas dans votre boîte de réception)");
+        res.redirect("/connexion");
     } catch (error) {
         console.error("SQL error", error);
         res.status(500).json({ message: "Erreur interne du serveur." });

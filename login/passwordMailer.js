@@ -1,44 +1,37 @@
 const express = require("express");
 const router = express.Router();
-const {ConnectionPool} = require("mssql");
-const nodemailer = require("nodemailer");
+const { ConnectionPool } = require("mssql");
 const bodyParser = require("body-parser");
 const config = require("../db");
-const {sql} = require("../db");
+const { sql } = require("../db");
+const bcrypt = require("bcrypt");
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
 // Create MSSQL pool
 
+const apikey = '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';
 
-// Nodemailer configuration
-const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    auth: {
-        user: 'incdwan@gmail.com',
-        pass: 'PZD-xfg-wyd*tra6cwv'
-    }
-});
+const sendGrid = require('@sendgrid/mail');
+sendGrid.setApiKey(apikey);
 
-async function sendResetPassword(courriel) {
+async function sendResetPassword(email) {
+    const msg = {
+        to: email,
+        from: 'incdwan@gmail.com',
+        subject: 'Réinitialiser votre mot de passe',
+        text: 'Cliquez sur le lien pour réinitialiser votre mot de passe',
+        html: "<a href='http://localhost:3000/update-password-page'>Réinitialiser votre mot de passe</a>"
+    };
     try {
-        await transporter.sendMail({
-            to: '"Dwan inc." <matteo.bosco41@ethereal.email>',
-            from: ["lywilson01@gmail.com"],
-            subject: "Reset your password?",
-            text: "Did you try to reset your password? If yes, click on the link below",
-            html: "<a href='http://localhost:3000/update-password-page'>Click here to reset your password</a>"
-        });
-
-        console.log("Message sent to:", courriel);
+        await sendGrid.send(msg);
+        console.log('Courriel envoyé');
     } catch (error) {
-        console.error("Error sending email:", error);
+        console.log('Erreur lors de l\'envoi du courriel:', error);
         throw error; // Re-throw the error to handle it in the calling function
     }
 }
-
 
 router.post("/reset-password", async (req, res) => {
     const { email } = req.body;
@@ -56,7 +49,7 @@ router.post("/reset-password", async (req, res) => {
         // Send reset password email
         await sendResetPassword(email);
 
-        res.redirect("/")
+        res.redirect("/");
     } catch (error) {
         console.error("SQL error", error);
         res.status(500).json({ message: "Erreur interne du serveur." });
@@ -89,7 +82,11 @@ router.post("/MDPoublier.html", (req, res) => {
     const { email } = req.body;
     sendResetPassword(email)
         .then(() => {
-            res.redirect("/")
+            res.redirect("/");
+        })
+        .catch((error) => {
+            console.error("Error sending email:", error);
+            res.status(500).json({ message: "Erreur interne du serveur." });
         });
 });
 

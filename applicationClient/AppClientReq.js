@@ -15,13 +15,19 @@ router.get('/getSalonPhotos', (req, res) => {
 });
 
 
-<<<<<<< HEAD
+
 router.get('/getSalonDataBySalonId', (req, res) => {
     const salonId = req.query
     getSalonDataBySalonId(salonId)
         .then((result) => {
             res.json(result);
-=======
+        })
+        .catch(error => {
+            console.error('Database access error:', error);
+            res.status(500).send('Internal Server Error');
+        });
+});
+
 
 router.get('/getReservationData', (req, res) => {
     const email = req.query.email;
@@ -36,17 +42,12 @@ router.get('/getReservationData', (req, res) => {
             } else {
                 res.status(404).send('No reservations found for this email');
             }
->>>>>>> 94353647dc29003347185e1b4fc67b4c78272a45
         })
         .catch(error => {
             console.error('Database access error:', error);
             res.status(500).send('Internal Server Error');
         });
 });
-<<<<<<< HEAD
-
-=======
->>>>>>> 94353647dc29003347185e1b4fc67b4c78272a45
 
 
 router.get('/getProfilData', (req, res) => {
@@ -62,3 +63,4 @@ router.get('/getProfilData', (req, res) => {
 })
 
 module.exports = router;
+

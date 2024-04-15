@@ -79,7 +79,7 @@ function GenereMap() {
   const map = new mapboxgl.Map({
     container: 'map', // container ID
     style: 'mapbox://styles/mapbox/streets-v12', // style URL
-    center: [-73.623848, 45.520123], // starting position [lng, lat]
+    center: [-73.593864,45.558509], // starting position [lng, lat]
     zoom: 10 // starting zoom
   });
 
@@ -87,21 +87,102 @@ function GenereMap() {
     map.addSource('places', {
       'type': 'geojson',
       'data': {
-        'type': 'FeatureCollection',
-        'features': [
-          {
-            'type': 'Feature',
-            'properties': {
-              'description': '<strong>M9</strong><p>Dwan office</p>'
-            },
-            'geometry': {
-              'type': 'Point',
-              'coordinates': [-73.553131, 45.550018]
-            }
+      "type": "FeatureCollection",
+          "features": [
+        {
+          "type": "Feature",
+          "properties": {
+            "description": "<strong>Ta Tchass</strong><p>Adresse: 6969 Rue du Hood<br>Téléphone: 514-111-1111<br>Horaire: 10:00 - 19:00</p>"
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [-73.622115,45.614294]
           }
-        ]
-      }
+        },
+        {
+          "type": "Feature",
+          "properties": {
+            "description": "<strong>Home Say Young</strong><p>Adresse: 420 Avenue Squidgame<br>Téléphone: 514-222-2222<br>Horaire: 10:30 - 19:30</p>"
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [-73.560034,45.507863]
+          }
+        },
+        {
+          "type": "Feature",
+          "properties": {
+            "description": "<strong>Slat Salon</strong><p>Adresse: 495 Rue Atlanta<br>Téléphone: 514-333-3333<br>Horaire: 11:00 - 20:00</p>"
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [-73.604080,45.561663]
+          }
+        },
+        {
+          "type": "Feature",
+          "properties": {
+            "description": "<strong>Chez Drippy</strong><p>Adresse: 7102 Avenue Rosemont<br>Téléphone: 514-444-4444<br>Horaire: 11:00 - 20:00</p>"
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [-73.579382,45.555649]
+          }
+        },
+        {
+          "type": "Feature",
+          "properties": {
+            "description": "<strong>Wing Phat Hair</strong><p>Adresse: 9102 Rue Jarry<br>Téléphone: 514-555-5555<br>Horaire: 8:00 - 21:00</p>"
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [-73.601758,45.572846]
+          }
+        },
+        {
+          "type": "Feature",
+          "properties": {
+            "description": "<strong>Daniel Studio</strong><p>Adresse: 101 Rue Sherbrooke<br>Téléphone: 514-666-6666<br>Horaire: 9:30 - 18:30</p>"
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [-73.555480,45.551003]
+          }
+        },
+        {
+          "type": "Feature",
+          "properties": {
+            "description": "<strong>Cheveux dAfrique</strong><p>Adresse: 789 Rue Wakanda<br>Téléphone: 514-777-7777<br>Horaire: 9:30 - 18:30</p>"
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [-73.636817,45.576310]
+          }
+        },
+        {
+          "type": "Feature",
+          "properties": {
+            "description": "<strong>Élégance Chinoise</strong><p>Adresse: 888 Rue Xi Jinping<br>Téléphone: 514-888-8888<br>Horaire: 10:30 - 19:30</p>"
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [-73.666813,45.507877]
+          }
+        },
+        {
+          "type": "Feature",
+          "properties": {
+            "description": "<strong>Coiffure Lorry</strong><p>Adresse: 456 Avenue Appweb<br>Téléphone: 514-999-9999<br>Horaire: 10:00 - 20:00</p>"
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [-73.572765,45.513823]
+          }
+        }
+      ]
+    }
     });
+
     // Add a layer showing the places.
     map.addLayer({
       'id': 'places',

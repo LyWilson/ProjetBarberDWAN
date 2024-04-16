@@ -4,7 +4,7 @@ const { getSalonDataBySalonId, getReservationData, getProfilData } = require('..
 
 // 1) Route pour obtenir les données du salon
 
-
+/* NOTE: CETTE ROUTE NE MARCHE PAS DONC JE LAI COMMENTÉ ET MIS SUR APP.JS
 // 2) Route pour obtenir les données du salon par salonId
 router.get('/getSalonDataBySalonId', (req, res) => {
     const salonId = req.query
@@ -17,6 +17,7 @@ router.get('/getSalonDataBySalonId', (req, res) => {
             res.status(500).send('Internal Server Error');
         });
 });
+*/
 
 // 3) Route pour obtenir les données de réservation selon l'email
 router.get('/getReservationData', (req, res) => {

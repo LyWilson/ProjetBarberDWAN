@@ -1,4 +1,5 @@
 // Fonction de la barre de navigation
+
 function getNavbar() {
     return `
   <nav class="navbar " style="background-color: rgb(19, 41, 149)" role="navigation" aria-label="main navigation">

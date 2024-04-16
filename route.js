@@ -1,7 +1,7 @@
 const express = require('express');
 const { join } = require("path");
 const router = express.Router();
-const Authentification = require('./Function/Authentification');
+//const Authentification = require('./Function/Authentification');
 
 // les routes dans /login/public
 router.use(express.static(__dirname + "/login/Public"));
@@ -76,9 +76,27 @@ router.get("/contact.js", (req, res) => {
     res.sendFile(join(__dirname + '/', 'contact.js'));
 })
 
+router.get("/fonctionDb.js", (req, res) => {
+    res.sendFile(join(__dirname + '/', 'fonctionDb.js'));
+});
+
+router.get("/db.js", (req, res) => {
+    res.sendFile(join(__dirname + '/', 'db.js'));
+});
+
 router.get("/logo.png", (req, res) => {
     res.sendFile(join(__dirname + '/Image', 'img.png'));
 });
+
+// Route to handle requests for both main and reference images in salon-specific folders
+router.get("/images/:salonFolder/:imageName", (req, res) => {
+    const { salonFolder, imageName } = req.params;
+    const filePath = join(__dirname, 'Image', salonFolder, imageName);
+    res.sendFile(filePath);
+});
+
+
+
 
 
 // les routes dans /home
@@ -89,7 +107,6 @@ router.get("/", (req, res) => {
 router.get("/home.js", (req, res) => {
     res.sendFile(join(__dirname + '/', 'home.js'));
 });
-
 
 
 //Route fichier applicationCoiffeur
@@ -108,7 +125,7 @@ router.get("/RdvPC", (req, res) => {
 });
 
 router.get("/RdvPC.js", (req, res) => {
-   res.sendFile(join(__dirname + '/applicationCoiffeur/historique', 'RdvPC.js'));
+    res.sendFile(join(__dirname + '/applicationCoiffeur/historique', 'RdvPC.js'));
 });
 
 router.get("/ProfilPC", (req, res) => {
@@ -124,4 +141,3 @@ router.get("/appCoiffeur.css", (req, res) => {
 });
 
 module.exports = router;
-

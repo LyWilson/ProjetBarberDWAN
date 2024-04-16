@@ -1,11 +1,20 @@
+import {generateFooter, generateNavBarWithAuth} from "./commun.js";
+
 const urlParams = new URLSearchParams(window.location.search);
-const clientToken = urlParams.get('token');
+const clientToken = urlParams.get('token')
+const user = urlParams.get('user')
+
 if (clientToken) {
-    sessionStorage.setItem('token', clientToken);
-    window.location.href = '/AccueilClient';
+    if(user === 'client'){
+        sessionStorage.setItem('token', clientToken);
+        window.location.href = '/AccueilClient';
+    } else {
+        sessionStorage.setItem('tokenCoiffeur', clientToken);
+        window.location.href = '/dashboard';
+    }
 }
 
-import { generateFooter, generateNavBarWithAuth} from "./commun.js";
+
 
 document.addEventListener("DOMContentLoaded", () => {
     generateFooter();

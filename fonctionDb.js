@@ -13,8 +13,8 @@ async function getSalonData(req, res) {
 };
 
 // 2) Fonction pour obtenir les données du salon par salonId
-async function getSalonDetails(req, res) {
-  const salonId = req.query.salonId;  // Get the salonId from query parameters
+async function getSalonDataBySalonId(req, res) {
+  const salonId = req.query.salonId;
   if (!salonId) {
     return res.status(400).send('Salon ID is required');
   }
@@ -24,7 +24,7 @@ async function getSalonDetails(req, res) {
     if (result.recordset.length === 0) {
       return res.status(404).send('Salon not found');
     }
-    res.json(result.recordset[0]);  // Send the first record found
+    res.json(result.recordset[0]);
   } catch (err) {
     console.error('Failed to connect or query database:', err);
     res.status(500).send('Server error');
@@ -79,6 +79,7 @@ async function getProfilData(email) {
   }
 };
 
+// 5) Fonction pour vérifier si le client existe
 async function verifieClient(email) {
   try {
     await sql.connect(config);
@@ -95,7 +96,7 @@ async function verifieClient(email) {
 // Exportation des fonctions de la base de données
 module.exports = {
   getSalonData,
-  getSalonDetails,
+  getSalonDataBySalonId,
   getReservationData,
   getProfilData,
   verifieClient,

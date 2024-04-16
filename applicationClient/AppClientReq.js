@@ -1,21 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const {getSalonDataBySalonId, getReservationData, getSalonPhotosBySalonId, getProfilData } = require('../fonctionDb');
+const { getSalonDataBySalonId, getReservationData, getProfilData } = require('../fonctionDb');
 
-router.get('/getSalonPhotos', (req, res) => {
-    const salonId = req.query
-    getSalonPhotosBySalonId(salonId)
-        .then((result) => {
-            res.json(result);
-        })
-        .catch((error) => {
-            console.error(error);
-            res.status(500).send('Internal Server Error');
-        });
-});
+// 1) Route pour obtenir les données du salon
 
 
-
+// 2) Route pour obtenir les données du salon par salonId
 router.get('/getSalonDataBySalonId', (req, res) => {
     const salonId = req.query
     getSalonDataBySalonId(salonId)
@@ -28,7 +18,7 @@ router.get('/getSalonDataBySalonId', (req, res) => {
         });
 });
 
-
+// 3) Route pour obtenir les données de réservation selon l'email
 router.get('/getReservationData', (req, res) => {
     const email = req.query.email;
     if (!email) {
@@ -50,6 +40,7 @@ router.get('/getReservationData', (req, res) => {
 });
 
 
+// 4) Route pour obtenir le profil de l'utilisateur
 router.get('/getProfilData', (req, res) => {
     const info = req.query
     getProfilData(info.email)

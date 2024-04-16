@@ -36,7 +36,7 @@ async function getReservationData(email) {
   try {
     await sql.connect(config);
     const result = await sql.query`
-      SELECT
+    SELECT
         Reservation.reservationId,
         Reservation.dateHeureReservation,
         Reservation.dureeReservation,
@@ -48,20 +48,17 @@ async function getReservationData(email) {
         CoiffurePreEtablie.descriptionCoiffure
       FROM Reservation
       INNER JOIN Coiffeur ON Reservation.coiffeurId = Coiffeur.coiffeurId
-      INNER JOIN Salon ON Reservation.salonId = Salon.salonId
+      INNER JOIN Salon ON Coiffeur.salonId = Salon.salonId
       INNER JOIN CoiffurePreEtablie ON Reservation.coiffureId = CoiffurePreEtablie.coiffureId
       INNER JOIN Client ON Reservation.clientId = Client.clientId
       WHERE Client.email = ${email}
-    `;
-    if (result.recordset.length === 0) {
-      return null; // Or you can throw an exception or return an empty array based on how you want to handle no data.
-    }
-    return result.recordset;
-  } catch (err) {
-    console.error('Failed to fetch reservation data:', err);
-    throw err; // Rethrow or handle error as needed.
+      `;
+    return result.recordset[0];
+  }
+  catch (error) {
+    throw error;
   } finally {
-    await sql.close(); // Ensure that you close the database connection.
+    await sql.close();
   }
 };
 

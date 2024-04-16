@@ -53,7 +53,7 @@ function getFooter() {
     <div class="content has-text-centered">
             <p>
                 <strong>© 2024</strong>
-                Wilson Ly | Daniel To | Nicolas Fauteux | Andy Ly Phok
+                Wilson Ly | Daniel To | Nicolas Fauteux | Ly Andy Phok
             </p>
         </div>
 </footer>
@@ -113,7 +113,7 @@ function generateNavBarWithAuth() {
     if (sessionStorage.getItem("token")) {
         generateNavBar();
         console.log("Token");
-    } else if(sessionStorage.getItem("tokenCoiffeur")) {
+    } else if (sessionStorage.getItem("tokenCoiffeur")) {
         generateNavBar();
         console.log("Token Coiffeur");
     } else {

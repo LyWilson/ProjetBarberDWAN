@@ -21,25 +21,16 @@ router.get('/getSalonDataBySalonId', (req, res) => {
 
 // 3) Route pour obtenir les données de réservation selon l'email
 router.get('/getReservationData', (req, res) => {
-    const email = req.query.email;
-    if (!email) {
-        return res.status(400).send('Email parameter is required');
-    }
-
-    getReservationData(email)
-        .then(result => {
-            if (result) {
-                res.json(result);
-            } else {
-                res.status(404).send('No reservations found for this email');
-            }
+    const info = req.query
+    getReservationData(info.email)
+        .then((result) => {
+            res.json(result);
         })
-        .catch(error => {
-            console.error('Database access error:', error);
+        .catch((error) => {
+            console.error(error);
             res.status(500).send('Internal Server Error');
         });
-});
-
+})
 
 // 4) Route pour obtenir le profil de l'utilisateur
 router.get('/getProfilData', (req, res) => {

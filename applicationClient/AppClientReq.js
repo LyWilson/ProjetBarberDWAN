@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getSalonData, getSalonDataBySalonId, getReservationData, getSalonPhotosBySalonId, getProfilData } = require('../fonctionDb');
+const {getSalonDataBySalonId, getReservationData, getSalonPhotosBySalonId, getProfilData } = require('../fonctionDb');
 
 router.get('/getSalonPhotos', (req, res) => {
     const salonId = req.query

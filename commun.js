@@ -112,7 +112,12 @@ function generateNavBarNonAuth() {
 function generateNavBarWithAuth() {
     if (sessionStorage.getItem("token")) {
         generateNavBar();
+        console.log("Token");
+    } else if(sessionStorage.getItem("tokenCoiffeur")) {
+        generateNavBar();
+        console.log("Token Coiffeur");
     } else {
+        console.log("No token");
         generateNavBarNonAuth();
     }
 }

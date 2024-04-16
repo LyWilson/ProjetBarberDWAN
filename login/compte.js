@@ -84,6 +84,9 @@ router.post("/login", async (req, res) => {
             console.log({user});
             console.log({result});
         }
+        if (Coiffeur === undefined && Client === undefined) {
+            return res.status(400).json({ message: "Veuillez sélectionner un type d'utilisateur." });
+        }
         console.log({user});
         // Vérifier le mot de passe
         const passwordMatch = await bcrypt.compare(motDePasse, user.motDePasseEncrypte);

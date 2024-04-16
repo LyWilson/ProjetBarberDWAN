@@ -69,7 +69,7 @@ function generateSponsorRectangle(salonId, nomSalon, numeroTelephoneSalon, adres
       <a href="salonDetails?salonId=${salonId}">
         <div class="columns is-vcentered">
           <div class="column is-6">
-            <img src="${imageUrl}" alt="Salon Image" style="width: 100%; height: 100px; padding-left: 25px;">
+            <img src="${imageUrl}" alt="Salon Image" style="width: 100%; height: 100px;" class="centered";">
           </div>
           <div class="column">
             <p><strong>Salon Name:</strong> ${nomSalon}</p>

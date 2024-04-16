@@ -1,7 +1,7 @@
 const express = require('express');
 const { join } = require("path");
 const router = express.Router();
-//const Authentification = require('./Function/Authentification');
+const Authentification = require('./Function/Authentification');
 
 // les routes dans /login/public
 router.use(express.static(__dirname + "/login/Public"));

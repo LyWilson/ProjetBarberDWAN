@@ -57,28 +57,6 @@ router.post("/reset-password", async (req, res) => {
     }
 });
 
-router.post("/update-password", async (req, res) => {
-    const { email, motDePasse } = req.body;
-
-    // Hash the password
-    const encryptedPassword = await bcrypt.hash(motDePasse, 10);
-
-    try {
-        let pool = await sql.connect(config);
-        await pool.request().query(`
-            UPDATE Client
-            SET motDePasse = '${encryptedPassword}'
-            WHERE email = '${email}'
-        `);
-
-        console.log({ message: "Mot de passe mis à jour." });
-        res.json({ message: "Mot de passe mis à jour." });
-    } catch (error) {
-        console.error("SQL error", error);
-        res.status(500).json({ message: "Erreur interne du serveur." });
-    }
-});
-
 router.post("/MDPoublier.html", (req, res) => {
     const { email } = req.body;
     sendResetPassword(email)

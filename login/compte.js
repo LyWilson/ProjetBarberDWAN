@@ -37,7 +37,7 @@ router.post("/register-client", async (req, res) => {
             `);
         } else {
             // Aucun bouton n'est sélectionné
-            return res.status(400).json({ message: "Veuillez sélectionner un type d'utilisateur." });
+            alert("Veuillez sélectionner un type d'utilisateur.");
         }
 
         // Générer le jeton JWT

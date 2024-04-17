@@ -2,15 +2,16 @@ import { deconnexion, generateFooter, generateNavBarWithAuth } from "../../commu
 
 const token = sessionStorage.getItem('token');
 
-const parseJwt = token => {
+// Fonction pour décoder le token 
+function parseJwt(token) {
   try {
     return JSON.parse(decodeURIComponent(atob(token.split('.')[1].replace('-', '+').replace('_', '/')).split('').map(c => `%${('00' + c.charCodeAt(0).toString(16)).slice(-2)}`).join('')));
   } catch (e) {
     return null;
   }
-};
+}
 
-// Fonction pour obtenir les informations de la réservation de l'utilisateur
+// Function to get all reservations for the user
 async function infoReservation() {
   try {
     const userData = parseJwt(token);
@@ -21,11 +22,13 @@ async function infoReservation() {
     const email = userData.email;
     const response = await fetch(`/getReservationData?email=${encodeURIComponent(email)}`);
     if (!response.ok) {
-      throw new Error('Failed to fetch user reservation');
+      throw new Error('Failed to fetch reservations');
     }
-    const reservation = await response.json();
-    if (reservation) {
-      populateReservationDetails(reservation.dateHeureReservation, reservation.coiffeurPrenom, reservation.coiffeurNom, reservation.nomSalon, reservation.adresse, reservation.nomCoiffure, reservation.descriptionCoiffure, reservation.dureeReservation);
+    const reservations = await response.json();
+    if (reservations.length > 0) {
+      reservations.forEach(reservation => {
+        generateCarteReservation(reservation.dateHeureReservation, reservation.coiffeurPrenom, reservation.coiffeurNom, reservation.nomSalon, reservation.adresse, reservation.nomCoiffure, reservation.descriptionCoiffure, reservation.dureeReservation);
+      });
     } else {
       console.log('No reservation data received');
     }
@@ -34,33 +37,35 @@ async function infoReservation() {
   }
 }
 
-// Function that populates reservation details directly from arguments
-function populateReservationDetails(dateHeureReservation, coiffeurPrenom, coiffeurNom, nomSalon, adresse, nomCoiffure, descriptionCoiffure, dureeReservation) {
+function generateCarteReservation(dateHeureReservation, coiffeurPrenom, coiffeurNom, nomSalon, adresse, nomCoiffure, descriptionCoiffure, dureeReservation) {
   const reservationsContainer = document.getElementById('reservationsContainer');
-  reservationsContainer.innerHTML = '';
+
+  const date = new Date(dateHeureReservation);
+  const options = { year: 'numeric', month: 'long', day: 'numeric'}
+  const dateFormatted = date.toLocaleDateString('fr-FR', options) + ` à ${date.getHours().toString().padStart(2, '0')}h${date.getMinutes().toString().padStart(2, '0')}`;
 
   const reservationHtml = `
-    <div class="card">
-        <header class="card-header">
-            <p class="card-header-title">
-                Date et heure de la réservation: ${dateHeureReservation}
-            </p>
-        </header>
-        <div class="card-content">
-            <div class="content">
-                <p>Coiffeur: <strong>${coiffeurPrenom} ${coiffeurNom}</strong></p>
-                <p>Salon: <strong>${nomSalon}</strong></p>
-                <p>Adresse: <strong>${adresse}</strong></p>
-                <p>Style de coiffure: <strong>${nomCoiffure}</strong></p>
-                <p>Description: <strong>${descriptionCoiffure}</strong></p>
-                <p>Durée de la réservation: <strong>${dureeReservation} minutes</strong></p>
-            </div>
-        </div>
-    </div>`;
+  <div class="card reservation-card">
+      <header class="card-header">
+          <p class="card-header-title">
+              RÉSERVATION: ${dateFormatted}
+          </p>
+      </header>
+      <div class="card-content">
+          <div class="content">
+              <p>Coiffeur: <strong>${coiffeurPrenom} ${coiffeurNom}</strong></p>
+              <p>Salon: <strong>${nomSalon}</strong></p>
+              <p>Adresse: <strong>${adresse}</strong></p>
+              <p>Style de coiffure: <strong>${nomCoiffure}</strong></p>
+              <p>Description: <strong>${descriptionCoiffure}</strong></p>
+              <p>Durée de la réservation: <strong>${dureeReservation} minutes</strong></p>
+          </div>
+      </div>
+  </div>`;
   reservationsContainer.insertAdjacentHTML('beforeend', reservationHtml);
 }
 
-// Initialisation de la page avec les réservations de l'utilisateur
+
 document.addEventListener("DOMContentLoaded", () => {
   generateNavBarWithAuth();
   generateFooter();

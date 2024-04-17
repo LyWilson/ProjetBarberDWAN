@@ -105,6 +105,11 @@
             <div class="column is-full">
                 <div class="box content" style="background-color: lightcyan">
                     <h3 class="title is-4 title-margin-adjust">Portfolio</h3>
+                    <div id="gallery"></div>
+                    <form action="/upload/123" method="post" enctype="multipart/form-data">
+                        <input type="file" name="photo" accept="image/*">
+                        <button type="submit" onclick="uploadFile()">Upload Photo</button>
+                    </form>
                 </div>
 
             </div>

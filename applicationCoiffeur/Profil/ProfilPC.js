@@ -85,7 +85,7 @@ function distributeCoiffures(coiffures, numberOfSalons = 9) {
 //Section Disponibilité
 async function fetchSalonDisponibilite() {
     try {
-        const response = await fetch(`/getSalonData`);
+        const funcitonDb = require("/fonctionDb")
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -138,6 +138,41 @@ function updateHeureOuverture(horairesOuverture) {
 `;
 }
 
+// Section Portfolio
+function uploadFile() {
+    var formData = new FormData(document.getElementById('uploadForm'));
+    $.ajax({
+        url: `/upload/${salonId}`,
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(data) {
+            alert('File uploaded successfully!');
+        },
+        error: function() {
+            alert('Error uploading file.');
+        }
+    });
+}
+
+// script.js
+function displayPortfolio(salonId) {
+    const basePath = `/images/salon${salonId}/Portfolio${salonId}`;
+    const portfolioContainer = document.getElementById('gallery');
+    const images = ['haircut1.png', 'haircut2.png'];
+    portfolioContainer.innerHTML = '';
+
+    images.forEach(imageName => {
+        const imgElement = document.createElement('img');
+        imgElement.src = `${basePath}/${imageName}`;
+        imgElement.alt = `Salon ${salonId} Portfolio Image`;
+        imgElement.classList.add('portfolio-image'); // Add a class for styling
+
+        portfolioContainer.appendChild(imgElement);
+    });
+}
+
 
 function Auth() {
     if (!sessionStorage.getItem('token')) {
@@ -154,4 +189,6 @@ document.addEventListener("DOMContentLoaded", () => {
     deconnexion();
     //fetchDescriptionService(coiffureId)
     fetchSalonDisponibilite(salonId);
+    uploadFile();
+    displayPortfolio(salonId)
 });

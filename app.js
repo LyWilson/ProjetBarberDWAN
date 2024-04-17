@@ -5,12 +5,15 @@ const route = require('./route');
 const passwordMailer = require('./login/passwordMailer');
 const inscription = require('./login/compte');
 const AppClientReq = require('./applicationClient/AppClientReq');
+const AppCoiffeurReq = require('./applicationCoiffeur/AppCoiffeurReq')
 
-// Middleware pour les routes de l'application client et de l'application admin 
+// Middleware pour les routes de l'application client et de l'application admin
 app.use("/", route)
 app.use("/", passwordMailer)
 app.use("/", inscription)
 app.use("/", AppClientReq)
+app.use("/", AppCoiffeurReq)
+
 
 app.use(express.json());
 
@@ -22,5 +25,6 @@ app.get('/getSalonDataBySalonId', fonctionDb.getSalonDataBySalonId);
 
 // Serveur en écoute sur le port 3000
 app.listen(3000, () => {
-  console.log(`andy commit 167`);
+  console.log(`Server started on port 3000`);
+  console.log('Nico commit 168')
 });

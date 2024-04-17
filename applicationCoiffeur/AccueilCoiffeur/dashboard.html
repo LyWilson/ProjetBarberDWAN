@@ -9,29 +9,54 @@
     <div id="navigationBar"></div>
 </head>
 <body>
-<section class="section1">
-    <div class="container">
-        <div class="box">
-            <div class
-        </div>
-    </div>
-</section>
-<section class="section2">
-    <div class="container">
-        <div class="box">
-            <div class="is-flex" style="align-items: center; justify-content: space-between;">
-                <div>
-                    <p style="text-align: left">Avis des clients</p>
-                </div>
-                <div style="margin-left: 20px;"> <!-- Optionally add some spacing -->
-                    <canvas id="chartContainer" style="width: 125%; height:400%"></canvas> <!-- Adjusted width for side-by-side layout -->
+    <section class="section1" style="margin-top: 20px;">
+        <div class="container">
+            <div class="box" style="border-width: medium; background-color: #EFFFFF;">
+                <div class="is-flex" style="align-items: center; justify-content: space-between;">
+                    <div>
+                        <p style="text-align: left">Avis des clients</p>
+                    </div>
+                    <div style="margin-left: 20px;"> <!-- Optionally add some spacing -->
+                        <canvas id="chartContainer" style="width: 100%; height:350%;"></canvas> <!-- Adjusted width for side-by-side layout -->
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="dashboardPC.js" type="module"></script>
+    </section>
+    <section class="section2" style="margin-top: 20px; margin-bottom: 20px;">
+        <div class="container">
+            <div class="box" style="border-width: medium; background-color: #EFFFFF;">
+                <div class="is-flex" style="align-items: center; justify-content: space-between;">
+                    <div>
+                        <div style="margin-right: 20px;">
+                            <canvas id="barChartContainer" style="width: 185%; height: 400%;"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <p>analyse des revenus</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section3" style="margin-bottom: 20px;">
+        <div class="container">
+            <div class="box" style="border-width: medium; background-color: #EFFFFF;">
+                <div class="is-flex" style="align-items: center; justify-content: space-between;">
+                    <div>
+                        <p>Nombre de clients par jours</p>
+                    </div>
+                    <div>
+                        <div style="margin-left: 20px;">
+                            <canvas id="lineChartContainer" style="width: 250%; height: 400%;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="dashboardPC.js" type="module"></script>
 </body>
 <div id="footer"></div>
 </html>

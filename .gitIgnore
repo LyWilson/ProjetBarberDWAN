@@ -1,4 +1,7 @@
 node_modules/
 package.json
 package-lock.json
-workspace.xml
+.idea/workspace.xml
+.idea/vcs.xml
+.idea/ProjetBarberDWAN.iml
+.idea/modules.xml

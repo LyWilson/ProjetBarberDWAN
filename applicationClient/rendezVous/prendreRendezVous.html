@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Prendre un Rendez-vous</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Prendre un Rendez-vous</h1>
+
+            <div class="field">
+                <label class="label">Date:</label>
+                <input class="input" type="date" id="appointmentDate">
+            </div>
+
+            <div class="field">
+                <label class="label">Heure:</label>
+                <div class="select">
+                    <select id="appointmentTime">
+                    </select>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Type de coiffure:</label>
+                <div class="select">
+                    <select id="hairstyle">
+                    </select>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Barbier:</label>
+                <div class="select">
+                    <select id="barber">
+                    </select>
+                </div>
+            </div>
+
+            <div class="field">
+                <button class="button is-link" onclick="submitAppointment()">Confirmer</button>
+            </div>
+        </div>
+    </section>
+
+    <script src="prendreRendezVous.js"></script>
+</body>
+</html>

@@ -52,8 +52,8 @@ async function getReservationData(email) {
       INNER JOIN CoiffurePreEtablie ON Reservation.coiffureId = CoiffurePreEtablie.coiffureId
       INNER JOIN Client ON Reservation.clientId = Client.clientId
       WHERE Client.email = ${email}
-      `;
-    return result.recordset[0];
+      ORDER BY Reservation.dateHeureReservation DESC;`;
+    return result.recordset;
   }
   catch (error) {
     throw error;

@@ -31,6 +31,37 @@ th {
     background-color: #f2f2f2;
 }
 
+/*rendezVous.js*/
+.reservation-card {
+    margin-bottom: 20px; /* Espacer les cartes entre elles */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Ajouter une ombre pour un effet de profondeur */
+    border-radius: 10px; /* Bordures arrondies pour adoucir le design */
+}
+
+.card-header {
+    background-color: #f5f5f5; /* Un fond légèrement gris pour le header */
+    border-top-left-radius: 10px; /* Arrondir les coins supérieurs */
+    border-top-right-radius: 10px;
+}
+
+.card-header-title {
+    color: #333; /* Une couleur de texte sombre pour contraster avec le fond */
+}
+
+.card-content {
+    padding: 20px; /* Ajouter de l'espace autour du contenu interne */
+}
+
+.content p {
+    margin-bottom: 10px; /* Espacer les paragraphes */
+    line-height: 1.6; /* Améliorer la lisibilité des lignes */
+}
+
+.content p strong {
+    color: #0056b3; /* Une couleur distinctive pour les éléments importants */
+}
+
+
 /* salonDetails.html */
 .modal {
     display: none;

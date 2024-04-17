@@ -1,12 +1,13 @@
 import { deconnexion, generateFooter, generateNavBarWithAuth } from '../../commun.js';
 
+const salonId = 1;  // This should be dynamically set possibly from URL or session
 
 //Section Profil
 async function fetchSalonProfile() {
     try {
-        const response = await fetch(`/getSalonData`);
+        const response = await fetch(`/getSalonDataBySalonId?salonId=${salonId}`);
         if (!response.ok) {
-            new Error(`HTTP error! status: ${response.status}`);
+            throw new Error('Failed to fetch salon details');
         }
         const salonData = await response.json();
         updateProfileSection(salonData);
@@ -33,14 +34,14 @@ function updateProfileSection({ salonId, nomSalon, adresse, numeroTelephone, des
 }
 
 //Section services
-/*
 async function fetchDescriptionService() {
     try {
-        const response = await fetch('/getCoiffureData');
+        const response = await fetch(`/getCoiffurePreEtablieData`);
         if (!response.ok) {
             new Error(`HTTP error! status: ${response.status}`);
         }
         const coiffureData = await response.json();
+        console.log(coiffureData);
         updateServiceSection(coiffureData)
     } catch (error) {
         console.error('could not fetch the data', error);
@@ -48,21 +49,22 @@ async function fetchDescriptionService() {
 }
 
 function updateServiceSection(salonCoiffures) {
-    const serviceSection = document.querySelector('.column.is-two-fifth .box.content');
+    const serviceSection = document.getElementById('serviceSection');
     serviceSection.innerHTML = `<h3 class="title is-4 title-margin-adjust">Description des services</h3>`;
 
     salonCoiffures.forEach(coiffure => {
         const coiffureHTML = `
             <div>
-                <h4 class="title is-5">${coiffure.nomCoiffure}</h4>
-                <p>Description: ${coiffure.descriptionCoiffure}</p>
-                <p>Durée estimée: ${coiffure.dureeEstimee} minutes</p>
+                <p><b class="title is-5">${coiffure.nomCoiffure} :</b>
+                Durée estimée: ${coiffure.dureeEstimee} minutes</p></br>
+                
             </div>
         `;
         serviceSection.insertAdjacentHTML('beforeend', coiffureHTML);
     });
 }
 
+/*
 function distributeCoiffures(coiffures, numberOfSalons = 9) {
     const distributed = Array.from({ length: numberOfSalons }, () => []);
     let salonIndex = 0;
@@ -80,7 +82,6 @@ function distributeCoiffures(coiffures, numberOfSalons = 9) {
 
     return distributed;
 }
-*/
 
 //Section Disponibilité
 async function fetchSalonDisponibilite() {
@@ -137,10 +138,11 @@ function updateHeureOuverture(horairesOuverture) {
     </table>
 `;
 }
+ */
 
 // Section Portfolio
 function uploadFile() {
-    var formData = new FormData(document.getElementById('uploadForm'));
+    const formData = new FormData(document.getElementById('uploadForm'));
     $.ajax({
         url: `/upload/${salonId}`,
         type: 'POST',
@@ -148,13 +150,19 @@ function uploadFile() {
         contentType: false,
         processData: false,
         success: function(data) {
-            alert('File uploaded successfully!');
+            // Check if upload was successful
+            if (data.success) {
+                window.alert('File uploaded successfully!');
+            } else {
+                window.alert('Error uploading file.');
+            }
         },
         error: function() {
             alert('Error uploading file.');
         }
     });
 }
+
 
 // script.js
 function displayPortfolio(salonId) {
@@ -187,8 +195,8 @@ document.addEventListener("DOMContentLoaded", () => {
     generateFooter();
     generateNavBarWithAuth();
     deconnexion();
-    //fetchDescriptionService(coiffureId)
-    fetchSalonDisponibilite(salonId);
+    fetchDescriptionService()
+    //fetchSalonDisponibilite(salonId);
     uploadFile();
     displayPortfolio(salonId)
 });

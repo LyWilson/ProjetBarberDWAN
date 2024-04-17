@@ -21,10 +21,12 @@ app.use(express.json());
 const fonctionDb = require('./fonctionDb');
 app.get('/getSalonData', fonctionDb.getSalonData);
 app.get('/getSalonDataBySalonId', fonctionDb.getSalonDataBySalonId);
+app.get('/getCoiffurePreEtablieData', fonctionDb.getCoiffurePreEtablieData);
 
 
 // Serveur en écoute sur le port 3000
 app.listen(3000, () => {
   console.log(`Server started on port 3000`);
   console.log('Nico commit 190')
+  console.log('Willy commit 187')
 });

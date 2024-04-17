@@ -113,5 +113,46 @@ router.post("/login", async (req, res) => {
     }
 });
 
+router.post("/update-password", async (req, res) => {
+    const { email, password, confirmPassword, userType } = req.body;
+    console.log(req.body)
+
+    // Vérifier si le nouveau mot de passe correspond au mot de passe de confirmation
+    if (password !== confirmPassword) {
+        return res.status(400).json({ message: "Les mots de passe ne correspondent pas." });
+    }
+
+    try {
+        // Hasher le nouveau mot de passe
+        const encryptedPassword = await bcrypt.hash(password, 10)
+
+
+        // Déterminer le nom de la table en fonction du type d'utilisateur
+        let tableName = '';
+        if (userType === 'coiffeur') {
+            tableName = 'Coiffeur';
+        } else if (userType === 'client') {
+            tableName = 'Client';
+        } else {
+            return res.status(400).json({ message: "Type d'utilisateur non valide." });
+        }
+
+        // Mettre à jour le mot de passe de l'utilisateur dans la base de données
+        let pool = await sql.connect(config);
+        let request = pool.request();
+
+        await request.query(`
+            UPDATE ${tableName}
+            SET motDePasseEncrypte = '${encryptedPassword}'
+            WHERE email = '${email}'
+        `);
+
+        console.log("Mot de passe mis à jour avec succès.");
+        res.redirect('/connexion')
+    } catch (error) {
+        console.error("Erreur SQL", error);
+        res.status(500).json({ message: "Erreur interne du serveur lors de la mise à jour du mot de passe." });
+    }
+});
 
 module.exports = router;

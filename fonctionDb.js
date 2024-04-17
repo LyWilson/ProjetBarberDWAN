@@ -89,6 +89,17 @@ async function verifieClient(email) {
   }
 }
 
+async function getCoiffurePreEtablieData(req, res) {
+  try {
+    let pool = await sql.connect(config);
+    let result = await pool.request().query(`SELECT * FROM CoiffurePreEtablie`);
+    res.json(result.recordset);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
 
 // Exportation des fonctions de la base de données
 module.exports = {
@@ -97,4 +108,5 @@ module.exports = {
   getReservationData,
   getProfilData,
   verifieClient,
+  getCoiffurePreEtablieData,
 };

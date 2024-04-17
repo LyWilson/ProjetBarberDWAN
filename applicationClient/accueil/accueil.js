@@ -48,7 +48,7 @@ function generateCarteSalons(salonId, nomSalon, adresse, horairesOuverture) {
 
 async function loadSponsor(salonId) {
   try {
-    const response = await fetch(`/getSalonDetails?salonId=${salonId}`);
+    const response = await fetch(`/getSalonDataBySalonId?salonId=${salonId}`);
     if (!response.ok) {
       throw new Error('Failed to fetch salon details');
     }
@@ -69,7 +69,7 @@ function generateSponsorRectangle(salonId, nomSalon, numeroTelephoneSalon, adres
       <a href="salonDetails?salonId=${salonId}">
         <div class="columns is-vcentered">
           <div class="column is-6">
-            <img src="${imageUrl}" alt="Salon Image" style="width: 100%; height: 100px; padding-left: 25px;">
+            <img src="${imageUrl}" alt="Salon Image" style="width: 100%; height: 100px;" class="centered";">
           </div>
           <div class="column">
             <p><strong>Salon Name:</strong> ${nomSalon}</p>
@@ -115,7 +115,7 @@ function GenereMap() {
   const map = new mapboxgl.Map({
     container: 'map', // container ID
     style: 'mapbox://styles/mapbox/streets-v12', // style URL
-    center: [-73.593864,45.558509], // starting position [lng, lat]
+    center: [-73.593864, 45.558509], // starting position [lng, lat]
     zoom: 10 // starting zoom
   });
 
@@ -132,7 +132,7 @@ function GenereMap() {
             },
             "geometry": {
               "type": "Point",
-              "coordinates": [-73.622115,45.614294]
+              "coordinates": [-73.622115, 45.614294]
             }
           },
           {
@@ -142,7 +142,7 @@ function GenereMap() {
             },
             "geometry": {
               "type": "Point",
-              "coordinates": [-73.560034,45.507863]
+              "coordinates": [-73.560034, 45.507863]
             }
           },
           {
@@ -152,7 +152,7 @@ function GenereMap() {
             },
             "geometry": {
               "type": "Point",
-              "coordinates": [-73.604080,45.561663]
+              "coordinates": [-73.604080, 45.561663]
             }
           },
           {
@@ -162,7 +162,7 @@ function GenereMap() {
             },
             "geometry": {
               "type": "Point",
-              "coordinates": [-73.579382,45.555649]
+              "coordinates": [-73.579382, 45.555649]
             }
           },
           {
@@ -172,7 +172,7 @@ function GenereMap() {
             },
             "geometry": {
               "type": "Point",
-              "coordinates": [-73.601758,45.572846]
+              "coordinates": [-73.601758, 45.572846]
             }
           },
           {
@@ -182,7 +182,7 @@ function GenereMap() {
             },
             "geometry": {
               "type": "Point",
-              "coordinates": [-73.555480,45.551003]
+              "coordinates": [-73.555480, 45.551003]
             }
           },
           {
@@ -192,7 +192,7 @@ function GenereMap() {
             },
             "geometry": {
               "type": "Point",
-              "coordinates": [-73.636817,45.576310]
+              "coordinates": [-73.636817, 45.576310]
             }
           },
           {
@@ -202,7 +202,7 @@ function GenereMap() {
             },
             "geometry": {
               "type": "Point",
-              "coordinates": [-73.666813,45.507877]
+              "coordinates": [-73.666813, 45.507877]
             }
           },
           {
@@ -212,7 +212,7 @@ function GenereMap() {
             },
             "geometry": {
               "type": "Point",
-              "coordinates": [-73.572765,45.513823]
+              "coordinates": [-73.572765, 45.513823]
             }
           }
         ]

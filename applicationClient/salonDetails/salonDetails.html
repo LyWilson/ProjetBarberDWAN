@@ -10,7 +10,7 @@
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
   <style>
     .star {
-      font-size: 24px;
+      font-size: 25px;
       margin-left: 10px;
       cursor: pointer;
     }
@@ -22,32 +22,23 @@
   <!-- Salon Details Section -->
   <section class="section">
     <div class="container">
-      <div class="box">
-        <h1 class="title has-text-centered">Salon Details</h1>
-        <div id="salonDetails">
-          <p><strong>Salon de coiffure:</strong> <span id="salonName"></span>
-            <i id="favoriteIcon" class="far fa-star has-text-warning star"></i>
-          </p>
-          <p><strong>Adresse:</strong> <span id="salonAddress"></span></p>
-          <p><strong>Numéro de téléphone:</strong> <span id="salonPhoneNumber"></span></p>
-          <p><strong>Heures d'ouverture:</strong> <span id="salonOpeningHours"></span></p>
-          <!-- Add more information here -->
-          <button id="reservationButton" class="button is-primary">Prendre un rendez-vous</button>
-        </div>
+      <div class="box" id="salonDetails">
+        <!-- Dynamic salon details will be inserted here -->
       </div>
     </div>
+    <div class="container">
+      <button id="reservationButton" class="button is-primary">Prendre un rendez-vous</button>
+    </div>
   </section>
-
   <!-- Photo Gallery Section -->
   <section class="section">
     <div class="container">
-      <h2 class="title">Photo Gallery</h2>
-      <div id="photoGallery" class="columns is-multiline">
-        <!-- Add photos dynamically using JavaScript -->
+      <h2 class="title">Photos de nos clients</h2>
+      <div id="salonPhotosContainer" class="columns is-multiline">
+        <!-- Photos will be inserted here by salonDetails.js -->
       </div>
     </div>
   </section>
-
   <!-- Reservation Popup -->
   <div id="reservationPopup" class="modal">
     <div class="modal-background"></div>
@@ -59,9 +50,9 @@
     </div>
     <button id="closePopup" class="modal-close is-large" aria-label="close"></button>
   </div>
-
   <!-- Include your JavaScript file -->
   <script src="salonDetails.js" type="module"></script>
 </body>
 <div id="footer"></div>
+
 </html>

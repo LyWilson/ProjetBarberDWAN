@@ -10,6 +10,7 @@ const config = {
   }
 };
 
+/* 
 // Fonction pour tester la connexion à la base de données en fetch les données de la table
 async function fetchDataFromTable(tableName) {
   try {
@@ -26,7 +27,7 @@ async function fetchDataFromTable(tableName) {
   }
 }
 
-// Function to display data from all tables
+// Fonction pour afficher toutes les données dans le terminal
 async function displayAllDataInTerminal() {
   try {
     const tables = ['Salon', 'Client', 'Coiffeur', 'Reservation'];
@@ -42,6 +43,7 @@ async function displayAllDataInTerminal() {
 }
 
 displayAllDataInTerminal();
+*/
 
 module.exports = {
   sql, config

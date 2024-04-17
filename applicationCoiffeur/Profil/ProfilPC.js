@@ -2,7 +2,6 @@ import { deconnexion, generateFooter, generateNavBarWithAuth } from '../../commu
 
 const salonId = 1;  // This should be dynamically set possibly from URL or session
 
-
 //Section Profil
 async function fetchSalonProfile() {
     try {
@@ -37,34 +36,35 @@ function updateProfileSection({ salonId, nomSalon, adresse, numeroTelephone, des
 //Section services
 async function fetchDescriptionService() {
     try {
-        const response = await fetch('/getCoiffureData');
+        const response = await fetch(`/getCoiffurePreEtablieData`);
         if (!response.ok) {
             new Error(`HTTP error! status: ${response.status}`);
         }
         const coiffureData = await response.json();
+        console.log(coiffureData);
         updateServiceSection(coiffureData)
     } catch (error) {
         console.error('could not fetch the data', error);
     }
 }
 
-/*
 function updateServiceSection(salonCoiffures) {
-    const serviceSection = document.querySelector('.column.is-two-fifth .box.content');
+    const serviceSection = document.getElementById('serviceSection');
     serviceSection.innerHTML = `<h3 class="title is-4 title-margin-adjust">Description des services</h3>`;
 
     salonCoiffures.forEach(coiffure => {
         const coiffureHTML = `
             <div>
-                <h4 class="title is-5">${coiffure.nomCoiffure}</h4>
-                <p>Description: ${coiffure.descriptionCoiffure}</p>
-                <p>Durée estimée: ${coiffure.dureeEstimee} minutes</p>
+                <p><b class="title is-5">${coiffure.nomCoiffure} :</b>
+                Durée estimée: ${coiffure.dureeEstimee} minutes</p></br>
+                
             </div>
         `;
         serviceSection.insertAdjacentHTML('beforeend', coiffureHTML);
     });
 }
 
+/*
 function distributeCoiffures(coiffures, numberOfSalons = 9) {
     const distributed = Array.from({ length: numberOfSalons }, () => []);
     let salonIndex = 0;
@@ -82,7 +82,6 @@ function distributeCoiffures(coiffures, numberOfSalons = 9) {
 
     return distributed;
 }
-*/
 
 //Section Disponibilité
 async function fetchSalonDisponibilite() {
@@ -139,6 +138,7 @@ function updateHeureOuverture(horairesOuverture) {
     </table>
 `;
 }
+ */
 
 // Section Portfolio
 function uploadFile() {
@@ -195,8 +195,8 @@ document.addEventListener("DOMContentLoaded", () => {
     generateFooter();
     generateNavBarWithAuth();
     deconnexion();
-    //fetchDescriptionService(coiffureId)
-    fetchSalonDisponibilite(salonId);
+    fetchDescriptionService()
+    //fetchSalonDisponibilite(salonId);
     uploadFile();
     displayPortfolio(salonId)
 });

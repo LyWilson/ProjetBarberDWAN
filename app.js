@@ -21,6 +21,7 @@ app.use(express.json());
 const fonctionDb = require('./fonctionDb');
 app.get('/getSalonData', fonctionDb.getSalonData);
 app.get('/getSalonDataBySalonId', fonctionDb.getSalonDataBySalonId);
+app.get('/getCoiffurePreEtablieData', fonctionDb.getCoiffurePreEtablieData);
 
 
 // Serveur en écoute sur le port 3000

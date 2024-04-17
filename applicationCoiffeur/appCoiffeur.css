@@ -73,7 +73,21 @@
     background-color: lightpink;
 }
 
-
 .horaire-container td {
     border: none;
+}
+
+/* styles.css */
+#gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Espace entre les images */
+    justify-content: center;
+    padding: 20px;
+}
+
+#gallery img {
+    width: 150px; /* Largeur fixe pour toutes les images */
+    height: 150px; /* Hauteur fixe pour garder les images uniformes */
+    object-fit: cover; /* Assure que les images couvrent la zone définie sans être déformées */
 }

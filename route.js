@@ -12,52 +12,64 @@ router.get("/connexion", (req, res) => {
 router.get("/inscription", (req, res) => {
     res.sendFile(join(__dirname + '/login/Public', 'inscription.html'));
 });
+
+
 router.get("/update-password-page", (req, res) => {
     res.sendFile(join(__dirname + '/login/Public', 'update-password.html'));
 });
 
+
 // les routes dans /applicationClient
 router.use(express.static(__dirname + "/applicationClient"));
+
 
 router.get("/AccueilClient", (req, res) => {
     res.sendFile(join(__dirname + '/applicationClient/accueil', 'accueil.html'));
 });
-
 router.get("/accueil.js", (req, res) => {
     res.sendFile(join(__dirname + '/applicationClient/accueil', 'accueil.js'));
 });
 
-router.get("/profil", (req, res) => {
-    res.sendFile(join(__dirname + '/applicationClient/profil', 'profil.html'));
-});
-
-router.get("/profil.js", (req, res) => {
-    res.sendFile(join(__dirname + '/applicationClient/profil', 'profil.js'));
-});
-
-router.get("/rendezVous", (req, res) => {
-    res.sendFile(join(__dirname + '/applicationClient/rendezVous', 'rendezVous.html'));
-});
-
-router.get("/rendezVous.js", (req, res) => {
-    res.sendFile(join(__dirname + '/applicationClient/rendezVous', 'rendezVous.js'));
-});
 
 router.get("/favoris", (req, res) => {
     res.sendFile(join(__dirname + '/applicationClient/favoris', 'favoris.html'));
 });
-
 router.get("/favoris.js", (req, res) => {
     res.sendFile(join(__dirname + '/applicationClient/favoris', 'favoris.js'));
 });
 
+
+router.get("/profil", (req, res) => {
+    res.sendFile(join(__dirname + '/applicationClient/profil', 'profil.html'));
+});
+router.get("/profil.js", (req, res) => {
+    res.sendFile(join(__dirname + '/applicationClient/profil', 'profil.js'));
+});
+
+
+router.get("/prendreRendezVous", (req, res) => {
+    res.sendFile(join(__dirname, '/applicationClient/rendezVous', 'prendreRendezVous.html'));
+});
+router.get("/prendreRendezVous.js", (req, res) => {
+    res.sendFile(join(__dirname + '/applicationClient/rendezVous', 'prendreRendezVous.js'));
+});
+
+
+router.get("/rendezVous", (req, res) => {
+    res.sendFile(join(__dirname + '/applicationClient/rendezVous', 'rendezVous.html'));
+});
+router.get("/rendezVous.js", (req, res) => {
+    res.sendFile(join(__dirname + '/applicationClient/rendezVous', 'rendezVous.js'));
+});
+
+
 router.get("/salonDetails", (req, res) => {
     res.sendFile(join(__dirname + '/applicationClient/salonDetails', 'salonDetails.html'));
 });
-
 router.get("/salonDetails.js", (req, res) => {
     res.sendFile(join(__dirname + '/applicationClient/salonDetails', 'salonDetails.js'));
 });
+
 
 router.get("/appClient.css", (req, res) => {
     res.sendFile(join(__dirname + '/applicationClient', 'appClient.css'));

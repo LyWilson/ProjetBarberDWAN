@@ -1,12 +1,14 @@
 import { deconnexion, generateFooter, generateNavBarWithAuth } from '../../commun.js';
 
+const salonId = 1;  // This should be dynamically set possibly from URL or session
+
 
 //Section Profil
 async function fetchSalonProfile() {
     try {
-        const response = await fetch(`/getSalonData`);
+        const response = await fetch(`/getSalonDataBySalonId?salonId=${salonId}`);
         if (!response.ok) {
-            new Error(`HTTP error! status: ${response.status}`);
+            throw new Error('Failed to fetch salon details');
         }
         const salonData = await response.json();
         updateProfileSection(salonData);
@@ -33,7 +35,6 @@ function updateProfileSection({ salonId, nomSalon, adresse, numeroTelephone, des
 }
 
 //Section services
-/*
 async function fetchDescriptionService() {
     try {
         const response = await fetch('/getCoiffureData');
@@ -47,6 +48,7 @@ async function fetchDescriptionService() {
     }
 }
 
+/*
 function updateServiceSection(salonCoiffures) {
     const serviceSection = document.querySelector('.column.is-two-fifth .box.content');
     serviceSection.innerHTML = `<h3 class="title is-4 title-margin-adjust">Description des services</h3>`;
@@ -140,7 +142,7 @@ function updateHeureOuverture(horairesOuverture) {
 
 // Section Portfolio
 function uploadFile() {
-    var formData = new FormData(document.getElementById('uploadForm'));
+    const formData = new FormData(document.getElementById('uploadForm'));
     $.ajax({
         url: `/upload/${salonId}`,
         type: 'POST',
@@ -148,13 +150,19 @@ function uploadFile() {
         contentType: false,
         processData: false,
         success: function(data) {
-            alert('File uploaded successfully!');
+            // Check if upload was successful
+            if (data.success) {
+                window.alert('File uploaded successfully!');
+            } else {
+                window.alert('Error uploading file.');
+            }
         },
         error: function() {
             alert('Error uploading file.');
         }
     });
 }
+
 
 // script.js
 function displayPortfolio(salonId) {

@@ -41,7 +41,9 @@ function generateCarteReservation(dateHeureReservation, coiffeurPrenom, coiffeur
   const reservationsContainer = document.getElementById('reservationsContainer');
 
   const date = new Date(dateHeureReservation);
-  const dateFormatted = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} à ${date.getHours().toString().padStart(2, '0')}h${date.getMinutes().toString().padStart(2, '0')}`;
+  const options = { year: 'numeric', month: 'long', day: 'numeric'}
+  const dateFormatted = date.toLocaleDateString('fr-FR', options) + ` à ${date.getHours().toString().padStart(2, '0')}h${date.getMinutes().toString().padStart(2, '0')}`;
+
   const reservationHtml = `
   <div class="card reservation-card">
       <header class="card-header">

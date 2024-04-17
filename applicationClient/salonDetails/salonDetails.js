@@ -56,8 +56,6 @@ async function loadSalonDetails() {
 }
 
 
-
-
 // 2) Fonction toggleFavorite and adds it to favourite.html
 function toggleFavorite() {
   const favoriteIcon = document.getElementById('favoriteIcon');
@@ -66,16 +64,12 @@ function toggleFavorite() {
   favoriteIcon.classList.toggle('has-text-warning');
 }
 
-// 3) Fonction pour afficher le popup de réservation
-function togglePopup(active) {
-  const popup = document.getElementById('reservationPopup');
-  popup.classList.toggle('is-active', active);
-}
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('reservationButton').addEventListener('click', () => togglePopup(true));
-  document.querySelectorAll('.modal-close, .modal-background, #closePopup')
-    .forEach(element => element.addEventListener('click', () => togglePopup(false)));
-});
+// 3) Fonction href vers prendreRendezVous.html
+const buttonReservation = document.getElementById('reservationButton');
+buttonReservation.addEventListener('click', () => {
+  window.location.href = '/prendreRendezVous/';
+  });
+
 
 // 4) Fonction pour charger les photos du salon
 function loadSalonPhotos() {

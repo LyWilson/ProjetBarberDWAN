@@ -27,7 +27,7 @@ async function infoReservation() {
     const reservations = await response.json();
     if (reservations.length > 0) {
       reservations.forEach(reservation => {
-        generateCarteReservation(reservation.dateHeureReservation, reservation.coiffeurPrenom, reservation.coiffeurNom, reservation.nomSalon, reservation.adresse, reservation.nomCoiffure, reservation.descriptionCoiffure, reservation.dureeReservation);
+        generateCarteReservation(reservation.dateHeureReservation, reservation.coiffeurPrenom, reservation.coiffeurNom, reservation.nomSalon, reservation.adresse, reservation.nomCoiffure, reservation.descriptionCoiffure, reservation.dureeReservation, reservation.idReservation);
       });
     } else {
       console.log('No reservation data received');
@@ -37,7 +37,7 @@ async function infoReservation() {
   }
 }
 
-function generateCarteReservation(dateHeureReservation, coiffeurPrenom, coiffeurNom, nomSalon, adresse, nomCoiffure, descriptionCoiffure, dureeReservation) {
+function generateCarteReservation(dateHeureReservation, coiffeurPrenom, coiffeurNom, nomSalon, adresse, nomCoiffure, descriptionCoiffure, dureeReservation, reservation) {
   const reservationsContainer = document.getElementById('reservationsContainer');
 
   const date = new Date(dateHeureReservation);
@@ -53,12 +53,16 @@ function generateCarteReservation(dateHeureReservation, coiffeurPrenom, coiffeur
       </header>
       <div class="card-content">
           <div class="content">
-              <p>Coiffeur: <strong>${coiffeurPrenom} ${coiffeurNom}</strong></p>
-              <p>Salon: <strong>${nomSalon}</strong></p>
-              <p>Adresse: <strong>${adresse}</strong></p>
-              <p>Style de coiffure: <strong>${nomCoiffure}</strong></p>
-              <p>Description: <strong>${descriptionCoiffure}</strong></p>
-              <p>Durée de la réservation: <strong>${dureeReservation} minutes</strong></p>
+              <p><strong>Coiffeur:  </strong>${coiffeurPrenom} ${coiffeurNom}</p>
+              <p><strong>Salon:  </strong>${nomSalon}</p>
+              <p><strong>Adresse:  </strong>${adresse}</p>
+              <p><strong>Style de coiffure:  </strong>${nomCoiffure}</p>
+              <p><strong>Description:  </strong>${descriptionCoiffure}</p>
+              <p><strong>Durée de la réservation:  </strong>${dureeReservation} minutes</p>
+          </div>
+          <div class="card-footer">
+            <a href="javascript:void(0);" class="card-footer-item" onclick="modifierReservation('${reservation}');">Modifier la réservation</a>
+            <a href="javascript:void(0);" class="card-footer-item annuler-reservation" data-id="${reservation}">Annuler la réservation</a>
           </div>
       </div>
   </div>`;
@@ -70,5 +74,6 @@ document.addEventListener("DOMContentLoaded", () => {
   generateNavBarWithAuth();
   generateFooter();
   deconnexion();
+
   infoReservation();
 });

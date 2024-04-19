@@ -89,6 +89,7 @@ async function verifieClient(email) {
   }
 }
 
+// 6) Fonction pour obtenir les données de coiffure prédéfinie
 async function getCoiffurePreEtablieData(req, res) {
   try {
     let pool = await sql.connect(config);

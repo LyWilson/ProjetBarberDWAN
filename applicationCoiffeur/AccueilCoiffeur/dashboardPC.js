@@ -10,34 +10,54 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 //Pie Chart
-function initializePieChart() {
-    const ctx = document.getElementById('chartContainer').getContext('2d');
-    const reviewScore = 4; // Your dynamic score value goes here
-    const maxScore = 5;
-    const chart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: ['Score', 'Remaining'],
-            datasets: [{
-                label: 'All Time Review',
-                data: [reviewScore, maxScore - reviewScore], // Data for pie chart: score and the remaining to make up 5
-                backgroundColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(211, 211, 211)'
-                ],
-                hoverOffset: 4
-            }]
-        },
-        options: {
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'bottom'
+async function initializePieChart(salonId) {
+    // Make sure the salonId is valid or exit the function
+    if (!salonId) return console.error('Salon ID is required');
+
+    try {
+        // Fetch the salon data
+        const response = await fetch(`/getSalonDataBySalonId?salonId=${salonId}`);
+        if (!response.ok) {
+            throw new Error('Salon not found');
+        }
+        const salonData = await response.json();
+
+        // Extract the evaluation score from salonData
+        const reviewScore = salonData.evaluation; // Assuming 'evaluation' is the column name
+        const maxScore = 5; // Assuming the max score is 5
+
+        // Initialize the pie chart with the fetched data
+        const ctx = document.getElementById('chartContainer').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Score', 'Remaining'],
+                datasets: [{
+                    label: 'All Time Review',
+                    data: [reviewScore, maxScore - reviewScore],
+                    backgroundColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(211, 211, 211)'
+                    ],
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    }
                 }
             }
-        }
-    });
+        });
+    } catch (error) {
+        console.error('Error fetching salon data:', error);
+    }
 }
+
+
+
 
 //
 const Utils = {
@@ -51,6 +71,9 @@ const Utils = {
         return Array.from({length: count}, (_, i) => i + 1);
     },
     numbers: function({count, min, max}) {
+        return Array.from({length: count}, () => Math.floor(Math.random() * (max - min + 1)) + min);
+    },
+    revenus: function({count, min = 10000, max = 25000}) {
         return Array.from({length: count}, () => Math.floor(Math.random() * (max - min + 1)) + min);
     },
     CHART_COLORS: {
@@ -79,7 +102,7 @@ function initbarChart() {
         labels: labels,
         datasets: [{
             label: 'Revenus',
-            data: [15210, 12457, 17921, 19982, 23718, 21453, 18364],
+            data: Utils.revenus({count: labels.length}),
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(255, 159, 64, 0.2)',
@@ -148,3 +171,4 @@ function initLineChart() {
     const ctx = document.getElementById('lineChartContainer').getContext('2d');
     const lineChart = new Chart(ctx, config);
 }
+

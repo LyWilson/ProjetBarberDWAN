@@ -26,6 +26,5 @@ app.get('/getCoiffurePreEtablieData', fonctionDb.getCoiffurePreEtablieData);
 // Serveur en écoute sur le port 3000
 app.listen(3000, () => {
   console.log(`Server started on port 3000`);
-  console.log('Nico commit 192')
-  console.log('Willy commit 187')
+  console.log('Andy commit 196');
 });

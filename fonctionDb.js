@@ -101,6 +101,68 @@ async function getCoiffurePreEtablieData(req, res) {
   }
 };
 
+// 7) Fonction pour obtenir les salons favoris selon le email du client
+async function getSalonFavoris(email) {
+  try {
+    await sql.connect(config);
+    const result = await sql.query`
+      SELECT
+          s.nomSalon,
+          s.adresse,
+          s.horairesOuverture
+        FROM SalonFavoris sf
+        INNER JOIN Salon s ON sf.salonId = s.salonId
+        INNER JOIN Client c ON sf.clientId = c.clientId
+        WHERE c.email = ${email};
+    `;
+    return result.recordset;
+  } catch (error) {
+    console.error('Error fetching salon favorites:', error);
+    throw error;
+  } finally {
+    await sql.close();
+  }
+}
+
+// Function to add salon to favorites
+async function addSalonToFavorites(email, salonId) {
+  try {
+    await sql.connect(config);
+    const clientIdResult = await sql.query`
+      SELECT clientId FROM Client WHERE email = ${email};
+    `;
+    const clientId = clientIdResult.recordset[0].clientId;
+    await sql.query`
+      INSERT INTO SalonFavoris (clientId, salonId)
+      VALUES (${clientId}, ${salonId});
+    `;
+  } catch (error) {
+    throw error;
+  } finally {
+    await sql.close();
+  }
+}
+
+// Function to remove salon from favorites
+async function removeSalonFromFavorites(email, salonId) {
+  try {
+    await sql.connect(config);
+    const clientIdResult = await sql.query`
+      SELECT clientId FROM Client WHERE email = ${email};
+    `;
+    const clientId = clientIdResult.recordset[0].clientId;
+    await sql.query`
+      DELETE FROM SalonFavoris
+      WHERE clientId = ${clientId} AND salonId = ${salonId};
+    `;
+  } catch (error) {
+    throw error;
+  } finally {
+    await sql.close();
+  }
+}
+
+
 
 // Exportation des fonctions de la base de données
 module.exports = {
@@ -110,4 +172,7 @@ module.exports = {
   getProfilData,
   verifieClient,
   getCoiffurePreEtablieData,
+  getSalonFavoris,
+  addSalonToFavorites,
+  removeSalonFromFavorites,
 };

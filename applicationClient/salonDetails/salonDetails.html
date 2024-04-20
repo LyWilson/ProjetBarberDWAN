@@ -7,18 +7,16 @@
   <title>Salon Details</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
   <link rel="stylesheet" href="../appClient.css">
-  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-  <style>
-    .star {
-      font-size: 25px;
-      margin-left: 10px;
-      cursor: pointer;
-    }
-  </style>
   <div id="navigationBar"></div>
 </head>
 
 <body>
+  <!-- Bouton -->
+  <div class="container">
+    <button id="addToFavoritesButton" class="button is-primary">Ajouter aux favoris</button>
+    <button id="removeFromFavoritesButton" class="button is-danger is-hidden">Retirer de mes favoris</button>
+  </div>
+  
   <!-- Salon Details Section -->
   <section class="section">
     <div class="container">
@@ -27,7 +25,7 @@
       </div>
     </div>
     <div class="container">
-      <button id="reservationButton" class="button is-primary">Prendre un rendez-vous</button>
+      <button id="reservationButton" class="button is-info">Prendre un rendez-vous</button>
     </div>
 
   </section>

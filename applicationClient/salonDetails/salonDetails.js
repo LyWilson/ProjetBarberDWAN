@@ -1,6 +1,62 @@
 // Importation des modules
 import { deconnexion, generateFooter, generateNavBarWithAuth } from '../../commun.js';
 
+const token = sessionStorage.getItem('token');
+const info = token => decodeURIComponent(atob(token.split('.')[1].replace('-', '+').replace('_', '/')).split('').map(c => `%${('00' + c.charCodeAt(0).toString(16)).slice(-2)}`).join(''));
+    
+
+function getSalonIdFromURL() {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get('salonId');
+}
+
+// Function to add salon to favorites
+async function addToFavorites() {
+  try {
+    const email = JSON.parse(info(token)).email;
+    const salonId = getSalonIdFromURL(); // Get salon ID from URL
+    const response = await fetch(`/addSalonToFavorites?email=${encodeURIComponent(email)}&salonId=${encodeURIComponent(salonId)}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    if (!response.ok) {
+      throw new Error('Failed to add salon to favorites');
+    }
+    // Hide add to favorites button, show remove from favorites button
+    document.getElementById('addToFavoritesButton').classList.add('is-hidden');
+    document.getElementById('removeFromFavoritesButton').classList.remove('is-hidden');
+  } catch (error) {
+    console.error('Error adding salon to favorites:', error);
+  }
+}
+
+// Function to remove salon from favorites
+async function removeFromFavorites() {
+  const salonId = getSalonIdFromURL(); // Implement this function to extract salonId from URL
+  const token = sessionStorage.getItem('token');
+  try {
+    const response = await fetch('/removeSalonFromFavorites', {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ salonId: salonId })
+    });
+    if (!response.ok) {
+      throw new Error('Failed to remove salon from favorites');
+    }
+    // Hide remove from favorites button, show add to favorites button
+    document.getElementById('removeFromFavoritesButton').classList.add('is-hidden');
+    document.getElementById('addToFavoritesButton').classList.remove('is-hidden');
+  } catch (error) {
+    console.error('Error removing salon from favorites:', error);
+  }
+}
+
+
 // 1.1) Fonction pour afficher les détails du salon
 function displaySalonDetails(nomSalon, adresse, numeroTelephoneSalon, horairesOuverture) {
   const salonDetailsContainer = document.getElementById('salonDetails');
@@ -13,25 +69,14 @@ function displaySalonDetails(nomSalon, adresse, numeroTelephoneSalon, horairesOu
     <div class="card">
       <div class="card-content">
         <div class="content">
-        <p><strong id="nomSalon">Salon de coiffure:</strong> ${nomSalon}
-        <i id="favoriteIcon" class="far fa-star has-text-warning star"></i>
-        </p>
+        <p><strong id="nomSalon">Salon de coiffure:</strong> ${nomSalon}</p>
         <p><strong id="adresse">Adresse:</strong> ${adresse}</p>
         <p><strong id="numeroTelephoneSalon">Numéro de téléphone:</strong> ${numeroTelephoneSalon}</p>
         <p><strong id="horairesOuverture">Heures d'ouverture:</strong> ${horairesOuverture}</p>
       </div>
     </div>
   `;
-
   salonDetailsContainer.innerHTML = detailsHTML;
-  const starIcon = document.getElementById('favoriteIcon');
-console.log("Favorite icon:", starIcon); // Debugging statement
-if (starIcon) {
-  starIcon.addEventListener('click', toggleFavorite);
-} else {
-    console.error('Failed to find the favorite icon for event binding.');
-}
-
 }
 
 // 1) Fonction pour charger les détails du salonId à partir de l'URL 
@@ -55,35 +100,6 @@ async function loadSalonDetails() {
     document.getElementById('salonDetails').innerHTML = `<p>Error loading salon details: ${error.message}</p>`;
   }
 }
-
-// 
-// Function to toggle favorite status of a salon
-async function toggleFavorite() {
-  const nomSalonElement = document.getElementById('nomSalon');
-  const nomSalon = nomSalonElement.textContent.trim();
-
-  try {
-      const response = await fetch("/toggleFavoriteSalon", {
-          method: "POST",
-          headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
-          },
-          body: JSON.stringify({ nomSalon }),
-      });
-
-      if (response.ok) {
-          // Salon favorite status toggled successfully
-          // You can optionally update the UI here if needed
-          console.log("Salon favorite status toggled successfully");
-      } else {
-          console.error("Failed to toggle salon favorite status");
-      }
-  } catch (error) {
-      console.error("Error toggling salon favorite status:", error);
-  }
-}
-//
 
 
 
@@ -148,4 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   loadSalonDetails();
   loadSalonPhotos();
+
+  document.getElementById('addToFavoritesButton').addEventListener('click', addToFavorites);
+  document.getElementById('removeFromFavoritesButton').addEventListener('click', removeFromFavorites);
 });

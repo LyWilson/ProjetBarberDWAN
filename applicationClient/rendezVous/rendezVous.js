@@ -1,7 +1,7 @@
 import { deconnexion, generateFooter, generateNavBarWithAuth } from "../../commun.js";
 
 const token = sessionStorage.getItem('token');
-
+console.log(token);
 // Fonction pour décoder le token 
 function parseJwt(token) {
   try {
@@ -15,6 +15,7 @@ function parseJwt(token) {
 async function infoReservation() {
   try {
     const userData = parseJwt(token);
+    console.log(userData)
     if (!userData) {
       console.error('Invalid token');
       return;

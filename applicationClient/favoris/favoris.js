@@ -1,12 +1,16 @@
-document.addEventListener("DOMContentLoaded", () => {
-  loadFavoriteSalons();
-});
+import { deconnexion, generateFooter, generateNavBarWithAuth } from '../../commun.js';
 
 // Function to fetch and display favorite salons for the logged-in user
 async function loadFavoriteSalons() {
-  const lesSalons = document.getElementById('listeSalons');
+  const lesSalons = document.getElementById('favoriteSalonsContainer');
   try {
-    const response = await fetch('/getFavoriteSalons');  // Updated endpoint to get only favorite salons
+    const token = sessionStorage.getItem('authToken'); // Retrieve the token from sessionStorage
+    const response = await fetch('/getFavoriteSalons', {
+      headers: {
+        'Authorization': `Bearer ${token}`, // Include the token in the headers
+        'Content-Type': 'application/json'
+      }
+    }); 
     if (!response.ok) {
       throw new Error('Failed to fetch favorite salon data');
     }
@@ -18,17 +22,18 @@ async function loadFavoriteSalons() {
     }
 
     favoriteSalons.forEach(salon => {
-      const carteSalons = generateCarteSalons(salon.salonId, salon.nomSalon, salon.adresse, salon.horairesOuverture);
+      const carteSalons = generateSalonCard(salon.salonId, salon.nomSalon, salon.adresse, salon.horairesOuverture);
       lesSalons.insertAdjacentHTML('beforeend', carteSalons);
-    });
+    });    
   } catch (error) {
     console.error('Error fetching favorite salons:', error);
     lesSalons.innerHTML = '<p class="has-text-centered">Impossible de charger vos salons favoris.</p>';
   }
 }
 
+
 // Function to generate HTML for salon cards
-function generateCarteSalons(salonId, nomSalon, adresse, horairesOuverture) {
+function generateSalonCard(salonId, nomSalon, adresse, horairesOuverture) {
   const imageUrl = `/images/salon${salonId}/${salonId}.png`; // Ensure the image path structure is correct
   return `
   <div class="column is-3">
@@ -53,3 +58,11 @@ function generateCarteSalons(salonId, nomSalon, adresse, horairesOuverture) {
   </div>
   `;
 }
+
+// Initialize the page
+document.addEventListener('DOMContentLoaded', () => {
+  generateNavBarWithAuth();
+  generateFooter();
+
+  loadFavoriteSalons();
+});

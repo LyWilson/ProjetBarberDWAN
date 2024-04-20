@@ -1,18 +1,25 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <title>Mes Favoris</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mes Salons Favoris</title>
+  <link rel="stylesheet" href="../appClient.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-  <link rel="stylesheet" href="styles.css">
+  <div id="navigationBar"></div>
 </head>
 
 <body>
-  <h1>Mes Favoris</h1>
-  <div id="favoritesContainer"></div>
-  <button onclick="addFavorite('Nouveau Favori')">Ajouter Favori</button>
-  <script src="favoris.js"></script>
+  <div class="container">
+    <div class="section">
+        <h1 class="title">Mes salons favoris</h1>
+        <div id="favoriteSalonsContainer" class="columns is-multiline"></div>
+    </div>
+</div>
+
+<div id="footer"></div>
+  <script src="favoris.js" type="module"></script>
 </body>
 
 </html>

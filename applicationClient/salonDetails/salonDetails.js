@@ -13,24 +13,25 @@ function displaySalonDetails(nomSalon, adresse, numeroTelephoneSalon, horairesOu
     <div class="card">
       <div class="card-content">
         <div class="content">
-          <p><strong>Salon de coiffure:</strong> ${nomSalon}
-            <i id="favoriteIcon" class="far fa-star has-text-warning star"></i>
-          </p>
-          <p><strong>Adresse:</strong> ${adresse}</p>
-          <p><strong>Numéro de téléphone:</strong> ${numeroTelephoneSalon}</p>
-          <p><strong>Heures d'ouverture:</strong> ${horairesOuverture}</p>
-        </div>
+        <p><strong id="nomSalon">Salon de coiffure:</strong> ${nomSalon}
+        <i id="favoriteIcon" class="far fa-star has-text-warning star"></i>
+        </p>
+        <p><strong id="adresse">Adresse:</strong> ${adresse}</p>
+        <p><strong id="numeroTelephoneSalon">Numéro de téléphone:</strong> ${numeroTelephoneSalon}</p>
+        <p><strong id="horairesOuverture">Heures d'ouverture:</strong> ${horairesOuverture}</p>
       </div>
     </div>
   `;
 
   salonDetailsContainer.innerHTML = detailsHTML;
-  const favoriteIcon = document.getElementById('favoriteIcon');
-  if (favoriteIcon) {
-    favoriteIcon.addEventListener('click', toggleFavorite);
-  } else {
+  const starIcon = document.getElementById('favoriteIcon');
+console.log("Favorite icon:", starIcon); // Debugging statement
+if (starIcon) {
+  starIcon.addEventListener('click', toggleFavorite);
+} else {
     console.error('Failed to find the favorite icon for event binding.');
-  }
+}
+
 }
 
 // 1) Fonction pour charger les détails du salonId à partir de l'URL 
@@ -55,14 +56,36 @@ async function loadSalonDetails() {
   }
 }
 
+// 
+// Function to toggle favorite status of a salon
+async function toggleFavorite() {
+  const nomSalonElement = document.getElementById('nomSalon');
+  const nomSalon = nomSalonElement.textContent.trim();
 
-// 2) Fonction toggleFavorite and adds it to favourite.html
-function toggleFavorite() {
-  const favoriteIcon = document.getElementById('favoriteIcon');
-  favoriteIcon.classList.toggle('fas');
-  favoriteIcon.classList.toggle('far');
-  favoriteIcon.classList.toggle('has-text-warning');
+  try {
+      const response = await fetch("/toggleFavoriteSalon", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+          },
+          body: JSON.stringify({ nomSalon }),
+      });
+
+      if (response.ok) {
+          // Salon favorite status toggled successfully
+          // You can optionally update the UI here if needed
+          console.log("Salon favorite status toggled successfully");
+      } else {
+          console.error("Failed to toggle salon favorite status");
+      }
+  } catch (error) {
+      console.error("Error toggling salon favorite status:", error);
+  }
 }
+//
+
+
 
 // 3) Fonction href vers prendreRendezVous.html
 const buttonReservation = document.getElementById('reservationButton');

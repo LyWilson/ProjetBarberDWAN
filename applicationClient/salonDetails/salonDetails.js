@@ -106,7 +106,9 @@ async function loadSalonDetails() {
 // 3) Fonction href vers prendreRendezVous.html
 const buttonReservation = document.getElementById('reservationButton');
 buttonReservation.addEventListener('click', () => {
-  window.location.href = '/prendreRendezVous/';
+  const urlParams = new URLSearchParams(window.location.search);
+  const salonId = urlParams.get('salonId');
+  window.location.href = `/prendreRendezVous/?salonId=${salonId}`;
   });
 
 

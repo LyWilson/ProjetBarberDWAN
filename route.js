@@ -113,6 +113,10 @@ router.get("/images/:salonFolder/:Portfolio/:imageName", (req, res) => {
     res.sendFile(filePath);
 });
 
+router.get("/prendreRendezVous.js", (req, res) => {
+    res.sendFile(join(__dirname + '/applicationClient/rendezVous/', 'prendreRendezVous.js'));
+})
+
 
 
 // les routes dans /home

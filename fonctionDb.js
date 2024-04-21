@@ -101,6 +101,20 @@ async function getCoiffurePreEtablieData(req, res) {
   }
 };
 
+async function getBabierData(req, res) {
+    //const urlParams = new URLSearchParams(window.location.search);
+    //const salonId = urlParams.get('salonId');
+    try {
+        let pool = await sql.connect(config);
+        let result = await pool.request().query(`SELECT * FROM Coiffeur`);
+        res.json(result.recordset);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+
+}
+
 // 7) Fonction pour obtenir les salons favoris selon le email du client
 async function getSalonFavoris(email) {
   try {
@@ -162,6 +176,49 @@ async function removeSalonFromFavorites(email, salonId) {
   }
 }
 
+async function prendreRendezVous(clientId, coiffeurId, coiffureId, dateHeureReservation) {
+  const dureeReservation = await getInfoCoiffure(coiffureId);
+  console.log(clientId, coiffeurId, coiffureId, dateHeureReservation, dureeReservation);
+    try {
+        await sql.connect(config);
+        await sql.query`
+            INSERT INTO Reservation (clientId, coiffeurId, coiffureId, dateHeureReservation, dureeReservation)
+            VALUES (${clientId}, ${coiffeurId}, ${coiffureId}, ${dateHeureReservation}, ${dureeReservation});
+        `
+        return { message: 'Réservation réussie.' };
+    } catch (error) {
+        throw error;
+    } finally {
+        await sql.close();
+    }
+
+}
+
+async function getInfoCoiffure(CoiffureId) {
+    try {
+        await sql.connect(config);
+        const result = await sql.query`SELECT dureeEstimee FROM CoiffurePreEtablie WHERE coiffureId = ${CoiffureId}`;
+        return result.recordset[0].dureeEstimee
+    } catch (error) {
+        throw error;
+    } finally {
+        await sql.close();
+    }
+}
+
+async function getHeuresTravail(salonId) {
+    try {
+        await sql.connect(config);
+        const result = await sql.query`SELECT horairesTravail FROM Coiffeur WHERE salonId = ${salonId}`;
+        return result.recordset;
+
+    }
+    catch (error) {
+        throw error;
+    } finally {
+        await sql.close();
+    }
+};
 
 
 // Exportation des fonctions de la base de données
@@ -175,4 +232,6 @@ module.exports = {
   getSalonFavoris,
   addSalonToFavorites,
   removeSalonFromFavorites,
+  prendreRendezVous,
+    getBabierData
 };

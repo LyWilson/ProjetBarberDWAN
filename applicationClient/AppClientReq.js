@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getSalonDataBySalonId, getReservationData, getProfilData, getSalonFavoris, addSalonToFavorites, removeSalonFromFavorites } = require('../fonctionDb');
+const { prendreRendezVous, getReservationData, getProfilData, getSalonFavoris, addSalonToFavorites, removeSalonFromFavorites } = require('../fonctionDb');
 
 // 1) Route pour obtenir les données du salon
 
@@ -69,19 +69,34 @@ router.post('/addSalonToFavorites', async (req, res) => {
       res.status(500).send('Internal Server Error'); // Error response
     }
   });
-  
+
   // Route to remove salon from favorites
-  router.delete('/removeSalonFromFavorites', async (req, res) => {
-    try {
-      const { salonId } = req.body;
-      const email = req.user.email; // Assuming you have middleware to authenticate users and attach user data to req.user
-      await removeSalonFromFavorites(email, salonId);
-      res.sendStatus(200); // Success response
-    } catch (error) {
-      console.error('Error removing salon from favorites:', error);
-      res.status(500).send('Internal Server Error'); // Error response
-    }
-  });
+router.delete('/removeSalonFromFavorites', async (req, res) => {
+try {
+  const { salonId } = req.body;
+  const email = req.user.email; // Assuming you have middleware to authenticate users and attach user data to req.user
+  await removeSalonFromFavorites(email, salonId);
+  res.sendStatus(200); // Success response
+} catch (error) {
+  console.error('Error removing salon from favorites:', error);
+  res.status(500).send('Internal Server Error'); // Error response
+}
+});
+
+router.post('/prendreRendezVous', (req, res) => {
+    const { clientId, coiffeurId, coiffureId, date, heure } = req.body
+    const dateHeureReservation = `${date} ${heure}:00.000`
+    prendreRendezVous(clientId, coiffeurId, coiffureId, dateHeureReservation)
+        .then((result) => {
+            res.json(result);
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('Internal Server Error');
+        });
+});
+
+
 
 module.exports = router;
 

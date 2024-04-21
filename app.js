@@ -22,9 +22,10 @@ const fonctionDb = require('./fonctionDb');
 app.get('/getSalonData', fonctionDb.getSalonData);
 app.get('/getSalonDataBySalonId', fonctionDb.getSalonDataBySalonId);
 app.get('/getCoiffurePreEtablieData', fonctionDb.getCoiffurePreEtablieData);
+app.get('/getBabierData', fonctionDb.getBabierData);
 
 // Serveur en écoute sur le port 3000
 app.listen(3000, () => {
   console.log(`Server started on port 3000`);
-  console.log('Willy commit 198');
+  console.log('Willy commit 200!!');
 });

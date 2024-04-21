@@ -1,10 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // fetchBarbers();
+    fetchBarbers();
     fetchHairstyles();
 
-    /*async function fetchBarbers() {
+    async function fetchBarbers() {
+        let SalonId = window.location.search.split('=')[1];
         try {
-            const response = await fetch('/api/barbers');
+            const response = await fetch(`/getBabierData/?salonId=${SalonId}`);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -19,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (error) {
             console.error('Error fetching barbers:', error);
         }
-    }*/
+    }
 
     async function fetchHairstyles() {
         try {
@@ -40,19 +41,36 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    window.submitAppointment = async function() {
-        try {
-            const date = document.getElementById('appointmentDate').value;
-            const time = document.getElementById('appointmentTime').value;
-            const hairstyle = document.getElementById('hairstyle').value;
-            const barber = document.getElementById('barber').value;
-
-            console.log(`Date: ${date}, Heure: ${time}, Coiffure: ${hairstyle}, Barbier: ${barber}`);
-            alert(`Rendez-vous confirmé pour le ${date} à ${time} avec ${barber} pour une ${hairstyle}.`);
-
-            // Remplacer par la logique d'envoi des données au serveur si nécessaire
-        } catch (error) {
-            console.error('Error submitting appointment:', error);
+    const form = document.getElementById('submit');
+    form.addEventListener('click', async function(event) {
+        event.preventDefault();
+        const clientId = document.getElementById('clientId').value;
+        const coiffeurId = document.getElementById('barber').value;
+        const coiffureId = document.getElementById('hairstyle').value;
+        const date = document.getElementById('appointmentDate').value;
+        const time = document.getElementById('appointmentTime').value;
+        const data= {
+            "clientId": clientId,
+            "coiffeurId": coiffeurId,
+            "coiffureId": coiffureId,
+            "date": date,
+            "heure": time
         }
-    }
+
+        const response = await fetch('/prendreRendezVous', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        alert('Réservation effectuée avec succès!');
+        window.location.href = '/rendezVous';
+
+
+    });
 });

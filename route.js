@@ -107,7 +107,11 @@ router.get("/images/:salonFolder/:imageName", (req, res) => {
     res.sendFile(filePath);
 });
 
-
+router.get("/images/:salonFolder/:Portfolio/:imageName", (req, res) => {
+    const { salonFolder, Portfolio, imageName } = req.params;
+    const filePath = join(__dirname, 'Image', salonFolder, Portfolio, imageName);
+    res.sendFile(filePath);
+});
 
 
 

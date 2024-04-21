@@ -3,7 +3,7 @@ import { deconnexion, generateFooter, generateNavBarWithAuth } from '../../commu
 
 const token = sessionStorage.getItem('token');
 const info = token => decodeURIComponent(atob(token.split('.')[1].replace('-', '+').replace('_', '/')).split('').map(c => `%${('00' + c.charCodeAt(0).toString(16)).slice(-2)}`).join(''));
-    
+
 
 function getSalonIdFromURL() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -79,7 +79,7 @@ function displaySalonDetails(nomSalon, adresse, numeroTelephoneSalon, horairesOu
   salonDetailsContainer.innerHTML = detailsHTML;
 }
 
-// 1) Fonction pour charger les détails du salonId à partir de l'URL 
+// 1) Fonction pour charger les détails du salonId à partir de l'URL
 async function loadSalonDetails() {
   try {
     const urlParams = new URLSearchParams(window.location.search);
@@ -121,14 +121,14 @@ function loadSalonPhotos() {
   displaySalonPhotos(salonId);
 }
 
-// 4.1) Fonction pour afficher les photos du salon 
+// 4.1) Fonction pour afficher les photos du salon
 function displaySalonPhotos(salonId) {
   const container = document.getElementById('salonPhotosContainer');
   container.innerHTML = '';
   let i = 1;
 
   function loadNextPhoto() {
-    const imageUrl = `/images/salon${salonId}/haircut${i}.png`;
+    const imageUrl = `/images/salon${salonId}/Portfolio${salonId}/haircut${i}.png`;
     const photoElement = document.createElement('div');
     photoElement.className = 'column is-4';
     photoElement.innerHTML = `

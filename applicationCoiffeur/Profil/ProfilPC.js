@@ -38,14 +38,30 @@ async function fetchDescriptionService() {
     try {
         const response = await fetch(`/getCoiffurePreEtablieData`);
         if (!response.ok) {
-            new Error(`HTTP error! status: ${response.status}`);
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
         const coiffureData = await response.json();
-        console.log(coiffureData);
-        updateServiceSection(coiffureData)
+        const salonArray = distributeCoiffures(coiffureData, salonId);
+        if (salonArray) {
+            updateServiceSection(salonArray);
+        }
+        console.log(salonArray);
     } catch (error) {
         console.error('could not fetch the data', error);
     }
+}
+
+function distributeCoiffures(coiffures, salonId, numberOfServicesPerSalon = 5) {
+    const startIndex = (salonId - 1) * numberOfServicesPerSalon;
+    const endIndex = startIndex + numberOfServicesPerSalon;
+    const salonCoiffures = coiffures.slice(startIndex, endIndex);
+
+    if (salonCoiffures.length === 0) {
+        console.error(`No services found for Salon ${salonId}`);
+        return null;
+    }
+
+    return salonCoiffures;
 }
 
 function updateServiceSection(salonCoiffures) {
@@ -56,33 +72,15 @@ function updateServiceSection(salonCoiffures) {
         const coiffureHTML = `
             <div>
                 <p><b class="title is-5">${coiffure.nomCoiffure} :</b>
-                Durée estimée: ${coiffure.dureeEstimee} minutes</p></br>
-                
+                Durée estimée: ${coiffure.dureeEstimee} minutes</p>
             </div>
         `;
         serviceSection.insertAdjacentHTML('beforeend', coiffureHTML);
     });
 }
 
+
 /*
-function distributeCoiffures(coiffures, numberOfSalons = 9) {
-    const distributed = Array.from({ length: numberOfSalons }, () => []);
-    let salonIndex = 0;
-
-    // Ensure the first coiffureId is in all salons
-    for (let i = 0; i < numberOfSalons; i++) {
-        distributed[i].push(coiffures[0]);
-    }
-
-    // Distribute the remaining coiffures
-    for (let i = 1; i < coiffures.length; i++) {
-        distributed[salonIndex].push(coiffures[i]);
-        salonIndex = (salonIndex + 1) % numberOfSalons;
-    }
-
-    return distributed;
-}
-
 //Section Disponibilité
 async function fetchSalonDisponibilite() {
     try {
@@ -198,5 +196,5 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchDescriptionService()
     //fetchSalonDisponibilite(salonId);
     uploadFile();
-    displayPortfolio(salonId)
+    displayPortfolio(salonId);
 });

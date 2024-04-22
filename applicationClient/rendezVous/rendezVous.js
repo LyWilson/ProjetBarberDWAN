@@ -2,7 +2,7 @@ import { deconnexion, generateFooter, generateNavBarWithAuth } from "../../commu
 
 const token = sessionStorage.getItem('token');
 console.log(token);
-// Fonction pour décoder le token 
+// Fonction pour décoder le token
 function parseJwt(token) {
   try {
     return JSON.parse(decodeURIComponent(atob(token.split('.')[1].replace('-', '+').replace('_', '/')).split('').map(c => `%${('00' + c.charCodeAt(0).toString(16)).slice(-2)}`).join('')));
@@ -10,7 +10,30 @@ function parseJwt(token) {
     return null;
   }
 }
+function modifierReservation(reservation) {
+  try {
+    sessionStorage.setItem('reservationId', reservation);
+    window.location.href = '/modifierReservation';
+  } catch (error) {
+    console.error(error);
+  }
+}
 
+function deleteReservationId(reservation) {
+  try {
+    fetch(`/deleteReservation/?reservationId=${reservation}`, {
+      method: 'GET',
+    }).then(response => {
+      if (response.ok) {
+        window.location.reload();
+      } else {
+        throw new Error('Failed to delete reservation');
+      }
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
 // Function to get all reservations for the user
 async function infoReservation() {
   try {
@@ -28,7 +51,7 @@ async function infoReservation() {
     const reservations = await response.json();
     if (reservations.length > 0) {
       reservations.forEach(reservation => {
-        generateCarteReservation(reservation.dateHeureReservation, reservation.coiffeurPrenom, reservation.coiffeurNom, reservation.nomSalon, reservation.adresse, reservation.nomCoiffure, reservation.descriptionCoiffure, reservation.dureeReservation, reservation.idReservation);
+        generateCarteReservation(reservation.reservationId, reservation.dateHeureReservation, reservation.coiffeurPrenom, reservation.coiffeurNom, reservation.nomSalon, reservation.adresse, reservation.nomCoiffure, reservation.descriptionCoiffure, reservation.dureeReservation, reservation.idReservation);
       });
     } else {
       console.log('No reservation data received');
@@ -38,7 +61,7 @@ async function infoReservation() {
   }
 }
 
-function generateCarteReservation(dateHeureReservation, coiffeurPrenom, coiffeurNom, nomSalon, adresse, nomCoiffure, descriptionCoiffure, dureeReservation, reservation) {
+function generateCarteReservation(reservationId, dateHeureReservation, coiffeurPrenom, coiffeurNom, nomSalon, adresse, nomCoiffure, descriptionCoiffure, dureeReservation, reservation) {
   const reservationsContainer = document.getElementById('reservationsContainer');
 
   const date = new Date(dateHeureReservation);
@@ -62,12 +85,22 @@ function generateCarteReservation(dateHeureReservation, coiffeurPrenom, coiffeur
               <p><strong>Durée de la réservation:  </strong>${dureeReservation} minutes</p>
           </div>
           <div class="card-footer">
-            <a href="javascript:void(0);" class="card-footer-item" onclick="modifierReservation('${reservation}');">Modifier la réservation</a>
-            <a href="javascript:void(0);" class="card-footer-item annuler-reservation" data-id="${reservation}">Annuler la réservation</a>
+            <a class="card-footer-item" id="btnModReservation">Modifier la réservation</a>
+            <a class="card-footer-item annuler-reservation" id="btnDeleteReservation${reservationId}")>Annuler la réservation</a>
           </div>
       </div>
   </div>`;
   reservationsContainer.insertAdjacentHTML('beforeend', reservationHtml);
+
+  const btnDeleteReservation = document.getElementById(`btnDeleteReservation${reservationId}`);
+  btnDeleteReservation.addEventListener('click', () => {
+    deleteReservationId(reservationId);
+  });
+
+  const btnModReservation = document.getElementById('btnModReservation');
+    btnModReservation.addEventListener('click', () => {
+        modifierReservation(reservationId);
+    });
 }
 
 

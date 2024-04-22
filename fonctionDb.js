@@ -262,6 +262,17 @@ async function getUserId(email) {
         await sql.close();
     }
 }
+async function deleteReservation(id) {
+    try {
+        await sql.connect(config);
+        await sql.query`DELETE FROM Reservation WHERE reservationId = ${id}`;
+    } catch (error) {
+        throw error;
+    } finally {
+        await sql.close();
+    }
+
+}
 
 // Exportation des fonctions de la base de données
 module.exports = {
@@ -277,5 +288,6 @@ module.exports = {
     prendreRendezVous,
     getBabierData,
     getReservationsBySalonId,
-    getUserId
+    getUserId,
+    deleteReservation
 };

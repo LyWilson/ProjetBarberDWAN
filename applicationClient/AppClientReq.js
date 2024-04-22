@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { prendreRendezVous, getReservationData, getProfilData, getSalonFavoris, addSalonToFavorites, removeSalonFromFavorites,
-    getUserId
+    getUserId, deleteReservation
 } = require('../fonctionDb');
 
 // 1) Route pour obtenir les données du salon
@@ -102,6 +102,18 @@ router.get('/getClientID', (req, res) => {
     const email = req.query.email
     console.log(email)
     getUserId(email)
+        .then((result) => {
+            res.json(result);
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('Internal Server Error');
+        });
+});
+
+router.get('/deleteReservation', (req, res) => {
+    const reservationId = req.query.reservationId
+    deleteReservation(reservationId)
         .then((result) => {
             res.json(result);
         })

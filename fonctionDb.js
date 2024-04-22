@@ -206,6 +206,36 @@ async function getInfoCoiffure(CoiffureId) {
     }
 }
 
+async function getReservationsBySalonId(salonId) {
+    try {
+        await sql.connect(config);
+        const result = await sql.query`
+      SELECT
+          Reservation.reservationId,
+          Reservation.dateHeureReservation,
+          Reservation.dureeReservation,
+          Coiffeur.nom AS coiffeurNom,
+          Coiffeur.prenom AS coiffeurPrenom,
+          Salon.nomSalon,
+          Salon.adresse,
+          CoiffurePreEtablie.nomCoiffure,
+          CoiffurePreEtablie.descriptionCoiffure
+        FROM Reservation
+        INNER JOIN Coiffeur ON Reservation.coiffeurId = Coiffeur.coiffeurId
+        INNER JOIN Salon ON Coiffeur.salonId = Salon.salonId
+        INNER JOIN CoiffurePreEtablie ON Reservation.coiffureId = CoiffurePreEtablie.coiffureId
+        WHERE Salon.salonId = ${salonId}
+        ORDER BY Reservation.dateHeureReservation DESC;
+    `;
+        return result.recordset;
+    } catch (error) {
+        console.error('Error fetching reservations by salon ID:', error);
+        throw error;
+    } finally {
+        await sql.close();
+    }
+}
+
 async function getHeuresTravail(salonId) {
     try {
         await sql.connect(config);
@@ -223,15 +253,16 @@ async function getHeuresTravail(salonId) {
 
 // Exportation des fonctions de la base de données
 module.exports = {
-  getSalonData,
-  getSalonDataBySalonId,
-  getReservationData,
-  getProfilData,
-  verifieClient,
-  getCoiffurePreEtablieData,
-  getSalonFavoris,
-  addSalonToFavorites,
-  removeSalonFromFavorites,
-  prendreRendezVous,
-    getBabierData
+    getSalonData,
+    getSalonDataBySalonId,
+    getReservationData,
+    getProfilData,
+    verifieClient,
+    getCoiffurePreEtablieData,
+    getSalonFavoris,
+    addSalonToFavorites,
+    removeSalonFromFavorites,
+    prendreRendezVous,
+    getBabierData,
+    getReservationsBySalonId,
 };

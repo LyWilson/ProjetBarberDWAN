@@ -179,15 +179,16 @@ function displayPortfolio(salonId) {
     });
 }
 
-
+/*
 function Auth() {
     if (!sessionStorage.getItem('token')) {
         window.location.href = '/connexion';
     }
 }
+ */
 
 document.addEventListener("DOMContentLoaded", () => {
-    Auth();  // Authenticate before fetching data
+    // Auth();  // Authenticate before fetching data
     const salonId = '1';  // This should be dynamically set possibly from URL or session
     fetchSalonProfile(salonId);
     generateFooter();

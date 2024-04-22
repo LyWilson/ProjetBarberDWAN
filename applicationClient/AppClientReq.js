@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { prendreRendezVous, getReservationData, getProfilData, getSalonFavoris, addSalonToFavorites, removeSalonFromFavorites } = require('../fonctionDb');
+const { prendreRendezVous, getReservationData, getProfilData, getSalonFavoris, addSalonToFavorites, removeSalonFromFavorites,
+    getUserId
+} = require('../fonctionDb');
 
 // 1) Route pour obtenir les données du salon
 
@@ -96,7 +98,18 @@ router.post('/prendreRendezVous', (req, res) => {
         });
 });
 
-
+router.get('/getClientID', (req, res) => {
+    const email = req.query.email
+    console.log(email)
+    getUserId(email)
+        .then((result) => {
+            res.json(result);
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('Internal Server Error');
+        });
+});
 
 module.exports = router;
 

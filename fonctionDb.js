@@ -277,5 +277,8 @@ module.exports = {
     prendreRendezVous,
     getBabierData,
     getReservationsBySalonId,
+<<<<<<< HEAD
     getUserId
+=======
+>>>>>>> 4479cc904b563c1625b258cd210cc7ddafdec802
 };

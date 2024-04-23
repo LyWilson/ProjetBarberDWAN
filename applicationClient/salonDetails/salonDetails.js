@@ -14,8 +14,9 @@ function getSalonIdFromURL() {
 async function addToFavorites() {
   try {
     const email = JSON.parse(info(token)).email;
-    const salonId = getSalonIdFromURL(); // Get salon ID from URL
-    const response = await fetch(`/addSalonToFavorites?email=${encodeURIComponent(email)}&salonId=${encodeURIComponent(salonId)}`, {
+    const salonId = getSalonIdFromURL();
+    console.log(email, salonId);
+    const response = await fetch(`/addSalonToFavorites?email=${email}&salonId=${salonId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

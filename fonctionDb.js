@@ -121,6 +121,7 @@ async function getSalonFavoris(email) {
         await sql.connect(config);
         const result = await sql.query`
       SELECT
+          s.salonId,
           s.nomSalon,
           s.adresse,
           s.horairesOuverture
@@ -140,6 +141,7 @@ async function getSalonFavoris(email) {
 
 // Function to add salon to favorites
 async function addSalonToFavorites(email, salonId) {
+    console.log(email, salonId);
     try {
         await sql.connect(config);
         const clientIdResult = await sql.query`

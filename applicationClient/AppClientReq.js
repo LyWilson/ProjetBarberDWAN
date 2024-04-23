@@ -73,9 +73,8 @@ router.get('/getSalonFavoris', (req, res) => {
 
 router.post('/addSalonToFavorites', async (req, res) => {
     try {
-      const { salonId } = req.body;
-      const email = req.user.email; // Assuming you have middleware to authenticate users and attach user data to req.
-        console.log(salonId, email)
+      const salonId = req.query.salonId
+      const email = req.query.email;
       await addSalonToFavorites(email, salonId);
       res.sendStatus(200); // Success response
     } catch (error) {

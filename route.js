@@ -117,7 +117,13 @@ router.get("/prendreRendezVous.js", (req, res) => {
     res.sendFile(join(__dirname + '/applicationClient/rendezVous/', 'prendreRendezVous.js'));
 })
 
+router.get("/updateRendezVous", (req, res) => {
+    res.sendFile(join(__dirname + '/applicationClient/rendezVous/', 'modifierRendezVous.html'));
+});
 
+router.get("/updateRendezVous.js", (req, res) => {
+    res.sendFile(join(__dirname + '/applicationClient/rendezVous/', 'modifierRendezVous.js'));
+});
 
 // les routes dans /home
 router.get("/", (req, res) => {

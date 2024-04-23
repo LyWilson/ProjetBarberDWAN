@@ -1,10 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Prendre un Rendez-vous</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
 </head>
 <body>
-$END$
+<section class="section">
+    <div class="container">
+        <h1 class="title">Prendre un Rendez-vous</h1>
+
+        <div class="field">
+            <label class="label">Date:</label>
+            <input class="input" type="date" id="appointmentDate">
+        </div>
+
+        <div class="field">
+            <label class="label">Heure:</label>
+            <div class="select">
+                <select id="appointmentTime">
+                    <option value="09:00">09:00</option>
+                    <option value="10:00">10:00</option>
+                    <option value="11:00">11:00</option>
+                    <option value="12:00">12:00</option>
+                    <option value="13:00">13:00</option>
+                    <option value="14:00">14:00</option>
+                    <option value="15:00">15:00</option>
+                    <option value="16:00">16:00</option>
+                    <option value="17:00">17:00</option>
+                    <option value="18:00">18:00</option>
+                    <option value="19:00">19:00</option>
+                    <option value="20:00">20:00</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Barbier:</label>
+            <div class="select">
+                <select id="barber">
+                    <!-- Options chargées dynamiquement avec JavaScript -->
+                </select>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Type de coiffure:</label>
+            <div class="select">
+                <select id="hairstyle">
+                    <!-- Options chargées dynamiquement avec JavaScript -->
+                </select>
+            </div>
+        </div>
+
+        <div class="field">
+            <button class="button is-link" id="submit">Confirmer</button>
+        </div>
+    </div>
+</section>
 </body>
+<script src="/updateRendezVous.js" type="module"></script>
 </html>

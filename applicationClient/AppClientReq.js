@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { prendreRendezVous, getReservationData, getProfilData, getSalonFavoris, addSalonToFavorites, removeSalonFromFavorites,
-    getUserId, deleteReservation
+    getUserId, deleteReservation, modifierRendezVous
 } = require('../fonctionDb');
 
 // 1) Route pour obtenir les données du salon
@@ -20,7 +20,18 @@ router.get('/getSalonDataBySalonId', (req, res) => {
         });
 });
 */
-
+router.post('modifierRendezVous', (req, res) => {
+    const { clientId, coiffeurId, coiffureId, date, heure, reservationId } = req.body
+    const dateHeureReservation = `${date} ${heure}:00.000`
+    modifierRendezVous(clientId, coiffeurId, coiffureId, dateHeureReservation, reservationId)
+        .then((result) => {
+            res.json(result);
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('Internal Server Error');
+        });
+})
 // 3) Route pour obtenir les données de réservation selon l'email
 router.get('/getReservationData', (req, res) => {
     const info = req.query
@@ -122,6 +133,20 @@ router.get('/deleteReservation', (req, res) => {
             res.status(500).send('Internal Server Error');
         });
 });
+
+router.post('/modifierRendezVous', (req, res) => {
+    const { clientId, coiffeurId, coiffureId, date, heure, reservationId } = req.body
+    const dateHeureReservation = `${date} ${heure}:00.000`
+    modifierRendezVous(clientId, coiffeurId, coiffureId, dateHeureReservation, reservationId)
+        .then((result) => {
+            res.json(result);
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('Internal Server Error');
+        });
+})
+
 
 module.exports = router;
 

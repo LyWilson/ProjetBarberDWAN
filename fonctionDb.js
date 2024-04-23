@@ -176,23 +176,7 @@ async function removeSalonFromFavorites(email, salonId) {
     }
 }
 
-async function prendreRendezVous(clientId, coiffeurId, coiffureId, dateHeureReservation) {
-    const dureeReservation = await getInfoCoiffure(coiffureId);
-    console.log(clientId, coiffeurId, coiffureId, dateHeureReservation, dureeReservation);
-    try {
-        await sql.connect(config);
-        await sql.query`
-            INSERT INTO Reservation (clientId, coiffeurId, coiffureId, dateHeureReservation, dureeReservation)
-            VALUES (${clientId}, ${coiffeurId}, ${coiffureId}, ${dateHeureReservation}, ${dureeReservation});
-        `
-        return { message: 'Réservation réussie.' };
-    } catch (error) {
-        throw error;
-    } finally {
-        await sql.close();
-    }
 
-}
 
 async function getInfoCoiffure(CoiffureId) {
     try {
@@ -274,6 +258,40 @@ async function deleteReservation(id) {
 
 }
 
+async function prendreRendezVous(clientId, coiffeurId, coiffureId, dateHeureReservation) {
+    const dureeReservation = await getInfoCoiffure(coiffureId);
+    console.log(clientId, coiffeurId, coiffureId, dateHeureReservation, dureeReservation);
+    try {
+        await sql.connect(config);
+        await sql.query`
+            INSERT INTO Reservation (clientId, coiffeurId, coiffureId, dateHeureReservation, dureeReservation)
+            VALUES (${clientId}, ${coiffeurId}, ${coiffureId}, ${dateHeureReservation}, ${dureeReservation});
+        `
+        return { message: 'Réservation réussie.' };
+    } catch (error) {
+        throw error;
+    } finally {
+        await sql.close();
+    }
+
+}
+
+async function modifierRendezVous(clientId, coiffeurId, coiffureId, dateHeureReservation, reservationId) {
+    try {
+        await sql.connect(config);
+        await sql.query`
+            UPDATE Reservation
+            SET coiffeurId = ${coiffeurId}, coiffureId = ${coiffureId}, dateHeureReservation = ${dateHeureReservation}
+            WHERE clientId = ${clientId} and reservationId = ${reservationId};
+        `
+        return { message: 'Réservation modifiée.' };
+    } catch (error) {
+        throw error;
+    } finally {
+        await sql.close();
+    }
+}
+
 // Exportation des fonctions de la base de données
 module.exports = {
     getSalonData,
@@ -289,5 +307,6 @@ module.exports = {
     getBabierData,
     getReservationsBySalonId,
     getUserId,
-    deleteReservation
+    deleteReservation,
+    modifierRendezVous
 };

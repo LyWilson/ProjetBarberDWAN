@@ -131,7 +131,7 @@ function getNavBarCoiffeur() {
 
     <div class="navbar-menu">
         <div class="navbar-end" style="color: white">
-            <a class="navbar-item text-white" style="color: white" href="http://localhost:3000/ProfilPC" id="profil">Mon Profil</a>
+            <a class="navbar-item text-white" style="color: white" href="http://localhost:3000/ProfilPC" id="profil">Le Salon</a>
             <a class="navbar-item text-white" style="color: white" href="http://localhost:3000/RdvPC" id="rdv">Mes Rendez-vous</a>
             <a class="navbar-item text-white" style="color: white" id="deconnexion">Déconnexion</a>
             <a class="navbar-item text-white" style="color: white" href="http://localhost:3000/contact" id="contact">Contact</a>
@@ -187,6 +187,13 @@ function deconnexion() {
         const btnDeconnexion = document.getElementById('deconnexion');
         btnDeconnexion.addEventListener('click', () => {
             sessionStorage.removeItem('token');
+            window.location.href = '/connexion';
+        });
+    }
+    if (sessionStorage.getItem('tokenCoiffeur')) {
+        const btnDeconnexion = document.getElementById('deconnexion');
+        btnDeconnexion.addEventListener('click', () => {
+            sessionStorage.removeItem('tokenCoiffeur');
             window.location.href = '/connexion';
         });
     }

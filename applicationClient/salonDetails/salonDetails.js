@@ -36,7 +36,7 @@ async function addToFavorites() {
 // Function to remove salon from favorites
 async function removeFromFavorites() {
   const salonId = getSalonIdFromURL(); // Implement this function to extract salonId from URL
-  const token = sessionStorage.getItem('token');
+  const email = JSON.parse(info(token)).email;
   try {
     const response = await fetch('/removeSalonFromFavorites', {
       method: 'DELETE',
@@ -44,7 +44,8 @@ async function removeFromFavorites() {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ salonId: salonId })
+      body: JSON.stringify({ salonId: salonId,
+               email: email })
     });
     if (!response.ok) {
       throw new Error('Failed to remove salon from favorites');
@@ -158,13 +159,38 @@ function displaySalonPhotos(salonId) {
   loadNextPhoto();
 }
 
+function loadBtnFavoris() {
+  const email = JSON.parse(info(token)).email;
+  const salonId = getSalonIdFromURL();
+  fetch(`/isSalonFavorite?email=${email}&salonId=${salonId}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to check if salon is favorite');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      if (data) {
+        document.getElementById('addToFavoritesButton').classList.add('is-hidden');
+        document.getElementById('removeFromFavoritesButton').classList.remove('is-hidden');
+      } else {
+        document.getElementById('addToFavoritesButton').classList.remove('is-hidden');
+        document.getElementById('removeFromFavoritesButton').classList.add('is-hidden');
+      }
+    })
+    .catch(error => {
+      console.error('Error checking if salon is favorite:', error);
+    });
+}
+
 
 // Initialisation des fonctions au chargement de la page
 document.addEventListener('DOMContentLoaded', () => {
   generateNavBarWithAuth();
   generateFooter();
   deconnexion();
-
+  loadBtnFavoris()
   loadSalonDetails();
   loadSalonPhotos();
 

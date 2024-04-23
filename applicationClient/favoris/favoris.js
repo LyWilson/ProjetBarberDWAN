@@ -37,7 +37,7 @@ function generateCarteSalons(salonId, nomSalon, adresse, horairesOuverture) {
   return `
   <div class="column is-3">
     <div class="card">
-      <a href="salonDetails?salonId=${salonId}">
+      <a href="http://localhost:3000/salonDetails?salonId=${salonId}">
         <div class="card-image">
           <figure class="image is-4by3">
             <img src="${imageUrl}" alt="Photo du salon: ${nomSalon}">

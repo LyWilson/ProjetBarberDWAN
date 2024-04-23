@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { prendreRendezVous, getReservationData, getProfilData, getSalonFavoris, addSalonToFavorites, removeSalonFromFavorites,
-    getUserId, deleteReservation, modifierRendezVous
+    getUserId, deleteReservation, modifierRendezVous, isSalonFavorite
 } = require('../fonctionDb');
 
 // 1) Route pour obtenir les données du salon
@@ -86,8 +86,8 @@ router.post('/addSalonToFavorites', async (req, res) => {
   // Route to remove salon from favorites
 router.delete('/removeSalonFromFavorites', async (req, res) => {
 try {
-  const { salonId } = req.body;
-  const email = req.user.email; // Assuming you have middleware to authenticate users and attach user data to req.user
+  const salonId= req.body.salonId;
+  const email = req.body.email; // Assuming you have middleware to authenticate users and attach user data to req.user
   await removeSalonFromFavorites(email, salonId);
   res.sendStatus(200); // Success response
 } catch (error) {
@@ -147,6 +147,17 @@ router.post('/modifierRendezVous', (req, res) => {
         });
 })
 
+router.get('/isSalonFavorite', (req, res) => {
+    const { email, salonId } = req.query
+    isSalonFavorite(email, salonId)
+        .then((result) => {
+            res.json(result);
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('Internal Server Error');
+        });
+})
 
 module.exports = router;
 

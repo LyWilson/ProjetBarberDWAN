@@ -294,6 +294,22 @@ async function modifierRendezVous(clientId, coiffeurId, coiffureId, dateHeureRes
     }
 }
 
+async function isSalonFavorite(email, salonId) {
+    try {
+        await sql.connect(config);
+        const result = await sql.query`
+      SELECT * FROM SalonFavoris
+      WHERE clientId = (SELECT clientId FROM Client WHERE email = ${email})
+      AND salonId = ${salonId};
+    `;
+        return result.recordset.length > 0;
+    } catch (error) {
+        throw error;
+    } finally {
+        await sql.close()
+    }
+}
+
 // Exportation des fonctions de la base de données
 module.exports = {
     getSalonData,
@@ -310,5 +326,6 @@ module.exports = {
     getReservationsBySalonId,
     getUserId,
     deleteReservation,
-    modifierRendezVous
+    modifierRendezVous,
+    isSalonFavorite
 };

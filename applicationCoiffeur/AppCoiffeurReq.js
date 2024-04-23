@@ -3,7 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const router = express.Router();
-const { getReservationsBySalonId } = require('../fonctionDb');
+const { getReservationsBySalonId, getSalonId } = require('../fonctionDb');
 
 // Middleware to create directory if it doesn't exist
 const createDir = (dir) => {
@@ -36,6 +36,18 @@ router.post('/upload/:salonId', upload.single('photo'), (req, res) => {
 router.get('/getReservationsBySalonId', (req, res) => {
     const salonId = req.query.salonId;
     getReservationsBySalonId(salonId)
+        .then((result) => {
+            res.json(result);
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('Internal Server Error');
+        });
+});
+
+router.get('/getSalonId', (req, res) => {
+    const email = req.query.email;
+    getSalonId(email)
         .then((result) => {
             res.json(result);
         })

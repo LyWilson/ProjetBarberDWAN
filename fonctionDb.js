@@ -248,6 +248,22 @@ async function getUserId(email) {
         await sql.close();
     }
 }
+
+
+async function getSalonId(email) {
+    try {
+        await sql.connect(config);
+        const result = await sql.query`SELECT salonId FROM Coiffeur WHERE email = ${email}`;
+        console.log(result.recordset[0].salonId);
+        return result.recordset[0].salonId;
+    } catch (error) {
+        throw error;
+    } finally {
+        await sql.close();
+    }
+
+}
+
 async function deleteReservation(id) {
     try {
         await sql.connect(config);
@@ -327,5 +343,7 @@ module.exports = {
     getUserId,
     deleteReservation,
     modifierRendezVous,
-    isSalonFavorite
+    isSalonFavorite,
+    getSalonId,
+
 };

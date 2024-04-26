@@ -1,4 +1,4 @@
-import {deconnexion, generateFooter, generateNavBarWithAuth} from "../../commun.js";
+import {authCoiffeur, deconnexion, generateFooter, generateNavBarWithAuth} from "../../commun.js";
 
 const salonId = 1;
 
@@ -39,6 +39,7 @@ function updateReservationsSection(reservations) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    authCoiffeur();
     generateFooter();
     generateNavBarWithAuth()
     deconnexion()

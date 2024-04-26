@@ -1,10 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { ConnectionPool } = require("mssql");
 const bodyParser = require("body-parser");
 const config = require("../db");
 const { sql } = require("../db");
-const bcrypt = require("bcrypt");
 const apikey = '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';
 const sendGrid = require('@sendgrid/mail');
 sendGrid.setApiKey(apikey);

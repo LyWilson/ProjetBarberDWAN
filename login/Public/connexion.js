@@ -34,12 +34,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Add event listener for form submission
+    /*
     registrationForm.addEventListener('submit', (event) => {
         if (!checkForm()) {
             event.preventDefault(); // Prevent form submission if validation fails
         }
     });
-
+*/
     //Client
     option1Checkbox.addEventListener('change', () => {
         if (option1Checkbox.checked) {

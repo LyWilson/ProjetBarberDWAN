@@ -1,4 +1,4 @@
-import {deconnexion, generateFooter, generateNavBarWithAuth} from "../../commun.js";
+import {authCoiffeur, deconnexion, generateFooter, generateNavBarWithAuth} from "../../commun.js";
 
 //Pie Chart
 async function initializePieChart(salonId) {
@@ -164,6 +164,7 @@ function initLineChart() {
 }
 
 document.addEventListener("DOMContentLoaded", async function(event) {
+    authCoiffeur();
     event.preventDefault()
     const token = sessionStorage.getItem('tokenCoiffeur');
     const info = token => decodeURIComponent(atob(token.split('.')[1].replace('-', '+').replace('_', '/')).split('').map(c => `%${('00' + c.charCodeAt(0).toString(16)).slice(-2)}`).join(''));

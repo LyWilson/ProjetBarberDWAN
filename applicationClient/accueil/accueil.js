@@ -1,4 +1,4 @@
-import { deconnexion, generateFooter, generateNavBarWithAuth } from '../../commun.js';
+import { deconnexion, generateFooter, generateNavBarWithAuth, authClient } from '../../commun.js';
 
 // Fonction pour afficher les salons
 async function loadSalons() {
@@ -266,6 +266,7 @@ function GenereMap() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  authClient();
   Auth();
   generateNavBarWithAuth();
   generateFooter();

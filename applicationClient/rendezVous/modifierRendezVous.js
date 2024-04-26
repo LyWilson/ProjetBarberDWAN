@@ -1,4 +1,10 @@
+import {authClient, deconnexion, generateFooter, generateNavBarWithAuth} from "../../commun.js";
+
 document.addEventListener('DOMContentLoaded', function() {
+    authClient();
+    generateNavBarWithAuth();
+    generateFooter();
+    deconnexion();
     fetchBarbers();
     fetchHairstyles();
 

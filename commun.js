@@ -1,5 +1,4 @@
 // Fonction de la barre de navigation
-
 function getNavbar() {
     return `
   <nav class="navbar " style="background-color: rgb(19, 41, 149)" role="navigation" aria-label="main navigation">
@@ -39,7 +38,6 @@ function getNavbar() {
 </nav>
   `;
 }
-
 // Fonction pour générer la barre de navigation
 function generateNavBar() {
     const navBar = document.getElementById('navigationBar');
@@ -108,6 +106,7 @@ function generateNavBarNonAuth() {
     navBar.innerHTML = getNavBarNonAuth();
 }
 
+// Fonction pour la barre de navigation du coiffeur
 function getNavBarCoiffeur() {
     return `
   <nav class="navbar " style="background-color: rgb(19, 41, 149)" role="navigation" aria-label="main navigation">
@@ -163,11 +162,13 @@ function getNavBarCoiffeur() {
   `;
 }
 
+// fonction pour générer la barre de navigation du coiffeur
 function generateNavBarCoiffeur() {
     const navBar = document.getElementById('navigationBar');
     navBar.innerHTML = getNavBarCoiffeur();
 }
 
+// Fonction pour générer la barre de navigation avec authentification
 function generateNavBarWithAuth() {
     if (sessionStorage.getItem("token")) {
         generateNavBar();
@@ -200,5 +201,19 @@ function deconnexion() {
 
 }
 
+// Fonction verifier token client
+function authClient() {
+    if (!sessionStorage.getItem('token')) {
+        window.location.href = '/accueilClient';
+    }
+}
+
+// Fonction verifier token coiffeur
+function authCoiffeur() {
+    if (!sessionStorage.getItem('tokenCoiffeur')) {
+        window.location.href = '/dashboard';
+    }
+}
+
 // Exportation des fonctions
-export { generateNavBarWithAuth, generateFooter, deconnexion };
+export { generateNavBarWithAuth, generateFooter, deconnexion, authClient, authCoiffeur};

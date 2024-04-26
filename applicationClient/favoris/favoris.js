@@ -1,4 +1,4 @@
-import { deconnexion, generateFooter, generateNavBarWithAuth } from '../../commun.js';
+import {authClient, deconnexion, generateFooter, generateNavBarWithAuth} from '../../commun.js';
 
 const token = sessionStorage.getItem('token');
 
@@ -60,6 +60,7 @@ function generateCarteSalons(salonId, nomSalon, adresse, horairesOuverture) {
 
 // Initialize the page
 document.addEventListener('DOMContentLoaded', () => {
+  authClient();
   generateNavBarWithAuth();
   generateFooter();
   deconnexion();

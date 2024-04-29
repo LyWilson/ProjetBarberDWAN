@@ -81,13 +81,10 @@ router.post("/login", async (req, res) => {
             }
 
             user = result.recordset[0];
-            console.log({user});
-            console.log({result});
         }
         if (Coiffeur === undefined && Client === undefined) {
-            return res.status(400).json({ message: "Veuillez sélectionner un type d'utilisateur." });
+            return res.redirect('/connexion')
         }
-        console.log({user});
         // Vérifier le mot de passe
         const passwordMatch = await bcrypt.compare(motDePasse, user.motDePasseEncrypte);
 
@@ -102,10 +99,10 @@ router.post("/login", async (req, res) => {
 
         // Envoyer le jeton dans le corps de la réponse
         if(Client) {
-            res.redirect(`/?token=${token}&user=client`);
+            res.status(302).redirect(`/?token=${token}&user=client`);
         }
         if(Coiffeur) {
-            res.redirect(`/?token=${token}&user=coiffeur`);
+            res.status(302).redirect(`/?token=${token}&user=coiffeur`);
         }
     } catch (error) {
         console.error("SQL error", error);

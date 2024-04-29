@@ -29,7 +29,7 @@
                                 Connectez-vous pour continuer
                             </strong>
                         </h3>
-                        <form method="POST" action="http://localhost:3000/login"> <!-- Modifier l'action pour pointer vers la route de connexion -->
+                        <form id="loginForm" action="/login" method="POST"> <!-- Modifier l'action pour pointer vers la route de connexion -->
                             <!-- Email Address -->
                             <div class="field">
                                 <label class="label" for="email">Email</label>
@@ -74,7 +74,7 @@
                             -->
                             <div class="control">
                                 <a href="/AccueilClient">
-                                    <button type="submit" class="button is-info">Se connecter</button>
+                                    <button class="button is-info" id="SubmitBtn">Se connecter</button>
                                 </a>
 
                             </div>

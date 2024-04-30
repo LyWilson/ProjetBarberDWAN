@@ -84,4 +84,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     });
+
+    async function fetchReservationData() {
+        let reservationId = window.location.search.split('=')[1];
+        try {
+            const response = await fetch(`/getReservationData/${reservationId}`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const reservation = await response.json();
+            const coiffeur = document.getElementById('coiffeur');
+            const salon = document.getElementById('salon');
+            const address = document.getElementById('address');
+            const style = document.getElementById('style');
+            const description = document.getElementById('description');
+            const duration = document.getElementById('duree');
+
+            coiffeur.innerHTML = `<strong>Coiffeur:  </strong> ${reservation[0].coiffeurPrenom} ${reservation[0].coiffeurNom}`;
+            salon.innerHTML = `<strong>Salon:  </strong> ${reservation[0].nomSalon}`;
+            address.innerHTML = `<strong>Adresse:  </strong> ${reservation[0].adresse}`;
+            style.innerHTML = `<strong>Style:  </strong> ${reservation[0].nomCoiffure}`;
+            description.innerHTML = `<strong>Description:  </strong> ${reservation[0].descriptionCoiffure}`;
+            duration.innerHTML = `<strong>Durée : </strong> ${reservation[0].dureeReservation} minutes`;
+
+        } catch (error) {
+            console.error('Error fetching reservation data:', error);
+        }
+    }
+
+    fetchReservationData();
 });

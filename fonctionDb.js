@@ -341,6 +341,37 @@ async function modifyClientInfo(email, nom, prenom, numeroTelephone) {
     }
 }
 
+async function getReservationsById(id) {
+    try {
+        await sql.connect(config);
+        const result = await sql.query`
+    SELECT
+        Reservation.reservationId,
+        Reservation.dateHeureReservation,
+        Reservation.dureeReservation,
+        Coiffeur.nom AS coiffeurNom,
+        Coiffeur.prenom AS coiffeurPrenom,
+        Salon.nomSalon,
+        Salon.adresse,
+        CoiffurePreEtablie.nomCoiffure,
+        CoiffurePreEtablie.descriptionCoiffure
+      FROM Reservation
+      INNER JOIN Coiffeur ON Reservation.coiffeurId = Coiffeur.coiffeurId
+      INNER JOIN Salon ON Coiffeur.salonId = Salon.salonId
+      INNER JOIN CoiffurePreEtablie ON Reservation.coiffureId = CoiffurePreEtablie.coiffureId
+      INNER JOIN Client ON Reservation.clientId = Client.clientId
+      WHERE Reservation.reservationId = ${id}
+      ORDER BY Reservation.dateHeureReservation DESC;`;
+        return result.recordset;
+    }
+    catch (error) {
+        throw error;
+    } finally {
+        await sql.close();
+    }
+
+}
+
 // Exportation des fonctions de la base de données
 module.exports = {
     getSalonData,
@@ -360,6 +391,6 @@ module.exports = {
     modifierRendezVous,
     isSalonFavorite,
     getSalonId,
-    modifyClientInfo
-
+    modifyClientInfo,
+    getReservationsById
 };

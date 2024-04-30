@@ -12,9 +12,36 @@ async function infoClient() {
     const data = await response.json();
     document.getElementById('lastNameInput').placeholder = data.nom;
     document.getElementById('firstNameInput').placeholder = data.prenom;
-    document.getElementById('emailInput').placeholder = data.email;
     document.getElementById('phoneInput').placeholder = data.numeroTelephone;
 }
+
+async function modifyClientInfo(event) {
+    event.preventDefault()
+    console.log('modifyClientInfo');
+    const email = JSON.parse(info(token)).email;
+    const lastName = document.getElementById('lastNameInput').value;
+    const firstName = document.getElementById('firstNameInput').value;
+    const phone = document.getElementById('phoneInput').value;
+    const data = {
+        email: email,
+        nom: lastName,
+        prenom: firstName,
+        numeroTelephone: phone
+    }
+    const response = await fetch(`/modifyClientInfo`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+        throw new Error('Failed to fetch salon data');
+    }
+    alert('Modification effectuée');
+    location.reload();
+}
+document.getElementById('BtnSubmit').addEventListener('click', modifyClientInfo);
 
 document.addEventListener("DOMContentLoaded", () => {
     authClient();

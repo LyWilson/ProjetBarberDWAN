@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { prendreRendezVous, getReservationData, getProfilData, getSalonFavoris, addSalonToFavorites, removeSalonFromFavorites,
-    getUserId, deleteReservation, modifierRendezVous, isSalonFavorite
+    getUserId, deleteReservation, modifierRendezVous, isSalonFavorite,modifyClientInfo
 } = require('../fonctionDb');
 
 // 1) Route pour obtenir les données du salon
@@ -48,6 +48,7 @@ router.get('/getReservationData', (req, res) => {
 // 4) Route pour obtenir le profil de l'utilisateur
 router.get('/getProfilData', (req, res) => {
     const info = req.query
+    console.log(info.email)
     getProfilData(info.email)
         .then((result) => {
             res.json(result);
@@ -158,6 +159,22 @@ router.get('/isSalonFavorite', (req, res) => {
             res.status(500).send('Internal Server Error');
         });
 })
+
+router.post('/modifyClientInfo', (req, res) => {
+    const email = req.body.email
+    const nom = req.body.nom
+    const prenom = req.body.prenom
+    const numeroTelephone = req.body.numeroTelephone
+    console.log(email, nom, prenom, numeroTelephone)
+    modifyClientInfo(email, nom, prenom, numeroTelephone)
+        .then((result) => {
+            res.json(result);
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('Internal Server Error');
+        });
+});
 
 module.exports = router;
 

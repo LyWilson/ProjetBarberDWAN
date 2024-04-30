@@ -326,6 +326,21 @@ async function isSalonFavorite(email, salonId) {
     }
 }
 
+async function modifyClientInfo(email, nom, prenom, numeroTelephone) {
+    try {
+        await sql.connect(config);
+        await sql.query`
+      UPDATE Client
+      SET nom = ${nom}, prenom = ${prenom}, numeroTelephone = ${numeroTelephone}
+      WHERE email = ${email};
+    `;
+    } catch (error) {
+        throw error;
+    } finally {
+        await sql.close();
+    }
+}
+
 // Exportation des fonctions de la base de données
 module.exports = {
     getSalonData,
@@ -345,5 +360,6 @@ module.exports = {
     modifierRendezVous,
     isSalonFavorite,
     getSalonId,
+    modifyClientInfo
 
 };

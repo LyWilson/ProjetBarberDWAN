@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     async function fetchBarbers() {
         let SalonId = window.location.search.split('=')[1];
         try {
-            const response = await fetch(`/getBabierData/?salonId=${SalonId}`);
+            const response = await fetch(`/getBabierDataBySalonId/${SalonId}`);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }

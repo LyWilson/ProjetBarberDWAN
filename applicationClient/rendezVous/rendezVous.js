@@ -109,6 +109,5 @@ document.addEventListener("DOMContentLoaded", () => {
   generateNavBarWithAuth();
   generateFooter();
   deconnexion();
-
   infoReservation();
 });

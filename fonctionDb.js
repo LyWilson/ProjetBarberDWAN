@@ -372,6 +372,18 @@ async function getReservationsById(id) {
 
 }
 
+async function getBabierDataBySalonId(id) {
+    try {
+        await sql.connect(config);
+        const result = await sql.query`SELECT * FROM Coiffeur WHERE salonId = ${id}`;
+        return result.recordset;
+    } catch (error) {
+        throw error;
+    } finally {
+        await sql.close();
+    }
+}
+
 // Exportation des fonctions de la base de données
 module.exports = {
     getSalonData,
@@ -392,5 +404,6 @@ module.exports = {
     isSalonFavorite,
     getSalonId,
     modifyClientInfo,
-    getReservationsById
+    getReservationsById,
+    getBabierDataBySalonId
 };

@@ -45,7 +45,8 @@ async function getReservationData(email) {
         Salon.nomSalon,
         Salon.adresse,
         CoiffurePreEtablie.nomCoiffure,
-        CoiffurePreEtablie.descriptionCoiffure
+        CoiffurePreEtablie.descriptionCoiffure,
+        Salon.salonId
       FROM Reservation
       INNER JOIN Coiffeur ON Reservation.coiffeurId = Coiffeur.coiffeurId
       INNER JOIN Salon ON Coiffeur.salonId = Salon.salonId
@@ -354,7 +355,8 @@ async function getReservationsById(id) {
         Salon.nomSalon,
         Salon.adresse,
         CoiffurePreEtablie.nomCoiffure,
-        CoiffurePreEtablie.descriptionCoiffure
+        CoiffurePreEtablie.descriptionCoiffure,
+        Salon.salonId
       FROM Reservation
       INNER JOIN Coiffeur ON Reservation.coiffeurId = Coiffeur.coiffeurId
       INNER JOIN Salon ON Coiffeur.salonId = Salon.salonId

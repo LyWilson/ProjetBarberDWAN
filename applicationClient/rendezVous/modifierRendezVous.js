@@ -5,9 +5,12 @@ document.addEventListener('DOMContentLoaded', function() {
     generateNavBarWithAuth();
     generateFooter();
     deconnexion();
+    /*
     fetchBarbers();
+    */
     fetchHairstyles();
 
+    /*
     async function fetchBarbers() {
         let SalonId = window.location.search.split('=')[1];
         try {
@@ -27,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error fetching barbers:', error);
         }
     }
-
+    */
     async function fetchHairstyles() {
         try {
             const response = await fetch('/getCoiffurePreEtablieData');
@@ -99,6 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const style = document.getElementById('style');
             const description = document.getElementById('description');
             const duration = document.getElementById('duree');
+            const SalonId = reservation[0].salonId;
 
             coiffeur.innerHTML = `<strong>Coiffeur:  </strong> ${reservation[0].coiffeurPrenom} ${reservation[0].coiffeurNom}`;
             salon.innerHTML = `<strong>Salon:  </strong> ${reservation[0].nomSalon}`;
@@ -106,6 +110,23 @@ document.addEventListener('DOMContentLoaded', function() {
             style.innerHTML = `<strong>Style:  </strong> ${reservation[0].nomCoiffure}`;
             description.innerHTML = `<strong>Description:  </strong> ${reservation[0].descriptionCoiffure}`;
             duration.innerHTML = `<strong>Durée : </strong> ${reservation[0].dureeReservation} minutes`;
+
+            try {
+                const response = await fetch(`/getBabierDataBySalonId/${SalonId}`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const barbers = await response.json();
+                const select = document.getElementById('barber');
+                barbers.forEach(barber => {
+                    const option = document.createElement('option');
+                    option.value = barber.coiffeurId;
+                    option.textContent = `${barber.nom} ${barber.prenom}`;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error fetching barbers:', error);
+            }
 
         } catch (error) {
             console.error('Error fetching reservation data:', error);

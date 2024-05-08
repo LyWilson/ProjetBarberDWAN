@@ -13,10 +13,11 @@ const createDir = (dir) => {
 }
 
 // Configure storage for Multer
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         const { salonId } = req.params;
-        const uploadDir = path.join(__dirname, `/images/salon${salonId}/${salonId}/Portfolio${salonId}`);
+        const uploadDir = path.join(__dirname, `../Image/salon${salonId}/Portfolio${salonId}`);
         createDir(uploadDir);
         cb(null, uploadDir);
     },
@@ -30,6 +31,7 @@ const upload = multer({ storage: storage });
 
 // Route to handle file upload
 router.post('/upload/:salonId', upload.single('photo'), (req, res) => {
+    console.log(req.params.salonId);
     res.send('File uploaded successfully!');
 });
 

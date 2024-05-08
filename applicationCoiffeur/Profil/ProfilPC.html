@@ -107,9 +107,9 @@
                 <div class="box content" style="background-color: lightcyan">
                     <h3 class="title is-4 title-margin-adjust">Portfolio</h3>
                     <div id="gallery"></div>
-                    <form action="/upload/123" method="post" enctype="multipart/form-data">
+                    <form id="uploadForm" enctype="multipart/form-data" action="javascript:void(0)">
                         <input type="file" name="photo" accept="image/*">
-                        <button type="submit" onclick="uploadFile()">Upload Photo</button>
+                        <button type="submit" id="btnUpload">Upload Photo</button>
                     </form>
                 </div>
 

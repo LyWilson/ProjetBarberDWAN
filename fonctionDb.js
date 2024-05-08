@@ -226,9 +226,8 @@ async function getReservationsBySalonId(salonId) {
 async function getHeuresTravail(salonId) {
     try {
         await sql.connect(config);
-        const result = await sql.query`SELECT horairesTravail FROM Coiffeur WHERE salonId = ${salonId}`;
+        const result = await sql.query`SELECT * FROM Coiffeur WHERE salonId = ${salonId}`;
         return result.recordset;
-
     }
     catch (error) {
         throw error;
@@ -412,6 +411,7 @@ module.exports = {
     prendreRendezVous,
     getBabierData,
     getReservationsBySalonId,
+    getHeuresTravail,
     getUserId,
     deleteReservation,
     modifierRendezVous,

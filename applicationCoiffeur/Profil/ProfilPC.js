@@ -84,64 +84,41 @@ function updateServiceSection(salonCoiffures) {
     });
 }
 
-
-/*
 //Section Disponibilité
-async function fetchSalonDisponibilite() {
+async function fetchHeuresTravail(salonId) {
     try {
-        const funcitonDb = require("/fonctionDb")
+        const response = await fetch(`/getHeuresTravail?salonId=${salonId}`);
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error('Failed to fetch working hours');
         }
-        const salonDetails = await response.json();
-        updateHeureOuverture(salonDetails.horairesOuverture);
+        const heuresTravail = await response.json();
+        console.log(heuresTravail);
+        updateHeuresTravailSection(heuresTravail);
     } catch (error) {
-        console.error('Could not fetch salon details', error);
+        console.error('Could not fetch working hours', error);
     }
 }
 
-function updateHeureOuverture(horairesOuverture) {
+function updateHeuresTravailSection(heuresTravail) {
     const horaireContainer = document.querySelector('.horaire-container');
     horaireContainer.innerHTML = `
-    <table class="table is-bordered is-striped" style="border: none;">
-        <tbody>
-            <tr>
-                <th class="title is-5">Horaires d'ouverture:</th>
-                <th></th>
-            </tr>
-            <tr>
-                <td>Dimanche:</td>
-                <td>Fermé</td>
-            </tr>
-            <tr>
-                <td>Lundi:</td>
-                <td>${horairesOuverture}</td>
-            </tr>
-            <tr>
-                <td>Mardi:</td>
-                <td>${horairesOuverture}</td>
-            </tr>
-            <tr>
-                <td>Mercredi:</td>
-                <td>${horairesOuverture}</td>
-            </tr>
-            <tr>
-                <td>Jeudi:</td>
-                <td>${horairesOuverture}</td>
-            </tr>
-            <tr>
-                <td>Vendredi:</td>
-                <td>${horairesOuverture}</td>
-            </tr>
-            <tr>
-                <td>Samedi:</td>
-                <td>Fermé</td>
-            </tr>
-        </tbody>
-    </table>
-`;
+        <table class="table is-bordered is-striped" style="border: none;">
+            <tbody>
+                <tr>
+                    <th class="title is-5">Horaires de travail:</th>
+                    <th></th>
+                </tr>
+                ${heuresTravail.map(coiffeur => `
+                    <tr>
+                        <td>${coiffeur.nom} ${coiffeur.prenom} :</td>
+                        <td>${coiffeur.horairesTravail}</td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    `;
 }
- */
+
 
 // Section Portfolio
 function uploadFile() {
@@ -205,7 +182,7 @@ document.addEventListener("DOMContentLoaded", async function(event) {
     generateNavBarWithAuth();
     deconnexion();
     fetchDescriptionService()
-    //fetchSalonDisponibilite(salonId);
+    fetchHeuresTravail(salonId);
     uploadFile();
     displayPortfolio(salonId);
 });

@@ -396,6 +396,57 @@ async function getCoiffurePreEtablieDataBySalonId(id) {
     }
 }
 
+async function getCoiffeurId(email) {
+    try {
+        await sql.connect(config);
+        const result = await sql.query`SELECT coiffeurId FROM Coiffeur WHERE email = ${email}`;
+        return result.recordset[0].coiffeurId;
+    } catch (error) {
+        throw error;
+    } finally {
+        await sql.close();
+    }
+}
+
+async function updateSponsor(salonId) {
+    try {
+        await sql.connect(config);
+        await sql.query `delete from Sponsor`;
+        await sql.query`insert into Sponsor (salonId) values (${salonId})`;
+    } catch (error) {
+        throw error;
+    } finally {
+        await sql.close();
+    }
+}
+
+async function getSponsorId() {
+    try {
+        await sql.connect(config);
+        const result = await sql.query`SELECT salonId FROM Sponsor`;
+        return result.recordset[0].salonId;
+    } catch (error) {
+        throw error;
+    } finally {
+        await sql.close();
+    }
+}
+
+async function ajouterAvis(reservationId, note, commentaire) {
+
+    try {
+        await sql.connect(config);
+        await sql.query`
+      INSERT INTO AvisCoiffeur (reservationId, note, commentaire)
+      VALUES (${reservationId}, ${note}, ${commentaire});
+    `;
+    } catch (error) {
+        throw error;
+    } finally {
+        await sql.close();
+    }
+}
+
 
 // Exportation des fonctions de la base de données
 module.exports = {
@@ -420,5 +471,7 @@ module.exports = {
     modifyClientInfo,
     getReservationsById,
     getBabierDataBySalonId,
-    getCoiffurePreEtablieDataBySalonId
+    getCoiffurePreEtablieDataBySalonId,
+    ajouterAvis,
+
 };

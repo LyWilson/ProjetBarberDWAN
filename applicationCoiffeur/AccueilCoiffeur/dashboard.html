@@ -13,22 +13,22 @@
                 transform: translateX(0); /* Début de l'animation */
             }
             50% {
-                transform: translateX(50%); /* Déplacement vers la droite */
-                opacity: 0; /* Disparition */
+                transform: translateX(85%); /* Déplacement vers la droite */
+                opacity: 1; /* Disparition */
             }
             100% {
-                transform: translateX(-50%); /* Retour à gauche */
+                transform: translateX(-20%); /* Retour à gauche */
                 opacity: 1; /* Réapparition */
             }
         }
         .animated-title {
-            animation: moveAndReset 10s ease-in-out infinite; /* Utilisation de l'animation sur l'élément */
+            animation: moveAndReset 8s ease-in-out infinite; /* Utilisation de l'animation sur l'élément */
             color : red;
         }
     </style>
 </head>
 <body>
-<h1 class="title is-centered has-text-centered animated-title">1 Place Sponsor Restant !! </h1>
+<h1 class="title animated-title">1 Place Sponsor Restant !! </h1>
     <section class="section1" style="margin-top: 20px;">
         <div class="container">
             <div class="box" style="border-width: medium; background-color: #EFFFFF;">

@@ -408,6 +408,29 @@ async function getCoiffeurId(email) {
     }
 }
 
+async function updateSponsor(salonId) {
+    try {
+        await sql.connect(config);
+        await sql.query `delete from Sponsor`;
+        await sql.query`insert into Sponsor (salonId) values (${salonId})`;
+    } catch (error) {
+        throw error;
+    } finally {
+        await sql.close();
+    }
+}
+
+async function getSponsorId() {
+    try {
+        await sql.connect(config);
+        const result = await sql.query`SELECT salonId FROM Sponsor`;
+        return result.recordset[0].salonId;
+    } catch (error) {
+        throw error;
+    } finally {
+        await sql.close();
+    }
+}
 
 // Exportation des fonctions de la base de données
 module.exports = {
@@ -433,5 +456,7 @@ module.exports = {
     getReservationsById,
     getBabierDataBySalonId,
     getCoiffurePreEtablieDataBySalonId,
-    getCoiffeurId
+    getCoiffeurId,
+    updateSponsor,
+    getSponsorId
 };

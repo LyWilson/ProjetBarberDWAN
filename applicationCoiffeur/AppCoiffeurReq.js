@@ -3,7 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const router = express.Router();
-const { getReservationsByCoiffeurId, getSalonId, getUserId, getHeuresTravail, getCoiffeurId} = require('../fonctionDb');
+const { getReservationsByCoiffeurId, getSalonId, getUserId, getHeuresTravail, getCoiffeurId, updateSponsor} = require('../fonctionDb');
 const fonctionDb = require("../fonctionDb");
 
 // Middleware to create directory if it doesn't exist
@@ -76,6 +76,18 @@ router.get('/getHeuresTravail', (req, res) => {
 router.get('/getCoiffeurId', (req, res) => {
     const email = req.query.email;
     getCoiffeurId(email)
+        .then((result) => {
+            res.json(result);
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('Internal Server Error');
+        });
+});
+
+router.get('/updateSponsor', async (req, res) => {
+    const salonId = req.query.salonId;
+    updateSponsor(salonId)
         .then((result) => {
             res.json(result);
         })

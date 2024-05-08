@@ -473,5 +473,7 @@ module.exports = {
     getBabierDataBySalonId,
     getCoiffurePreEtablieDataBySalonId,
     ajouterAvis,
-
+    getCoiffeurId,
+    updateSponsor,
+    getSponsorId
 };

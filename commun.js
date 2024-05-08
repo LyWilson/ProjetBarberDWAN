@@ -130,6 +130,7 @@ function getNavBarCoiffeur() {
 
     <div class="navbar-menu">
         <div class="navbar-end" style="color: white">
+            <a class="navbar-item text-white" style="color: white" href="http://localhost:3000/dashboard" id="profil">Dashboard</a>
             <a class="navbar-item text-white" style="color: white" href="http://localhost:3000/ProfilPC" id="profil">Le Salon</a>
             <a class="navbar-item text-white" style="color: white" href="http://localhost:3000/RdvPC" id="rdv">Mes Rendez-vous</a>
             <a class="navbar-item text-white" style="color: white" id="deconnexion">Déconnexion</a>

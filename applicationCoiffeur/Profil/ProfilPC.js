@@ -9,13 +9,14 @@ async function fetchSalonProfile(salonId) {
             throw new Error('Failed to fetch salon details');
         }
         const salonData = await response.json();
+        console.log(salonData);
         updateProfileSection(salonData);
     } catch (error) {
         console.error('Could not fetch salon data', error);
     }
 }
 
-function updateProfileSection({ salonId, nomSalon, adresse, numeroTelephone, description }) {
+function updateProfileSection({ salonId, nomSalon, adresse, numeroTelephoneSalon, description }) {
     const imageUrl = `/images/salon${salonId}/${salonId}.png`;
     const profileSection = document.querySelector('.section .is-one-third .box');
     profileSection.innerHTML = `
@@ -25,7 +26,7 @@ function updateProfileSection({ salonId, nomSalon, adresse, numeroTelephone, des
         <div class="field">
             <h3 class="title is-4 has-text-left">${nomSalon}</h3>
             <p>${adresse}</p>
-            <p>${numeroTelephone}</p>
+            <p>${numeroTelephoneSalon}</p>
             <h3 class="title is-6 has-text-left">Biographie</h3>
             <p>${description}</p>
         </div>

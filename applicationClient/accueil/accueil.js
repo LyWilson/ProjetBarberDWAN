@@ -265,13 +265,26 @@ function GenereMap() {
   });
 }
 
+async function getSponsorId() {
+  try {
+    const response = await fetch('/getSponsorId');
+    if (!response.ok) {
+      throw new Error('Failed to fetch sponsor id');
+    }
+    const sponsorId = await response.json();
+    loadSponsor(sponsorId);
+  } catch (error) {
+    console.error('Error fetching sponsor id:', error);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   authClient();
   Auth();
   generateNavBarWithAuth();
   generateFooter();
+  getSponsorId();
   loadSalons();
-  loadSponsor(9);
   deconnexion();
   GenereMap();
   document.addEventListener('input', filtrerSalons)

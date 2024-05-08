@@ -1,8 +1,21 @@
 import {authCoiffeur, deconnexion, generateFooter, generateNavBarWithAuth} from "../../commun.js";
 
-async function fetchReservationsBySalonId(salonId) {
+async function fetchCoiffeurId(email) {
     try {
-        const response = await fetch(`/getReservationsBySalonId?salonId=${salonId}`);
+        const response = await fetch(`/getCoiffeurId?email=${email}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch coiffeur ID');
+        }
+        const coiffeurId = await response.json();
+        fetchReservationsBySalonId(coiffeurId)
+    } catch (error) {
+        console.error('Could not fetch coiffeur ID', error);
+    }
+}
+
+async function fetchReservationsBySalonId(coiffeurId) {
+    try {
+        const response = await fetch(`/getReservationsByCoiffeurId?coiffeurId=${coiffeurId}`);
         if (!response.ok) {
             throw new Error('Failed to fetch reservations by salon ID');
         }
@@ -16,8 +29,26 @@ async function fetchReservationsBySalonId(salonId) {
 function updateReservationsSection(reservations) {
     console.log(reservations);
     const currentDate = new Date();
-    const upcomingReservations = reservations.filter(reservation => new Date(reservation.dateHeureReservation) > currentDate);
-    const pastReservations = reservations.filter(reservation => new Date(reservation.dateHeureReservation) <= currentDate);
+
+    const convertDateToISO = dateString => {
+        const parts = dateString.split(' ');
+        const datePart = parts[0];
+        const timePart = parts[1].split('-')[0]; // Only take the start time
+        return `${datePart}T${timePart}:00.000Z`;
+    };
+
+    const upcomingReservations = reservations.filter(reservation => {
+        const reservationDate = new Date(convertDateToISO(reservation.dateHeureReservation));
+        return reservationDate > currentDate;
+    });
+
+    const pastReservations = reservations.filter(reservation => {
+        const reservationDate = new Date(convertDateToISO(reservation.dateHeureReservation));
+        return reservationDate <= currentDate;
+    });
+
+    console.log(upcomingReservations);
+    console.log(pastReservations);
 
     const upcomingBox = document.getElementById('upcomingBox');
     const historyBox = document.getElementById('historyBox');
@@ -56,5 +87,5 @@ document.addEventListener("DOMContentLoaded", async function(event) {
     generateFooter();
     generateNavBarWithAuth()
     deconnexion()
-    fetchReservationsBySalonId(salonId);
+    fetchCoiffeurId(email);
 });

@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { prendreRendezVous, getReservationData, getProfilData, getSalonFavoris, addSalonToFavorites, removeSalonFromFavorites,
-    getUserId, deleteReservation, modifierRendezVous, isSalonFavorite,modifyClientInfo, getReservationsById, getBabierDataBySalonId, getCoiffurePreEtablieDataBySalonId, ajouterAvis
+    getUserId, deleteReservation, modifierRendezVous, isSalonFavorite,modifyClientInfo, getReservationsById, getBabierDataBySalonId, getCoiffurePreEtablieDataBySalonId, ajouterAvis,
+    getSponsorId
 } = require('../fonctionDb');
 
 // 1) Route pour obtenir les données du salon
@@ -223,6 +224,15 @@ router.post('/ajouterAvis/:reservationId', async (req, res) => {
         res.status(500).send('Internal Server Error'); // Error response
     }
 })
+router.get('/getSponsorId', (req, res) => {
+    getSponsorId()
+        .then((result) => {
+            res.json(result);
+        })
+        .catch(error => {
+            console.error('Database access error:', error);
+            res.status(500).send('Internal Server Error');
+        });
+})
 
 module.exports = router;
-

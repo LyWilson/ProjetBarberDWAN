@@ -163,6 +163,15 @@ function initLineChart() {
     const lineChart = new Chart(ctx, config);
 }
 
+async function updateSponsor(salonId) {
+    const response = await fetch(`/updateSponsor?salonId=${salonId}`);
+    if (response.ok) {
+        alert('Sponsor updated successfully');
+    } else {
+        alert('Failed to update sponsor');
+    }
+}
+
 document.addEventListener("DOMContentLoaded", async function(event) {
     authCoiffeur();
     event.preventDefault()
@@ -177,5 +186,5 @@ document.addEventListener("DOMContentLoaded", async function(event) {
     initializePieChart(salonId);
     initbarChart();
     initLineChart()
+    document.getElementById('updateSponsor').addEventListener('click', () => updateSponsor(salonId));
 });
-

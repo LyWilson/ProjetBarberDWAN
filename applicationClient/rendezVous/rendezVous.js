@@ -64,44 +64,54 @@ async function infoReservation() {
 function generateCarteReservation(reservationId, dateHeureReservation, coiffeurPrenom, coiffeurNom, nomSalon, adresse, nomCoiffure, descriptionCoiffure, dureeReservation, reservation) {
   const reservationsContainer = document.getElementById('reservationsContainer');
 
-  const date = new Date(dateHeureReservation);
-  const options = { year: 'numeric', month: 'long', day: 'numeric'}
-  const dateFormatted = date.toLocaleDateString('fr-FR', options) + ` à ${date.getHours().toString().padStart(2, '0')}h${date.getMinutes().toString().padStart(2, '0')}`;
+  // Séparer la date et l'heure de la réservation
+  const [datePart, timePart, nothing, timePartEnd] = dateHeureReservation.split(' ');
+  const [year, month, day] = datePart.split('-');
 
+  // Obtenir le nom du mois
+  const months = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+  const monthName = months[parseInt(month, 10) - 1];
+
+  // Construction de la carte HTML de réservation
   const reservationHtml = `
-  <div class="card reservation-card">
-      <header class="card-header">
-          <p class="card-header-title">
-              RÉSERVATION: ${dateFormatted}
-          </p>
-      </header>
-      <div class="card-content">
-          <div class="content">
-              <p><strong>Coiffeur:  </strong>${coiffeurPrenom} ${coiffeurNom}</p>
-              <p><strong>Salon:  </strong>${nomSalon}</p>
-              <p><strong>Adresse:  </strong>${adresse}</p>
-              <p><strong>Style de coiffure:  </strong>${nomCoiffure}</p>
-              <p><strong>Description:  </strong>${descriptionCoiffure}</p>
-              <p><strong>Durée de la réservation:  </strong>${dureeReservation} minutes</p>
-          </div>
-          <div class="card-footer">
-            <a class="card-footer-item" id="btnModReservation${reservationId}">Modifier la réservation</a>
-            <a class="card-footer-item annuler-reservation" id="btnDeleteReservation${reservationId}")>Annuler la réservation</a>
-          </div>
-      </div>
-  </div>`;
+    <div class="card reservation-card">
+        <header class="card-header">
+            <p class="card-header-title">
+                RÉSERVATION: ${parseInt(day, 10)} ${monthName} ${year} à ${timePart} - ${timePartEnd}
+            </p>
+        </header>
+        <div class="card-content">
+            <div class="content">
+                <p><strong>Coiffeur: </strong>${coiffeurPrenom} ${coiffeurNom}</p>
+                <p><strong>Salon: </strong>${nomSalon}</p>
+                <p><strong>Adresse: </strong>${adresse}</p>
+                <p><strong>Style de coiffure: </strong>${nomCoiffure}</p>
+                <p><strong>Description: </strong>${descriptionCoiffure}</p>
+                <p><strong>Durée de la réservation: </strong>${dureeReservation} minutes</p>
+            </div>
+            <div class="card-footer">
+              <a class="card-footer-item" id="btnModReservation${reservationId}">Modifier la réservation</a>
+              <a class="card-footer-item annuler-reservation" id="btnDeleteReservation${reservationId}">Annuler la réservation</a>
+            </div>
+        </div>
+    </div>`;
+
+  // Insérer la carte de réservation dans le conteneur des réservations
   reservationsContainer.insertAdjacentHTML('beforeend', reservationHtml);
 
+  // Ajouter un écouteur d'événement pour le bouton de suppression de réservation
   const btnDeleteReservation = document.getElementById(`btnDeleteReservation${reservationId}`);
   btnDeleteReservation.addEventListener('click', () => {
     deleteReservationId(reservationId);
   });
 
+  // Ajouter un écouteur d'événement pour le bouton de modification de réservation
   const btnModReservation = document.getElementById(`btnModReservation${reservationId}`);
-    btnModReservation.addEventListener('click', () => {
-        modifierReservation(reservationId);
-    });
+  btnModReservation.addEventListener('click', () => {
+    modifierReservation(reservationId);
+  });
 }
+
 
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -7,9 +7,10 @@ document.addEventListener('DOMContentLoaded', function() {
     deconnexion();
     fetchBarbers();
     fetchHairstyles();
+    heureDisponible();
 
     async function fetchBarbers() {
-        let SalonId = window.location.search.split('=')[1];
+        let SalonId = window.location.search.split('=')[1]
         try {
             const response = await fetch(`/getBabierDataBySalonId/${SalonId}`);
             if (!response.ok) {
@@ -28,9 +29,45 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    async function fetchHairstyles() {
+    async function heureDisponible() {
+        let SalonId = window.location.search.split('=')[1]
         try {
-            const response = await fetch('/getCoiffurePreEtablieData');
+            const response = await fetch(`/getSalonDataBySalonId/?salonId=${SalonId}`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const heures = await response.json();
+            console.log(heures);
+            const select = document.getElementById('appointmentTime');
+            const heuresDropdown = listeDispo(heures.horairesOuverture);
+            heuresDropdown.forEach(dropdown => {
+                const option = document.createElement('option');
+                option.innerHTML = dropdown;
+                select.appendChild(option);
+            });
+
+        } catch (error) {
+            console.error('Error fetching barbers:', error);
+        }
+    }
+
+    function listeDispo(timeRange) {
+        const [startHour, endHour] = timeRange.split(" - ").map(time => parseInt(time.split(":")[0]));
+
+        const dropdowns = [];
+
+        for (let hour = startHour; hour < endHour; hour++) {
+            const dropdown = `<option value="${hour}:00 - ${hour + 1}:00">${hour}:00 - ${hour + 1}:00</option>`;
+            dropdowns.push(dropdown);
+        }
+
+        return dropdowns;
+    }
+
+    async function fetchHairstyles() {
+        let SalonId = window.location.search.split('=')[1]
+        try {
+            const response = await fetch(`/getCoiffurePreEtablieDataBySalonId/${SalonId}`);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }

@@ -57,5 +57,4 @@ router.get('/getSalonId', (req, res) => {
         });
 });
 
-
 module.exports = router;

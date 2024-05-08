@@ -255,7 +255,6 @@ async function getSalonId(email) {
     try {
         await sql.connect(config);
         const result = await sql.query`SELECT salonId FROM Coiffeur WHERE email = ${email}`;
-        console.log(result.recordset[0].salonId);
         return result.recordset[0].salonId;
     } catch (error) {
         throw error;
@@ -386,6 +385,19 @@ async function getBabierDataBySalonId(id) {
     }
 }
 
+async function getCoiffurePreEtablieDataBySalonId(id) {
+    try {
+        await sql.connect(config);
+        const result = await sql.query`SELECT * FROM CoiffurePreEtablie WHERE salonId = ${id}`;
+        return result.recordset;
+    } catch (error) {
+        throw error;
+    } finally {
+        await sql.close();
+    }
+}
+
+
 // Exportation des fonctions de la base de données
 module.exports = {
     getSalonData,
@@ -407,5 +419,6 @@ module.exports = {
     getSalonId,
     modifyClientInfo,
     getReservationsById,
-    getBabierDataBySalonId
+    getBabierDataBySalonId,
+    getCoiffurePreEtablieDataBySalonId
 };

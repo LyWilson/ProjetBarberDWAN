@@ -3,7 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const router = express.Router();
-const { getReservationsBySalonId, getSalonId, getUserId, getHeuresTravail} = require('../fonctionDb');
+const { getReservationsByCoiffeurId, getSalonId, getUserId, getHeuresTravail, getCoiffeurId} = require('../fonctionDb');
 const fonctionDb = require("../fonctionDb");
 
 // Middleware to create directory if it doesn't exist
@@ -36,9 +36,9 @@ router.post('/upload/:salonId', upload.single('photo'), (req, res) => {
     res.send('File uploaded successfully!');
 });
 
-router.get('/getReservationsBySalonId', (req, res) => {
-    const salonId = req.query.salonId;
-    getReservationsBySalonId(salonId)
+router.get('/getReservationsByCoiffeurId', (req, res) => {
+    const coiffeurId = req.query.coiffeurId;
+    getReservationsByCoiffeurId(coiffeurId)
         .then((result) => {
             res.json(result);
         })
@@ -64,6 +64,18 @@ router.get('/getHeuresTravail', (req, res) => {
     const salonId = req.query.salonId
     console.log(salonId)
     getHeuresTravail(salonId)
+        .then((result) => {
+            res.json(result);
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('Internal Server Error');
+        });
+});
+
+router.get('/getCoiffeurId', (req, res) => {
+    const email = req.query.email;
+    getCoiffeurId(email)
         .then((result) => {
             res.json(result);
         })

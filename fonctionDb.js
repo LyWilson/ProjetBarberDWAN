@@ -193,7 +193,7 @@ async function getInfoCoiffure(CoiffureId) {
     }
 }
 
-async function getReservationsBySalonId(salonId) {
+async function getReservationsByCoiffeurId(coiffeurId) {
     try {
         await sql.connect(config);
         const result = await sql.query`
@@ -211,7 +211,7 @@ async function getReservationsBySalonId(salonId) {
         INNER JOIN Coiffeur ON Reservation.coiffeurId = Coiffeur.coiffeurId
         INNER JOIN Salon ON Coiffeur.salonId = Salon.salonId
         INNER JOIN CoiffurePreEtablie ON Reservation.coiffureId = CoiffurePreEtablie.coiffureId
-        WHERE Salon.salonId = ${salonId}
+        WHERE Reservation.coiffeurId = ${coiffeurId}
         ORDER BY Reservation.dateHeureReservation DESC;
     `;
         return result.recordset;
@@ -396,6 +396,18 @@ async function getCoiffurePreEtablieDataBySalonId(id) {
     }
 }
 
+async function getCoiffeurId(email) {
+    try {
+        await sql.connect(config);
+        const result = await sql.query`SELECT coiffeurId FROM Coiffeur WHERE email = ${email}`;
+        return result.recordset[0].coiffeurId;
+    } catch (error) {
+        throw error;
+    } finally {
+        await sql.close();
+    }
+}
+
 
 // Exportation des fonctions de la base de données
 module.exports = {
@@ -410,7 +422,7 @@ module.exports = {
     removeSalonFromFavorites,
     prendreRendezVous,
     getBabierData,
-    getReservationsBySalonId,
+    getReservationsByCoiffeurId,
     getHeuresTravail,
     getUserId,
     deleteReservation,
@@ -420,5 +432,6 @@ module.exports = {
     modifyClientInfo,
     getReservationsById,
     getBabierDataBySalonId,
-    getCoiffurePreEtablieDataBySalonId
+    getCoiffurePreEtablieDataBySalonId,
+    getCoiffeurId
 };

@@ -67,6 +67,13 @@ router.get("/salonDetails.js", (req, res) => {
     res.sendFile(join(__dirname + '/applicationClient/salonDetails', 'salonDetails.js'));
 });
 
+router.get("/avisClient", (req, res) => {
+    res.sendFile(join(__dirname + '/applicationClient/avis', 'avisClient.html'));
+})
+
+router.get("/avisClient.js", (req, res) => {
+    res.sendFile(join(__dirname + '/applicationClient/avis', 'avisClient.js'));
+})
 
 router.get("/appClient.css", (req, res) => {
     res.sendFile(join(__dirname + '/applicationClient', 'appClient.css'));

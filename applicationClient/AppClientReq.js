@@ -213,11 +213,10 @@ router.get('/getCoiffurePreEtablieDataBySalonId/:salonId', (req, res) => {
         });
 })
 
-router.post('/ajouterAvis/:reservationId', async (req, res) => {
+router.post('/ajouterAvis', async (req, res) => {
     try {
-        const reservationId = req.params.reservationId
-        const { note, avis } = req.body
-        await ajouterAvis(reservationId, note, avis);
+        const { coiffeurId, clientId, note, avis } = req.body
+        await ajouterAvis( coiffeurId, clientId, note, avis);
         res.sendStatus(200);
     } catch (error) {
         console.error('Error adding avis:', error);

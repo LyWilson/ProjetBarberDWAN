@@ -1,10 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Prendre un Rendez-vous</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+    <div id="navigationBar"></div>
 </head>
 <body>
-$END$
+<section class="section">
+    <div class="container">
+        <div class="card reservation-card">
+            <header class="card-header">
+                <p class="card-header-title">
+                    Réservation
+                </p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <p id="coiffeur"></p>
+                    <p id="salon"></p>
+                    <p id="address"></p>
+                    <p id="style"></p>
+                    <p id="description"></p>
+                    <p id="duree"></p>
+                </div>
+            </div>
+        </div>
+        <p></br></p>
+        <h1 class="title">Avis</h1>
+        <div class="field">
+            <label class="label">Babier:</label>
+            <div>
+                <p class="control">
+                    <span class="select">
+                        <select id="barber"></select>
+                    </span>
+                </p>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Note:</label>
+            <div>
+                <p class="control">
+                    <span class="select">
+                        <select id="note">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </span>
+                </p>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Commentaire:</label>
+            <div>
+                <p class="control">
+                    <textarea class="textarea" id="comment" placeholder="Commentaire"></textarea>
+                </p>
+            </div>
+        </div>
+
+
+
+        <div class="field">
+            <button class="button is-link" id="submit">Confirmer</button>
+        </div>
+    </div>
+</section>
 </body>
+<script src="/avisClient.js" type="module"></script>
+<div id="footer"></div>
 </html>

@@ -61,6 +61,15 @@ async function infoReservation() {
   }
 }
 
+async function creerAvis(reservationId) {
+    try {
+        window.location.href = `/avisClient?reservationId=${reservationId}`;
+    } catch (error) {
+        console.error(error);
+    }
+
+}
+
 function generateCarteReservation(reservationId, dateHeureReservation, coiffeurPrenom, coiffeurNom, nomSalon, adresse, nomCoiffure, descriptionCoiffure, dureeReservation, reservation) {
   const reservationsContainer = document.getElementById('reservationsContainer');
 
@@ -92,6 +101,7 @@ function generateCarteReservation(reservationId, dateHeureReservation, coiffeurP
             <div class="card-footer">
               <a class="card-footer-item" id="btnModReservation${reservationId}">Modifier la réservation</a>
               <a class="card-footer-item annuler-reservation" id="btnDeleteReservation${reservationId}">Annuler la réservation</a>
+              <a class="card-footer-item" id="avis${reservationId}">Avis</a>
             </div>
         </div>
     </div>`;
@@ -109,6 +119,11 @@ function generateCarteReservation(reservationId, dateHeureReservation, coiffeurP
   const btnModReservation = document.getElementById(`btnModReservation${reservationId}`);
   btnModReservation.addEventListener('click', () => {
     modifierReservation(reservationId);
+  });
+
+  const btnAvis = document.getElementById(`avis${reservationId}`);
+  btnAvis.addEventListener('click', () => {
+    creerAvis(reservationId);
   });
 }
 

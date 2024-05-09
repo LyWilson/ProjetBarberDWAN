@@ -354,7 +354,8 @@ async function getReservationsById(id) {
         Salon.adresse,
         CoiffurePreEtablie.nomCoiffure,
         CoiffurePreEtablie.descriptionCoiffure,
-        Salon.salonId
+        Salon.salonId,
+        Client.clientId
       FROM Reservation
       INNER JOIN Coiffeur ON Reservation.coiffeurId = Coiffeur.coiffeurId
       INNER JOIN Salon ON Coiffeur.salonId = Salon.salonId
@@ -432,13 +433,13 @@ async function getSponsorId() {
     }
 }
 
-async function ajouterAvis(reservationId, note, commentaire) {
+async function ajouterAvis( coiffeurId, clientId, note, commentaire) {
 
     try {
         await sql.connect(config);
         await sql.query`
-      INSERT INTO AvisCoiffeur (reservationId, note, commentaire)
-      VALUES (${reservationId}, ${note}, ${commentaire});
+      INSERT INTO AvisCoiffeur ( coiffeurId, clientId, evaluation, message)
+      VALUES (${coiffeurId}, ${clientId}, ${note}, ${commentaire});
     `;
     } catch (error) {
         throw error;

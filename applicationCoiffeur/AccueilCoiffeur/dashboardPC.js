@@ -1,56 +1,59 @@
 import {authCoiffeur, deconnexion, generateFooter, generateNavBarWithAuth} from "../../commun.js";
 
 //Pie Chart
-async function initializePieChart(salonId) {
-    // Make sure the salonId is valid or exit the function
-    if (!salonId) return console.error('Salon ID is required');
-
+async function initializePieChartWithReviews(coiffeurId) {
     try {
-        // Fetch the salon data
-        const response = await fetch(`/getSalonDataBySalonId?salonId=${salonId}`);
-        if (!response.ok) {
-            throw new Error('Salon not found');
-        }
-        const salonData = await response.json();
+        const avisResponse = await fetch(`/getAvisClientById?coiffeurId=${coiffeurId}`);
+        if (avisResponse.ok) {
+            const avisClients = await avisResponse.json();
 
-        // Extract the evaluation score from salonData
-        const reviewScore = salonData.evaluation; // Assuming 'evaluation' is the column name
-        const maxScore = 5; // Assuming the max score is 5
+            // Calculate number of positive, negative, and neutral reviews
+            let positiveReviews = 0;
+            let negativeReviews = 0;
+            let neutralReviews = 0;
 
-        // Initialize the pie chart with the fetched data
-        const ctx = document.getElementById('chartContainer').getContext('2d');
-        const chart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['Score', 'Remaining'],
-                datasets: [{
-                    label: 'All Time Review',
-                    data: [reviewScore, maxScore - reviewScore],
-                    backgroundColor: [
-                        'rgb(255, 99, 132)',
-                        'rgb(211, 211, 211)'
-                    ],
-                    hoverOffset: 4
-                }]
-            },
-            options: {
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'bottom'
+            avisClients.forEach(review => {
+                if (review.evaluation > 3) {
+                    positiveReviews++;
+                } else if (review.evaluation < 3) {
+                    negativeReviews++;
+                } else {
+                    neutralReviews++;
+                }
+            });
+
+            // Initialize the pie chart with review data
+            const ctx = document.getElementById('chartContainer').getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Positive', 'Negative', 'Neutral'],
+                    datasets: [{
+                        label: 'Reviews',
+                        data: [positiveReviews, negativeReviews, neutralReviews],
+                        backgroundColor: [
+                            'rgb(75, 192, 192)',
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 205, 86)'
+                        ],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom'
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
     } catch (error) {
-        console.error('Error fetching salon data:', error);
+        console.error('Error initializing pie chart with reviews:', error);
     }
 }
 
-
-
-
-//
 const Utils = {
     months: function({count}) {
         // Assuming this function returns an array of month names
@@ -172,19 +175,63 @@ async function updateSponsor(salonId) {
     }
 }
 
+async function getCoiffeurId(email) {
+    try {
+        const response = await fetch(`/getCoiffeurId?email=${email}`);
+        if (response.ok) {
+            return await response.json();
+        }
+    } catch (error) {
+        console.error('Failed to get coiffeur ID:', error);
+    }
+}
+
+async function getAvisClientById(coiffeurId) {
+    try {
+        const avisClientResponse = await fetch(`/getAvisClientById?coiffeurId=${coiffeurId}`);
+        if (avisClientResponse.ok) {
+            const avisClients = await avisClientResponse.json();
+            afficherAvisClients(avisClients);
+        }
+    } catch (error) {
+        console.error('Failed to fetch avis clients:', error);
+    }
+}
+
+async function afficherAvisClients(avisClients) {
+    const reviewsList = document.getElementById('customerReviews');
+
+    if (avisClients && avisClients.length > 0) {
+        reviewsList.innerHTML = '';
+
+        avisClients.forEach(review => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `<strong>Client:</strong> ${review.nom_client} ${review.prenom_client}, <strong>Rating:</strong> ${review.evaluation}/5<br>${review.message}`;
+            reviewsList.appendChild(listItem);
+        });
+    } else {
+        reviewsList.innerHTML = '<li>Aucun avis disponible pour le moment.</li>';
+    }
+}
+
+
 document.addEventListener("DOMContentLoaded", async function(event) {
     authCoiffeur();
     event.preventDefault()
     const token = sessionStorage.getItem('tokenCoiffeur');
     const info = token => decodeURIComponent(atob(token.split('.')[1].replace('-', '+').replace('_', '/')).split('').map(c => `%${('00' + c.charCodeAt(0).toString(16)).slice(-2)}`).join(''));
     const email = JSON.parse(info(token)).email;
-    const resultat = await fetch(`/getSalonId?email=${email}`)
-    const salonId = await resultat.json();
-    generateFooter();
-    generateNavBarWithAuth();
-    deconnexion();
-    initializePieChart(salonId);
-    initbarChart();
-    initLineChart()
-    document.getElementById('updateSponsor').addEventListener('click', () => updateSponsor(salonId));
+    const coiffeurId = await getCoiffeurId(email);
+    if (coiffeurId) {
+        generateFooter();
+        generateNavBarWithAuth();
+        deconnexion();
+        getAvisClientById(coiffeurId);
+        initializePieChartWithReviews(coiffeurId);
+        initbarChart();
+        initLineChart();
+        document.getElementById('updateSponsor').addEventListener('click', () => updateSponsor(coiffeurId));
+    } else {
+        console.error('Failed to get coiffeur ID');
+    }
 });

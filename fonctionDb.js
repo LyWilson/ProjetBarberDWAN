@@ -448,6 +448,22 @@ async function ajouterAvis( coiffeurId, clientId, note, commentaire) {
     }
 }
 
+async function getAvisClientsById(coiffeurId) {
+    try {
+        await sql.connect(config);
+        const result = await sql.query`
+            SELECT AvisCoiffeur.*, Client.nom AS nom_client, Client.prenom AS prenom_client 
+            FROM AvisCoiffeur 
+            INNER JOIN Client ON AvisCoiffeur.clientId = Client.clientId
+            WHERE AvisCoiffeur.coiffeurId = ${coiffeurId}`;
+        return result.recordset;
+    } catch (error) {
+        throw error;
+    } finally {
+        await sql.close();
+    }
+}
+
 // Exportation des fonctions de la base de données
 module.exports = {
     getSalonData,
@@ -473,6 +489,7 @@ module.exports = {
     getBabierDataBySalonId,
     getCoiffurePreEtablieDataBySalonId,
     ajouterAvis,
+    getAvisClientsById,
     getCoiffeurId,
     updateSponsor,
     getSponsorId

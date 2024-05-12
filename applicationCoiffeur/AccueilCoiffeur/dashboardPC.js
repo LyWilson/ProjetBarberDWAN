@@ -1,71 +1,59 @@
 import {authCoiffeur, deconnexion, generateFooter, generateNavBarWithAuth} from "../../commun.js";
 
 //Pie Chart
-async function initializePieChartWithReviews(email) {
+async function initializePieChartWithReviews(coiffeurId) {
     try {
-        const coiffeurIdResponse = await fetch(`/getCoiffeurId?email=${email}`);
-        if (!coiffeurIdResponse.ok) {
-            return null;
-        }
-
-        const coiffeurId = await coiffeurIdResponse.json();
         const avisResponse = await fetch(`/getAvisClientById?coiffeurId=${coiffeurId}`);
-        if (!avisResponse.ok) {
-            throw new Error('Failed to fetch avis clients');
-        }
-        const avisClients = await avisResponse.json();
-        console.log(avisClients);
+        if (avisResponse.ok) {
+            const avisClients = await avisResponse.json();
 
-        // Calculate number of positive, negative, and neutral reviews
-        let positiveReviews = 0;
-        let negativeReviews = 0;
-        let neutralReviews = 0;
+            // Calculate number of positive, negative, and neutral reviews
+            let positiveReviews = 0;
+            let negativeReviews = 0;
+            let neutralReviews = 0;
 
-        avisClients.forEach(review => {
-            if (review.evaluation > 3) {
-                positiveReviews++;
-            } else if (review.evaluation < 3) {
-                negativeReviews++;
-            } else {
-                neutralReviews++;
-            }
-        });
+            avisClients.forEach(review => {
+                if (review.evaluation > 3) {
+                    positiveReviews++;
+                } else if (review.evaluation < 3) {
+                    negativeReviews++;
+                } else {
+                    neutralReviews++;
+                }
+            });
 
-        // Initialize the pie chart with review data
-        const ctx = document.getElementById('chartContainer').getContext('2d');
-        const chart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['Positive', 'Negative', 'Neutral'],
-                datasets: [{
-                    label: 'Reviews',
-                    data: [positiveReviews, negativeReviews, neutralReviews],
-                    backgroundColor: [
-                        'rgb(75, 192, 192)',
-                        'rgb(255, 99, 132)',
-                        'rgb(255, 205, 86)'
-                    ],
-                    hoverOffset: 4
-                }]
-            },
-            options: {
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'bottom'
+            // Initialize the pie chart with review data
+            const ctx = document.getElementById('chartContainer').getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Positive', 'Negative', 'Neutral'],
+                    datasets: [{
+                        label: 'Reviews',
+                        data: [positiveReviews, negativeReviews, neutralReviews],
+                        backgroundColor: [
+                            'rgb(75, 192, 192)',
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 205, 86)'
+                        ],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom'
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
     } catch (error) {
         console.error('Error initializing pie chart with reviews:', error);
     }
 }
 
-
-
-
-//
 const Utils = {
     months: function({count}) {
         // Assuming this function returns an array of month names
@@ -198,20 +186,15 @@ async function getCoiffeurId(email) {
     }
 }
 
-async function getAvisClientById(email) {
-    const coiffeurIdResponse = await fetch(`/getCoiffeurId?email=${email}`);
-    if (!coiffeurIdResponse.ok) {
-        return null;
-    }
-
-    const coiffeurId = await coiffeurIdResponse.json();
-    const avisClientResponse = await fetch(`/getAvisClientById?coiffeurId=${coiffeurId}`);
-
-    if (avisClientResponse.ok) {
-        const avisClients = await avisClientResponse.json();
-        afficherAvisClients(avisClients);
-    } else {
-        return null;
+async function getAvisClientById(coiffeurId) {
+    try {
+        const avisClientResponse = await fetch(`/getAvisClientById?coiffeurId=${coiffeurId}`);
+        if (avisClientResponse.ok) {
+            const avisClients = await avisClientResponse.json();
+            afficherAvisClients(avisClients);
+        }
+    } catch (error) {
+        console.error('Failed to fetch avis clients:', error);
     }
 }
 
@@ -238,14 +221,17 @@ document.addEventListener("DOMContentLoaded", async function(event) {
     const token = sessionStorage.getItem('tokenCoiffeur');
     const info = token => decodeURIComponent(atob(token.split('.')[1].replace('-', '+').replace('_', '/')).split('').map(c => `%${('00' + c.charCodeAt(0).toString(16)).slice(-2)}`).join(''));
     const email = JSON.parse(info(token)).email;
-    const resultat = await fetch(`/getSalonId?email=${email}`)
-    const salonId = await resultat.json();
-    generateFooter();
-    generateNavBarWithAuth();
-    deconnexion();
-    getAvisClientById(email);
-    initializePieChartWithReviews(email);
-    initbarChart();
-    initLineChart();
-    document.getElementById('updateSponsor').addEventListener('click', () => updateSponsor(salonId));
+    const coiffeurId = await getCoiffeurId(email);
+    if (coiffeurId) {
+        generateFooter();
+        generateNavBarWithAuth();
+        deconnexion();
+        getAvisClientById(coiffeurId);
+        initializePieChartWithReviews(coiffeurId);
+        initbarChart();
+        initLineChart();
+        document.getElementById('updateSponsor').addEventListener('click', () => updateSponsor(coiffeurId));
+    } else {
+        console.error('Failed to get coiffeur ID');
+    }
 });

@@ -172,6 +172,41 @@ async function updateSponsor(salonId) {
     }
 }
 
+async function getAvisClientById(email) {
+    const coiffeurIdResponse = await fetch(`/getCoiffeurId?email=${email}`);
+    if (!coiffeurIdResponse.ok) {
+        return null;
+    }
+
+    const coiffeurId = await coiffeurIdResponse.json();
+    const avisClientResponse = await fetch(`/getAvisClientById?coiffeurId=${coiffeurId}`);
+
+    if (avisClientResponse.ok) {
+        const avisClients = await avisClientResponse.json();
+        console.log(avisClients);
+        afficherAvisClients(avisClients);
+    } else {
+        return null;
+    }
+}
+
+async function afficherAvisClients(avisClients) {
+    const reviewsList = document.getElementById('customerReviews');
+
+    if (avisClients && avisClients.length > 0) {
+        reviewsList.innerHTML = '';
+
+        avisClients.forEach(review => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `<strong>Client:</strong> ${review.nom_client} ${review.prenom_client}, <strong>Rating:</strong> ${review.evaluation}/5<br>${review.message}`;
+            reviewsList.appendChild(listItem);
+        });
+    } else {
+        reviewsList.innerHTML = '<li>Aucun avis disponible pour le moment.</li>';
+    }
+}
+
+
 document.addEventListener("DOMContentLoaded", async function(event) {
     authCoiffeur();
     event.preventDefault()
@@ -185,6 +220,7 @@ document.addEventListener("DOMContentLoaded", async function(event) {
     deconnexion();
     initializePieChart(salonId);
     initbarChart();
-    initLineChart()
+    initLineChart();
+    getAvisClientById(email);
     document.getElementById('updateSponsor').addEventListener('click', () => updateSponsor(salonId));
 });

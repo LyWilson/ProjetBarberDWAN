@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { prendreRendezVous, getReservationData, getProfilData, getSalonFavoris, addSalonToFavorites, removeSalonFromFavorites,
     getUserId, deleteReservation, modifierRendezVous, isSalonFavorite,modifyClientInfo, getReservationsById, getBabierDataBySalonId, getCoiffurePreEtablieDataBySalonId, ajouterAvis,
-    getSponsorId
+    getSponsorId, deleteClientAccount
 } = require('../fonctionDb');
 
 // 1) Route pour obtenir les données du salon
@@ -233,5 +233,16 @@ router.get('/getSponsorId', (req, res) => {
             res.status(500).send('Internal Server Error');
         });
 })
+
+router.delete('/deleteClientAccount', async (req, res) => {
+    try {
+        const clientId = req.query.clientId;
+        await deleteClientAccount(clientId);
+        res.sendStatus(200);
+    } catch (error) {
+        console.error('Error deleting client account:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 module.exports = router;

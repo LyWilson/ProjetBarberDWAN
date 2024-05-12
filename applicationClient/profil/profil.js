@@ -43,6 +43,29 @@ async function modifyClientInfo(event) {
 }
 document.getElementById('BtnSubmit').addEventListener('click', modifyClientInfo);
 
+async function deleteAccount(event) {
+    event.preventDefault()
+    const email = JSON.parse(info(token)).email;
+    const response = await fetch(`/getProfilData?email=${email}`);
+    if (!response.ok) {
+        throw new Error('Failed to fetch salon data');
+    }
+    const data = await response.json();
+    const clientId = data.clientId;
+    const responseDelete = await fetch(`/deleteClientAccount?clientId=${clientId}`, {
+        method: 'DELETE',
+    });
+    if (!responseDelete.ok) {
+        throw new Error('Failed to fetch salon data');
+    }
+
+    if (confirm("etes-vous sûr de vouloir supprimer votre compte?")) {
+        alert("Votre compte a été supprimé avec succès");
+    }
+}
+
+document.getElementById("BtnDeleteAccount").addEventListener("click", deleteAccount);
+
 document.addEventListener("DOMContentLoaded", () => {
     authClient();
     generateFooter();

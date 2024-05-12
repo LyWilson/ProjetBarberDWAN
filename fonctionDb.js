@@ -464,6 +464,17 @@ async function getAvisClientsById(coiffeurId) {
     }
 }
 
+async function deleteClientAccount(clientId) {
+    try {
+        await sql.connect(config);
+        await sql.query`DELETE FROM Client WHERE clientId = ${clientId}`;
+    } catch (error) {
+        throw error;
+    } finally {
+        await sql.close();
+    }
+}
+
 // Exportation des fonctions de la base de données
 module.exports = {
     getSalonData,
@@ -492,5 +503,6 @@ module.exports = {
     getAvisClientsById,
     getCoiffeurId,
     updateSponsor,
-    getSponsorId
+    getSponsorId,
+    deleteClientAccount
 };

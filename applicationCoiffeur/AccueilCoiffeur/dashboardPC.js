@@ -1,34 +1,49 @@
 import {authCoiffeur, deconnexion, generateFooter, generateNavBarWithAuth} from "../../commun.js";
 
 //Pie Chart
-async function initializePieChart(salonId) {
-    // Make sure the salonId is valid or exit the function
-    if (!salonId) return console.error('Salon ID is required');
-
+async function initializePieChartWithReviews(email) {
     try {
-        // Fetch the salon data
-        const response = await fetch(`/getSalonDataBySalonId?salonId=${salonId}`);
-        if (!response.ok) {
-            throw new Error('Salon not found');
+        const coiffeurIdResponse = await fetch(`/getCoiffeurId?email=${email}`);
+        if (!coiffeurIdResponse.ok) {
+            return null;
         }
-        const salonData = await response.json();
 
-        // Extract the evaluation score from salonData
-        const reviewScore = salonData.evaluation; // Assuming 'evaluation' is the column name
-        const maxScore = 5; // Assuming the max score is 5
+        const coiffeurId = await coiffeurIdResponse.json();
+        const avisResponse = await fetch(`/getAvisClientById?coiffeurId=${coiffeurId}`);
+        if (!avisResponse.ok) {
+            throw new Error('Failed to fetch avis clients');
+        }
+        const avisClients = await avisResponse.json();
+        console.log(avisClients);
 
-        // Initialize the pie chart with the fetched data
+        // Calculate number of positive, negative, and neutral reviews
+        let positiveReviews = 0;
+        let negativeReviews = 0;
+        let neutralReviews = 0;
+
+        avisClients.forEach(review => {
+            if (review.evaluation > 3) {
+                positiveReviews++;
+            } else if (review.evaluation < 3) {
+                negativeReviews++;
+            } else {
+                neutralReviews++;
+            }
+        });
+
+        // Initialize the pie chart with review data
         const ctx = document.getElementById('chartContainer').getContext('2d');
         const chart = new Chart(ctx, {
             type: 'pie',
             data: {
-                labels: ['Score', 'Remaining'],
+                labels: ['Positive', 'Negative', 'Neutral'],
                 datasets: [{
-                    label: 'All Time Review',
-                    data: [reviewScore, maxScore - reviewScore],
+                    label: 'Reviews',
+                    data: [positiveReviews, negativeReviews, neutralReviews],
                     backgroundColor: [
+                        'rgb(75, 192, 192)',
                         'rgb(255, 99, 132)',
-                        'rgb(211, 211, 211)'
+                        'rgb(255, 205, 86)'
                     ],
                     hoverOffset: 4
                 }]
@@ -43,7 +58,7 @@ async function initializePieChart(salonId) {
             }
         });
     } catch (error) {
-        console.error('Error fetching salon data:', error);
+        console.error('Error initializing pie chart with reviews:', error);
     }
 }
 
@@ -172,6 +187,17 @@ async function updateSponsor(salonId) {
     }
 }
 
+async function getCoiffeurId(email) {
+    try {
+        const response = await fetch(`/getCoiffeurId?email=${email}`);
+        if (response.ok) {
+            return await response.json();
+        }
+    } catch (error) {
+        console.error('Failed to get coiffeur ID:', error);
+    }
+}
+
 async function getAvisClientById(email) {
     const coiffeurIdResponse = await fetch(`/getCoiffeurId?email=${email}`);
     if (!coiffeurIdResponse.ok) {
@@ -183,7 +209,6 @@ async function getAvisClientById(email) {
 
     if (avisClientResponse.ok) {
         const avisClients = await avisClientResponse.json();
-        console.log(avisClients);
         afficherAvisClients(avisClients);
     } else {
         return null;
@@ -218,9 +243,9 @@ document.addEventListener("DOMContentLoaded", async function(event) {
     generateFooter();
     generateNavBarWithAuth();
     deconnexion();
-    initializePieChart(salonId);
+    getAvisClientById(email);
+    initializePieChartWithReviews(email);
     initbarChart();
     initLineChart();
-    getAvisClientById(email);
     document.getElementById('updateSponsor').addEventListener('click', () => updateSponsor(salonId));
 });

@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const router = express.Router();
 
-const { getReservationsByCoiffeurId, getSalonId, getUserId, getHeuresTravail, getCoiffeurId, updateSponsor} = require('../fonctionDb');
+const { getReservationsByCoiffeurId, getSalonId, getUserId, getHeuresTravail, getCoiffeurId, updateSponsor, getAvisClientsById} = require('../fonctionDb');
 
 // Middleware to create directory if it doesn't exist
 const createDir = (dir) => {
@@ -95,5 +95,19 @@ router.get('/updateSponsor', async (req, res) => {
             res.status(500).send('Internal Server Error');
         });
 });
+
+router.get('/getAvisClientById', async (req, res) => {
+    const coiffeurId = req.query.coiffeurId;
+    getAvisClientsById(coiffeurId)
+        .then((result) => {
+            res.json(result);
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('Internal Server Error');
+        });
+});
+
+
 
 module.exports = router;

@@ -61,6 +61,8 @@ async function deleteAccount(event) {
 
     if (confirm("etes-vous sûr de vouloir supprimer votre compte?")) {
         alert("Votre compte a été supprimé avec succès");
+        sessionStorage.removeItem('token');
+        window.location.href = '/connexion';
     }
 }
 

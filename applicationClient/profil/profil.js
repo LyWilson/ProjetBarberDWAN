@@ -1,4 +1,4 @@
-import {authClient, deconnexion, generateFooter, generateNavBarWithAuth} from "../../commun.js";
+import { authClient, deconnexion, generateFooter, generateNavBarWithAuth } from "../../commun.js";
 
 const token = sessionStorage.getItem('token');
 const info = token => decodeURIComponent(atob(token.split('.')[1].replace('-', '+').replace('_', '/')).split('').map(c => `%${('00' + c.charCodeAt(0).toString(16)).slice(-2)}`).join(''));
@@ -66,6 +66,18 @@ async function deleteAccount(event) {
     }
 }
 
+async function afficherAverageRating() {
+    const email = JSON.parse(info(token)).email;
+    const response = await fetch(`/getAverageRating?email=${email}`);
+    if (!response.ok) {
+        throw new Error('Failed to fetch average rating');
+    }
+    const data = await response.json();
+    document.getElementById('ratingDisplay').textContent = data.averageRating.toFixed(2); // Display average rating with 2 decimal places
+}
+
+
+
 document.getElementById("BtnDeleteAccount").addEventListener("click", deleteAccount);
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -74,4 +86,5 @@ document.addEventListener("DOMContentLoaded", () => {
     generateNavBarWithAuth()
     deconnexion()
     infoClient();
+    afficherAverageRating();
 });

@@ -146,7 +146,7 @@ function uploadFile() {
     });
 }
 
-
+/*
 async function displayPortfolio(salonId) {
     const basePath = `/images/salon${salonId}/Portfolio${salonId}`;
     const portfolioContainer = document.getElementById('gallery');
@@ -177,6 +177,29 @@ async function displayPortfolio(salonId) {
     } catch (error) {
         console.error('Error fetching image files:', error.message);
     }
+}
+*/
+function displayPortfolio(salonId) {
+    fetch(`/api/images/salon/${salonId}/portfolio`)
+        .then(response => response.json())
+        .then(imageNames => {
+            const portfolioContainer = document.getElementById('gallery');
+            portfolioContainer.innerHTML = ''; // Clear existing content
+
+            imageNames.forEach(imageName => {
+                const imgElement = document.createElement('img');
+                const basePath = `/Image/salon${salonId}/Portfolio${salonId}`;
+                imgElement.src = `${basePath}/${imageName}`;
+                imgElement.alt = `Salon ${salonId} Portfolio Image`;
+                imgElement.classList.add('portfolio-image'); // Add a class for styling
+
+                portfolioContainer.appendChild(imgElement);
+            });
+        })
+        .catch(error => {
+            console.error('Error loading images:', error);
+            window.alert('Failed to load portfolio images.');
+        });
 }
 
 

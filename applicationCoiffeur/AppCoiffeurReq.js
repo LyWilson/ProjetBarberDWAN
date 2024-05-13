@@ -133,6 +133,7 @@ router.get('/getAvisClientById', async (req, res) => {
         });
 });
 
+/*
 router.get('/api/images/salon/:salonId/portfolio', (req, res) => {
     const { salonId } = req.params;
     const directory = path.join(__dirname, `../Image/salon${salonId}/Portfolio${salonId}`);
@@ -150,6 +151,23 @@ router.get('/api/images/salon/:salonId/portfolio', (req, res) => {
             }
         });
     });
+});
+*/
+
+router.get('/api/images/salon/:salonId/portfolio', async (req, res) => {
+    const { salonId } = req.params;
+    const directory = path.join(__dirname, `../Image/salon${salonId}/Portfolio${salonId}`);
+    console.log(`Fetching images from ${directory}`);
+
+    try {
+        const files = await fs.promises.readdir(directory);
+        const imageFiles = files.filter(file => ['.jpg', '.jpeg', '.png', '.gif'].includes(path.extname(file).toLowerCase()));
+
+        res.json(imageFiles); // Send back the list of image filenames
+    } catch (err) {
+        console.error(`Error reading directory: ${err.message}`);
+        res.status(500).send('Failed to fetch images');
+    }
 });
 
 

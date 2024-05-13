@@ -214,6 +214,16 @@ async function afficherAvisClients(avisClients) {
     }
 }
 
+async function getSalonId(email) {
+    try {
+        const response = await fetch(`/getSalonId?email=${email}`);
+        if (response.ok) {
+            return await response.json();
+        }
+    } catch (error) {
+        console.error('Failed to get salon ID:', error);
+    }
+}
 
 document.addEventListener("DOMContentLoaded", async function(event) {
     authCoiffeur();
@@ -222,6 +232,7 @@ document.addEventListener("DOMContentLoaded", async function(event) {
     const info = token => decodeURIComponent(atob(token.split('.')[1].replace('-', '+').replace('_', '/')).split('').map(c => `%${('00' + c.charCodeAt(0).toString(16)).slice(-2)}`).join(''));
     const email = JSON.parse(info(token)).email;
     const coiffeurId = await getCoiffeurId(email);
+    const salonId = await getSalonId(email);
     if (coiffeurId) {
         generateFooter();
         generateNavBarWithAuth();
@@ -230,7 +241,7 @@ document.addEventListener("DOMContentLoaded", async function(event) {
         initializePieChartWithReviews(coiffeurId);
         initbarChart();
         initLineChart();
-        document.getElementById('updateSponsor').addEventListener('click', () => updateSponsor(coiffeurId));
+        document.getElementById('updateSponsor').addEventListener('click', () => updateSponsor(salonId));
     } else {
         console.error('Failed to get coiffeur ID');
     }

@@ -111,6 +111,7 @@ router.get('/getCoiffeurId', (req, res) => {
 
 router.get('/updateSponsor', async (req, res) => {
     const salonId = req.query.salonId;
+    console.log(salonId)
     updateSponsor(salonId)
         .then((result) => {
             res.json(result);

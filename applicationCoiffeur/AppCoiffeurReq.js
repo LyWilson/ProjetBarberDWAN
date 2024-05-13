@@ -133,6 +133,24 @@ router.get('/getAvisClientById', async (req, res) => {
         });
 });
 
+router.get('/api/images/salon/:salonId/portfolio', (req, res) => {
+    const { salonId } = req.params;
+    const directory = path.join(__dirname, `../Image/salon${salonId}/Portfolio${salonId}`);
+    console.log(`Fetching images from ${directory}`);
+
+    return new Promise((resolve, reject) => {
+        fs.readdir(directory, (err, files) => {
+            if (err) {
+                reject(err);
+            } else {
+                const imageFiles = files.filter(file => {
+                    return ['.jpg', '.jpeg', '.png', '.gif'].includes(path.extname(file).toLowerCase());
+                });
+                resolve(imageFiles);
+            }
+        });
+    });
+});
 
 
 module.exports = router;

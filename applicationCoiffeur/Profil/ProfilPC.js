@@ -132,6 +132,7 @@ function uploadFile() {
         const email = JSON.parse(info(token)).email;
         const resultat = await fetch(`/getSalonId?email=${email}`)
         const salonId = await resultat.json();
+        console.log(salonId);
         const response = await fetch(`/upload/${salonId}`, {
             method: 'POST',
             body: formData
@@ -145,21 +146,40 @@ function uploadFile() {
     });
 }
 
-function displayPortfolio(salonId) {
+
+async function displayPortfolio(salonId) {
     const basePath = `/images/salon${salonId}/Portfolio${salonId}`;
     const portfolioContainer = document.getElementById('gallery');
-    const images = ['haircut1.png', 'haircut2.png', 'haircut3.png']; // Include all images here
-    portfolioContainer.innerHTML = '';
 
-    images.forEach(imageName => {
-        const imgElement = document.createElement('img');
-        imgElement.src = `${basePath}/${imageName}`;
-        imgElement.alt = `Salon ${salonId} Portfolio Image`;
-        imgElement.classList.add('portfolio-image'); // Add a class for styling
+    try {
+        const response = await fetch(`/api/images/salon/${salonId}/portfolio`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch image files');
+        }
+        const files = await response.json();
+        console.log(files);
 
-        portfolioContainer.appendChild(imgElement);
-    });
+        // Filter image files
+        const imageFiles = files.filter(file => {
+            return ['.jpg', '.jpeg', '.png', '.gif'].includes(path.extname(file).toLowerCase());
+        });
+
+        portfolioContainer.innerHTML = '';
+
+        // Display images
+        imageFiles.forEach(imageName => {
+            const imgElement = document.createElement('img');
+            imgElement.src = `${basePath}/${imageName}`;
+            imgElement.alt = `Salon ${salonId} Portfolio Image`;
+            imgElement.classList.add('portfolio-image'); // Add a class for styling
+
+            portfolioContainer.appendChild(imgElement);
+        });
+    } catch (error) {
+        console.error('Error fetching image files:', error.message);
+    }
 }
+
 
 /*
 function Auth() {

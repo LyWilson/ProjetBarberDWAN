@@ -150,7 +150,6 @@ function uploadFile() {
 async function displayPortfolio(salonId) {
     const basePath = `/images/salon${salonId}/Portfolio${salonId}`;
     const portfolioContainer = document.getElementById('gallery');
-
     try {
         const response = await fetch(`/api/images/salon/${salonId}/portfolio`);
         if (!response.ok) {

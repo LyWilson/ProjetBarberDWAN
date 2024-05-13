@@ -412,7 +412,7 @@ async function getCoiffeurId(email) {
 async function updateSponsor(salonId) {
     try {
         await sql.connect(config);
-        await sql.query `delete from Sponsor`;
+        await sql.query`delete from Sponsor`;
         await sql.query`insert into Sponsor (salonId) values (${salonId})`;
     } catch (error) {
         throw error;
@@ -433,7 +433,7 @@ async function getSponsorId() {
     }
 }
 
-async function ajouterAvis( coiffeurId, clientId, note, commentaire) {
+async function ajouterAvis(coiffeurId, clientId, note, commentaire) {
 
     try {
         await sql.connect(config);
@@ -475,6 +475,25 @@ async function deleteClientAccount(clientId) {
     }
 }
 
+
+async function getAverageRating(email) {
+    try {
+        await sql.connect(config);
+        const result = await sql.query`
+            SELECT AVG(AvisClient.evaluation) AS average_rating
+            FROM AvisClient
+            INNER JOIN Client ON AvisClient.clientId = Client.clientId
+            WHERE Client.email = ${email}
+        `;
+        return result.recordset[0].average_rating;
+    } catch (error) {
+        throw error;
+    } finally {
+        await sql.close();
+    }
+};
+
+
 // Exportation des fonctions de la base de données
 module.exports = {
     getSalonData,
@@ -504,5 +523,6 @@ module.exports = {
     getCoiffeurId,
     updateSponsor,
     getSponsorId,
-    deleteClientAccount
+    deleteClientAccount,
+    getAverageRating
 };

@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { prendreRendezVous, getReservationData, getProfilData, getSalonFavoris, addSalonToFavorites, removeSalonFromFavorites,
-    getUserId, deleteReservation, modifierRendezVous, isSalonFavorite,modifyClientInfo, getReservationsById, getBabierDataBySalonId, getCoiffurePreEtablieDataBySalonId, ajouterAvis,
-    getSponsorId, deleteClientAccount
+const { prendreRendezVous, getReservationData, getProfilData, getSalonFavoris, addSalonToFavorites, removeSalonFromFavorites, getUserId, deleteReservation, modifierRendezVous, isSalonFavorite, modifyClientInfo, getReservationsById, getBabierDataBySalonId, getCoiffurePreEtablieDataBySalonId, ajouterAvis, getSponsorId, deleteClientAccount, getAverageRating
 } = require('../fonctionDb');
 
 // 1) Route pour obtenir les données du salon
@@ -75,27 +73,27 @@ router.get('/getSalonFavoris', (req, res) => {
 
 router.post('/addSalonToFavorites', async (req, res) => {
     try {
-      const salonId = req.query.salonId
-      const email = req.query.email;
-      await addSalonToFavorites(email, salonId);
-      res.sendStatus(200); // Success response
+        const salonId = req.query.salonId
+        const email = req.query.email;
+        await addSalonToFavorites(email, salonId);
+        res.sendStatus(200); // Success response
     } catch (error) {
-      console.error('Error adding salon to favorites:', error);
-      res.status(500).send('Internal Server Error'); // Error response
+        console.error('Error adding salon to favorites:', error);
+        res.status(500).send('Internal Server Error'); // Error response
     }
-  });
+});
 
-  // Route to remove salon from favorites
+// Route to remove salon from favorites
 router.delete('/removeSalonFromFavorites', async (req, res) => {
-try {
-  const salonId= req.body.salonId;
-  const email = req.body.email; // Assuming you have middleware to authenticate users and attach user data to req.user
-  await removeSalonFromFavorites(email, salonId);
-  res.sendStatus(200); // Success response
-} catch (error) {
-  console.error('Error removing salon from favorites:', error);
-  res.status(500).send('Internal Server Error'); // Error response
-}
+    try {
+        const salonId = req.body.salonId;
+        const email = req.body.email; // Assuming you have middleware to authenticate users and attach user data to req.user
+        await removeSalonFromFavorites(email, salonId);
+        res.sendStatus(200); // Success response
+    } catch (error) {
+        console.error('Error removing salon from favorites:', error);
+        res.status(500).send('Internal Server Error'); // Error response
+    }
 });
 
 router.post('/prendreRendezVous', (req, res) => {
@@ -216,7 +214,7 @@ router.get('/getCoiffurePreEtablieDataBySalonId/:salonId', (req, res) => {
 router.post('/ajouterAvis', async (req, res) => {
     try {
         const { coiffeurId, clientId, note, avis } = req.body
-        await ajouterAvis( coiffeurId, clientId, note, avis);
+        await ajouterAvis(coiffeurId, clientId, note, avis);
         res.sendStatus(200);
     } catch (error) {
         console.error('Error adding avis:', error);
@@ -244,5 +242,18 @@ router.delete('/deleteClientAccount', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
+
+router.get('/getAverageRating', async (req, res) => {
+    const { email } = req.query;
+    try {
+        const averageRating = await getAverageRating(email);
+        res.json({ averageRating });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 
 module.exports = router;

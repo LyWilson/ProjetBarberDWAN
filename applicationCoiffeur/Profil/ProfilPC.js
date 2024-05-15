@@ -15,7 +15,7 @@ async function fetchSalonProfile(salonId) {
         console.error('Could not fetch salon data', error);
     }
 }
-
+/*
 function updateProfileSection({ salonId, nomSalon, adresse, numeroTelephoneSalon, description }) {
     const imageUrl = `/images/salon${salonId}/${salonId}.png`;
     const profileSection = document.querySelector('.section .is-one-third .box');
@@ -31,6 +31,72 @@ function updateProfileSection({ salonId, nomSalon, adresse, numeroTelephoneSalon
             <p>${description}</p>
         </div>
     `;
+}
+*/
+
+function updateProfileSection({ salonId, nomSalon, adresse, numeroTelephoneSalon, description }) {
+    const imageUrl = `/images/salon${salonId}/${salonId}.png`;
+    const profileSection = document.querySelector('.section .is-one-third .box');
+    profileSection.innerHTML = `
+        <figure class="image is-128x128 is-inline-block">
+            <img class="profile-image" src="${imageUrl}" alt="Image du salon ${nomSalon}">
+        </figure>
+        <div class="field">
+            <h3 class="title is-4 has-text-left">${nomSalon}</h3>
+            <p>
+                <input type="text" id="adresse" value="${adresse}">
+            </p>
+            <p>
+                <input type="text" id="numeroTelephoneSalon" value="${numeroTelephoneSalon}">
+            </p>
+            <h3 class="title is-6 has-text-left">Biographie</h3>
+            <p>
+                <textarea id="description">${description}</textarea>
+            </p>
+            <button id="saveButton">Save</button>
+        </div>
+    `;
+
+    document.getElementById('saveButton').addEventListener('click', () => {
+        saveProfileSection(salonId);
+    });
+}
+
+async function saveProfileSection(salonId) {
+    const nomSalon = document.getElementById('nomSalon').value;
+    const adresse = document.getElementById('adresse').value;
+    const numeroTelephoneSalon = document.getElementById('numeroTelephoneSalon').value;
+    const description = document.getElementById('description').value;
+
+    // Update the DOM with the new values
+    updateProfileSection({ salonId, adresse, numeroTelephoneSalon, description });
+
+    // Send the updated data to the server
+    const data = {
+        salonId,
+        adresse,
+        numeroTelephoneSalon,
+        description
+    };
+
+    try {
+        const response = await fetch('/updateProfile', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        const result = await response.json();
+        if (result.success) {
+            alert('Profile updated successfully!');
+        } else {
+            alert('Failed to update profile.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error updating profile.');
+    }
 }
 
 //Section services

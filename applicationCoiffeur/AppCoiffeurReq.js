@@ -60,6 +60,24 @@ router.post('/upload/:salonId', upload.single('photo'), (req, res) => {
     res.send('File uploaded successfully!');
 });
 
+router.post('/updateProfile', async (req, res) => {
+    const { salonId, nomSalon, adresse, numeroTelephoneSalon, description } = req.body;
+
+    try {
+        await updateSalonProfile(salonId, { nomSalon, adresse, numeroTelephoneSalon, description });
+        res.json({ success: true });
+    } catch (error) {
+        console.error('Database update error:', error);
+        res.json({ success: false });
+    }
+});
+
+async function updateSalonProfile(salonId, data) {
+    await db.query('UPDATE Salon SET adresse = ?, numeroTelephoneSalon = ?, description = ? WHERE id = ?', [data.adresse, data.numeroTelephoneSalon, data.description, salonId]);
+    // Placeholder to simulate a successful update
+    return new Promise((resolve) => setTimeout(resolve, 100));
+}
+
 router.get('/getReservationsByCoiffeurId', (req, res) => {
     const coiffeurId = req.query.coiffeurId;
     getReservationsByCoiffeurId(coiffeurId)

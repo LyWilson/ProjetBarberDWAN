@@ -63,7 +63,6 @@ function updateProfileSection({ salonId, nomSalon, adresse, numeroTelephoneSalon
 }
 
 async function saveProfileSection(salonId) {
-    const nomSalon = document.getElementById('nomSalon').value;
     const adresse = document.getElementById('adresse').value;
     const numeroTelephoneSalon = document.getElementById('numeroTelephoneSalon').value;
     const description = document.getElementById('description').value;
@@ -267,7 +266,6 @@ function displayPortfolio(salonId) {
             window.alert('Failed to load portfolio images.');
         });
 }
-
 
 /*
 function Auth() {

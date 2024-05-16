@@ -58,22 +58,29 @@ function updateReservationsSection(reservations) {
 }
 
 function generateReservationList(reservations) {
-    return `
-        <ul>
-            ${reservations.map(reservation => `
-                <li>
-                    <p><b>Rendez-vous ID:</b> ${reservation.reservationId}</p>
-                    <p><b>Date et heure:</b> ${reservation.dateHeureReservation}</p>
-                    <p><b>DurÃ©e:</b> ${reservation.dureeReservation} minutes</p>
-                    <p><b>Coiffeur:</b> ${reservation.coiffeurNom} ${reservation.coiffeurPrenom}</p>
-                    <p><b>Salon:</b> ${reservation.nomSalon}</p>
-                    <p><b>Adresse:</b> ${reservation.adresse}</p>
-                    <p><b>Coiffure:</b> ${reservation.nomCoiffure}</p>
-                    <p><b>Description de la coiffure:</b> ${reservation.descriptionCoiffure}</p>
-                </li></br></br>
-            `).join('')}
-        </ul>
-    `;
+    return reservations.map(reservation => `
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">
+                    Rendez-vous ID: ${reservation.reservationId} - ${reservation.dateHeureReservation}
+                </p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <p><strong>Date et heure:</strong> ${reservation.dateHeureReservation}</p>
+                    <p><strong>Durée:</strong> ${reservation.dureeReservation} minutes</p>
+                    <p><strong>Coiffeur:</strong> ${reservation.coiffeurNom} ${reservation.coiffeurPrenom}</p>
+                    <p><strong>Salon:</strong> ${reservation.nomSalon}</p>
+                    <p><strong>Adresse:</strong> ${reservation.adresse}</p>
+                    <p><strong>Coiffure:</strong> ${reservation.nomCoiffure}</p>
+                    <p><strong>Description:</strong> ${reservation.descriptionCoiffure}</p>
+                </div>
+            </div>
+            <footer class="card-footer">
+                <a href="#" class="card-footer-item">Avis</a>
+            </footer>
+        </div>
+    `).join('');
 }
 
 document.addEventListener("DOMContentLoaded", async function(event) {

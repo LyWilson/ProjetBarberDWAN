@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const data = {
             "clientId": reservation[0].clientId,
-            "note": document.getElementById('note'),value,
+            "note": document.getElementById('note').value,
             "avis": document.getElementById('comment').value
         }
 
@@ -58,8 +58,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                const Clients = await response.json();
-                const select = document.getElementById('');
+                //logique à continuer nope
+                //const Clients = await response.json();
+                //const select = document.getElementById('');
             } catch (error) {
                 console.error('Error fetching the client:', error);
             }

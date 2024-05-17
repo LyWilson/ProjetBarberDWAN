@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil coiffeur</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="../appCoiffeur.css">
+    <div id="navigationBar"></div>
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <div class="card reservation-card">
+                <header class="card-header">
+                    <p class="card-header-title">
+                        Réservations
+                    </p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <p id="client"></p>
+                        <p id="nom"></p>
+                        <p id="prenom"></p>
+                    </div>
+                </div>
+            </div>
+
+            <p></br></p>
+            <div class="field">
+                <label class="label">Note:</label>
+                <div>
+                    <p class="control">
+                        <span class="select">
+                            <select id="note">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Commentaire</label>
+                <div>
+                    <p class="control">
+                        <textarea class="textarea" id="comment" placeholder="Commentaire"></textarea>
+                    </p>
+                </div>
+            </div>
+            <div class="field">
+                <button class="button is-link" id="submit">Confirmer</button>
+            </div>
+        </div>
+    </section>
+</body>
+

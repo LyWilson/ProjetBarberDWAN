@@ -63,7 +63,6 @@ function updateProfileSection({ salonId, nomSalon, adresse, numeroTelephoneSalon
 }
 
 async function saveProfileSection(salonId) {
-    const nomSalon = document.getElementById('nomSalon').value;
     const adresse = document.getElementById('adresse').value;
     const numeroTelephoneSalon = document.getElementById('numeroTelephoneSalon').value;
     const description = document.getElementById('description').value;
@@ -254,7 +253,7 @@ function displayPortfolio(salonId) {
 
             imageNames.forEach(imageName => {
                 const imgElement = document.createElement('img');
-                const basePath = `/Image/salon${salonId}/Portfolio${salonId}`;
+                const basePath = `/image/salon${salonId}/Portfolio${salonId}`;
                 imgElement.src = `${basePath}/${imageName}`;
                 imgElement.alt = `Salon ${salonId} Portfolio Image`;
                 imgElement.classList.add('portfolio-image'); // Add a class for styling
@@ -267,7 +266,6 @@ function displayPortfolio(salonId) {
             window.alert('Failed to load portfolio images.');
         });
 }
-
 
 /*
 function Auth() {

@@ -77,18 +77,11 @@ function generateReservationList(reservations) {
                 </div>
             </div>
             <footer class="card-footer">
-                <button class="card-footer-item button is-link" onclick="creationAvis(${reservation.reservationId})">Donner un avis</button>
+                <button class="card-footer-item button is-link" onclick="window.location.href = '/avisCoiffeur?reservationId=${reservation.reservationId}'">Donner un avis</button>
             </footer>
         </div>
     `).join('');
-}
 
-async function creationAvis(reservationId) {
-    try {
-        window.location.href = `/avisCoiffeur?reservationId=${reservationId}`
-    } catch (error) {
-        console.error(error)
-    }
 }
 
 document.addEventListener("DOMContentLoaded", async function(event) {

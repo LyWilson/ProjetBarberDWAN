@@ -64,7 +64,7 @@ router.post('/updateProfile', async (req, res) => {
     const { salonId, adresse, numeroTelephoneSalon, description } = req.body;
 
     try {
-        await updateSalonProfile(salonId, { adresse, numeroTelephoneSalon, description });
+        await updateSalonProfile(salonId, adresse, numeroTelephoneSalon, description);
         res.json({ success: true });
     } catch (error) {
         console.error('Database update error:', error);

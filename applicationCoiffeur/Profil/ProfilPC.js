@@ -89,8 +89,10 @@ async function saveProfileSection(salonId) {
         const result = await response.json();
         if (result.success) {
             alert('Profile updated successfully!');
+            window.location.reload();
         } else {
             alert('Failed to update profile.');
+            window.location.reload();
         }
     } catch (error) {
         console.error('Error:', error);
@@ -202,48 +204,16 @@ function uploadFile() {
             method: 'POST',
             body: formData
         });
-        const data = await response.json();
-        if (data.success) {
-            window.alert('File uploaded successfully!');
+        if (response.ok) {
+            alert('File uploaded successfully!');
+            window.location.reload();
         } else {
-            window.alert('Error uploading file.');
+            alert('Error uploading file.');
         }
     });
 }
 
-/*
-async function displayPortfolio(salonId) {
-    const basePath = `/images/salon${salonId}/Portfolio${salonId}`;
-    const portfolioContainer = document.getElementById('gallery');
-    try {
-        const response = await fetch(`/api/images/salon/${salonId}/portfolio`);
-        if (!response.ok) {
-            throw new Error('Failed to fetch image files');
-        }
-        const files = await response.json();
-        console.log(files);
 
-        // Filter image files
-        const imageFiles = files.filter(file => {
-            return ['.jpg', '.jpeg', '.png', '.gif'].includes(path.extname(file).toLowerCase());
-        });
-
-        portfolioContainer.innerHTML = '';
-
-        // Display images
-        imageFiles.forEach(imageName => {
-            const imgElement = document.createElement('img');
-            imgElement.src = `${basePath}/${imageName}`;
-            imgElement.alt = `Salon ${salonId} Portfolio Image`;
-            imgElement.classList.add('portfolio-image'); // Add a class for styling
-
-            portfolioContainer.appendChild(imgElement);
-        });
-    } catch (error) {
-        console.error('Error fetching image files:', error.message);
-    }
-}
-*/
 function displayPortfolio(salonId) {
     fetch(`/api/images/salon/${salonId}/portfolio`)
         .then(response => response.json())
@@ -253,7 +223,7 @@ function displayPortfolio(salonId) {
 
             imageNames.forEach(imageName => {
                 const imgElement = document.createElement('img');
-                const basePath = `/image/salon${salonId}/Portfolio${salonId}`;
+                const basePath = `/images/salon${salonId}/Portfolio${salonId}`;
                 imgElement.src = `${basePath}/${imageName}`;
                 imgElement.alt = `Salon ${salonId} Portfolio Image`;
                 imgElement.classList.add('portfolio-image'); // Add a class for styling

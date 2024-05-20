@@ -170,4 +170,8 @@ router.get("/appCoiffeur.css", (req, res) => {
     res.sendFile(join(__dirname + '/applicationCoiffeur', 'appCoiffeur.css'));
 });
 
+router.get("/avisCoiffeur", (req, res) => {
+    res.sendFile(join(__dirname + '/applicationCoiffeur/avisCoiffeur', 'avisCoiffeur.html'));
+});
+
 module.exports = router;

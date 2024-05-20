@@ -250,6 +250,7 @@ async function getUserId(email) {
 }
 
 
+
 async function getSalonId(email) {
     try {
         await sql.connect(config);
@@ -448,6 +449,21 @@ async function ajouterAvis(coiffeurId, clientId, note, commentaire) {
     }
 }
 
+async function ajouterAvisClient(coiffeurId, clientId, note, commentaire) {
+    try {
+        await sql.connect(config);
+        await sql.query`
+        INSERT INTO AvisClient ( coiffeurId, clientId, evaluation, message)
+        VALUES (${coiffeurId}, ${clientId}, ${note}, ${commentaire})
+        `;
+    } catch (err) {
+        throw err;
+    } finally {
+        await sql.close();
+    }
+
+}
+
 async function getAvisClientsById(coiffeurId) {
     try {
         await sql.connect(config);
@@ -547,13 +563,23 @@ async function updateSalonProfile(salonId, adresse, numeroTelephone, description
         await sql.connect(config);
         await sql.query`
         UPDATE Salon
-        SET adresse = ${adresse}, numeroTelephone = ${numeroTelephone}, desciption = ${description}
-        WHERE email = ${email};
         SET adresse = ${adresse}, numeroTelephoneSalon = ${numeroTelephone}, description = ${description}
         WHERE salonid = ${salonId};
         `;
     } catch (error) {
         throw error;
+    } finally {
+        await sql.close();
+    }
+}
+
+async function getClientDataByClientId(id) {
+    try {
+        await sql.connect(config);
+        const result = await sql.query`SELECT * FROM Client WHERE clientId = ${id}`;
+        return result.recordset;
+    } catch (err) {
+        throw err;
     } finally {
         await sql.close();
     }
@@ -590,9 +616,8 @@ module.exports = {
     getSponsorId,
     deleteClientAccount,
     getAverageRating,
-    getReservationDataClient,
-    ajouterAvisCoiffeur,
+    ajouterAvisClient,
     getClientDataByClientId,
-    updateSalonProfile
+    updateSalonProfile,
 
 };

@@ -69,7 +69,6 @@ async function saveProfileSection(salonId) {
 
     // Update the DOM with the new values
     updateProfileSection({ salonId, adresse, numeroTelephoneSalon, description });
-    console.log(salonId, adresse, numeroTelephoneSalon, description);
 
     // Send the updated data to the server
     const data = {
@@ -93,7 +92,6 @@ async function saveProfileSection(salonId) {
             window.location.reload();
         } else {
             alert('Failed to update profile.');
-            console.log(error);
             window.location.reload();
         }
     } catch (error) {

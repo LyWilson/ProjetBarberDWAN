@@ -1,4 +1,15 @@
-import {authCoiffeur, deconnexion, generateFooter, generateNavBarWithAuth} from "../../commun";
+import {authCoiffeur, deconnexion, generateFooter, generateNavBarWithAuth} from "../../commun.js";
+
+async function getCoiffeurId(email) {
+    try {
+        const response = await fetch(`/getCoiffeurId?email=${email}`);
+        if (response.ok) {
+            return await response.json();
+        }
+    } catch (error) {
+        console.error('Failed to get coiffeur ID:', error);
+    }
+}
 
 document.addEventListener('DOMContentLoaded', function () {
     authCoiffeur();
@@ -11,22 +22,29 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
         let reservationId = window.location.search.split('=')[1];
 
-        const result = await fetch(`/getReservationDataClient/${reservationId}`);
+        const result = await fetch(`/getReservationData/${reservationId}`);
         if (!result.ok) {
             throw new Error('Network response was not ok');
         }
         const reservation = await result.json();
+        console.log(reservation);
+
+        const token = sessionStorage.getItem('tokenCoiffeur');
+        const info = token => decodeURIComponent(atob(token.split('.')[1].replace('-', '+').replace('_', '/')).split('').map(c => `%${('00' + c.charCodeAt(0).toString(16)).slice(-2)}`).join(''));
+        const email = JSON.parse(info(token)).email;
+        const coiffeurId = await getCoiffeurId(email);
 
         const data = {
+            "coiffeurId": coiffeurId,
             "clientId": reservation[0].clientId,
             "note": document.getElementById('note').value,
             "avis": document.getElementById('comment').value
-        }
+        };
 
         const response = await fetch('/ajouterAvisCoiffeur', {
             method: 'POST',
             headers: {
-                'Cpntent-Type': 'application/json',
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify(data)
         });
@@ -34,39 +52,37 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        alert('avis envoyé avec succès');
-        window.location.href = '/historique';
+        alert('Avis envoyé avec succès');
+        window.location.href = '/RdvPC';
     });
 
     async function fetchReservationData2() {
         let reservationId = window.location.search.split('=')[1];
-        try{
-            const response = await fetch(`/getReservationsByCoiffeurId/${reservationId}`);
+        try {
+            const response = await fetch(`/getReservationData/${reservationId}`);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
             const reservation = await response.json();
             const client = document.getElementById('client');
-            const nom = document.getElementById('nom');
-            const prenom = document.getElementById('prenom');
-            const clientId = reservation[0].clientId
+            const clientId = reservation[0].clientId;
 
-            client.innerHTML = <strong>Client: </strong> ${reservation[0].clientPrenom} ${reservation[0].clientNom}
+
 
             try {
-                const response = await fetch(`/getClientDataByClientId/${clientId}`);
-                if (!response.ok) {
+                const clientResponse = await fetch(`/getClientDataByClientId?clientId=${clientId}`);
+                if (!clientResponse.ok) {
                     throw new Error('Network response was not ok');
                 }
-                //logique à continuer nope
-                //const Clients = await response.json();
-                //const select = document.getElementById('');
-            } catch (error) {
-                console.error('Error fetching the client:', error);
+                const clientData = await clientResponse.json();
+                client.innerHTML = `<strong>Client:  </strong> ${clientData[0].prenom} ${clientData[0].nom}`;
+
+            } catch (clientError) {
+                console.error('Error fetching the client:', clientError);
             }
         } catch (error) {
             console.error('Error fetching reservation data', error);
         }
     }
-    fetchReservationData2()
-})
+    fetchReservationData2();
+});

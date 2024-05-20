@@ -542,13 +542,15 @@ async function getClientDataByClientId(id) {
     }
 }
 
-async function updateSalonProfile(adresse, numeroTelephone, description) {
+async function updateSalonProfile(salonId, adresse, numeroTelephone, description) {
     try {
         await sql.connect(config);
         await sql.query`
         UPDATE Salon
         SET adresse = ${adresse}, numeroTelephone = ${numeroTelephone}, desciption = ${description}
         WHERE email = ${email};
+        SET adresse = ${adresse}, numeroTelephoneSalon = ${numeroTelephone}, description = ${description}
+        WHERE salonid = ${salonId};
         `;
     } catch (error) {
         throw error;

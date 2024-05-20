@@ -542,6 +542,21 @@ async function getClientDataByClientId(id) {
     }
 }
 
+async function updateSalonProfile(adresse, numeroTelephone, description) {
+    try {
+        await sql.connect(config);
+        await sql.query`
+        UPDATE Coiffeur
+        SET adresse = ${adresse}, numeroTelephone = ${numeroTelephone}, desciption = ${description}
+        WHERE email = ${email};
+        `;
+    } catch (error) {
+        throw error;
+    } finally {
+        await sql.close();
+    }
+}
+
 // Exportation des fonctions de la base de données
 module.exports = {
     getSalonData,
@@ -575,6 +590,7 @@ module.exports = {
     getAverageRating,
     getReservationDataClient,
     ajouterAvisCoiffeur,
-    getClientDataByClientId
+    getClientDataByClientId,
+    updateSalonProfile
 
 };

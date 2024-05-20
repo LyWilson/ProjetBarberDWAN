@@ -546,7 +546,7 @@ async function updateSalonProfile(adresse, numeroTelephone, description) {
     try {
         await sql.connect(config);
         await sql.query`
-        UPDATE Coiffeur
+        UPDATE Salon
         SET adresse = ${adresse}, numeroTelephone = ${numeroTelephone}, desciption = ${description}
         WHERE email = ${email};
         `;

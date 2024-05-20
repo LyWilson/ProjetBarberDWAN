@@ -61,10 +61,10 @@ router.post('/upload/:salonId', upload.single('photo'), (req, res) => {
 });
 
 router.post('/updateProfile', async (req, res) => {
-    const { salonId, adresse, numeroTelephoneSalon, description } = req.body;
+    const { salonId, nomSalon, adresse, numeroTelephoneSalon, description } = req.body;
 
     try {
-        await updateSalonProfile(salonId, { adresse, numeroTelephoneSalon, description });
+        await updateSalonProfile(salonId, {nomSalon, adresse, numeroTelephoneSalon, description });
         res.json({ success: true });
     } catch (error) {
         console.error('Database update error:', error);
@@ -146,7 +146,7 @@ router.get('/getAvisClientById', async (req, res) => {
         });
 });
 
-/*
+
 router.get('/api/images/salon/:salonId/portfolio', (req, res) => {
     const { salonId } = req.params;
     const directory = path.join(__dirname, `../Image/salon${salonId}/Portfolio${salonId}`);
@@ -165,8 +165,8 @@ router.get('/api/images/salon/:salonId/portfolio', (req, res) => {
         });
     });
 });
-*/
 
+/*
 router.get('/api/images/salon/:salonId/portfolio', async (req, res) => {
     const { salonId } = req.params;
     const directory = path.join(__dirname, `../Image/salon${salonId}/Portfolio${salonId}`);
@@ -182,6 +182,6 @@ router.get('/api/images/salon/:salonId/portfolio', async (req, res) => {
         res.status(500).send('Failed to fetch images');
     }
 });
-
+*/
 
 module.exports = router;

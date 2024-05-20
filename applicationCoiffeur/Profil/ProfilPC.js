@@ -91,6 +91,7 @@ async function saveProfileSection(salonId) {
             alert('Profile updated successfully!');
         } else {
             alert('Failed to update profile.');
+            console.log(error);
         }
     } catch (error) {
         console.error('Error:', error);

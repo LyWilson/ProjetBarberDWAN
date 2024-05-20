@@ -4,7 +4,9 @@ const path = require('path');
 const fs = require('fs');
 const router = express.Router();
 
-const { getReservationsByCoiffeurId, getSalonId, getUserId, getHeuresTravail, getCoiffeurId, updateSponsor, getAvisClientsById, updateSalonProfile} = require('../fonctionDb');
+const { getReservationsByCoiffeurId, getSalonId, getUserId, getHeuresTravail, getCoiffeurId,
+    updateSponsor, getAvisClientsById, updateSalonProfile, getReservationDataClient,
+    ajouterAvisCoiffeur, getClientDataByClientId,} = require('../fonctionDb');
 
 const countImages = (directory) => {
     return new Promise((resolve, reject) => {
@@ -61,10 +63,10 @@ router.post('/upload/:salonId', upload.single('photo'), (req, res) => {
 });
 
 router.post('/updateProfile', async (req, res) => {
-    const { salonId, nomSalon, adresse, numeroTelephoneSalon, description } = req.body;
+    const { salonId, adresse, numeroTelephoneSalon, description } = req.body;
 
     try {
-        await updateSalonProfile(salonId, {nomSalon, adresse, numeroTelephoneSalon, description });
+        await updateSalonProfile(salonId, {adresse, numeroTelephoneSalon, description });
         await updateSalonProfile(salonId, adresse, numeroTelephoneSalon, description);
         res.json({ success: true });
     } catch (error) {
@@ -167,22 +169,23 @@ router.get('/api/images/salon/:salonId/portfolio', (req, res) => {
     });
 });
 
-/*
-router.get('/api/images/salon/:salonId/portfolio', async (req, res) => {
-    const { salonId } = req.params;
-    const directory = path.join(__dirname, `../Image/salon${salonId}/Portfolio${salonId}`);
-    console.log(`Fetching images from ${directory}`);
+router.get("/getReservationsDataClient", (req, res) => {
+    const info = req.query
+    getReservationDataClient(info.email)
+})
 
+
+
+router.post('/ajouterAvisCoiffeur', async (req, res) => {
     try {
-        const files = await fs.promises.readdir(directory);
-        const imageFiles = files.filter(file => ['.jpg', '.jpeg', '.png', '.gif'].includes(path.extname(file).toLowerCase()));
-
-        res.json(imageFiles); // Send back the list of image filenames
-    } catch (err) {
-        console.error(`Error reading directory: ${err.message}`);
-        res.status(500).send('Failed to fetch images');
+        const {coiffeurId, clientId, note, avis} = req.body
+        await ajouterAvisCoiffeur(coiffeurId, clientId, note, avis);
+        res.sendStatus(200);
+    } catch (error) {
+        console.error('Cannot add Avis', error)
+        res.status(500).send("internal server error");
     }
-});
-*/
+})
+
 
 module.exports = router;

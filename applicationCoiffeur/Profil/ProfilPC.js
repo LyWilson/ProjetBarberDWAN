@@ -93,6 +93,7 @@ async function saveProfileSection(salonId) {
             window.location.reload();
         } else {
             alert('Failed to update profile.');
+            console.log(error);
             window.location.reload();
         }
     } catch (error) {

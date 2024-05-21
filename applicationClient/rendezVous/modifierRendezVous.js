@@ -5,32 +5,42 @@ document.addEventListener('DOMContentLoaded', function() {
     generateNavBarWithAuth();
     generateFooter();
     deconnexion();
-    /*
-    fetchBarbers();
-    */
     fetchHairstyles();
 
-    /*
-    async function fetchBarbers() {
-        let SalonId = window.location.search.split('=')[1];
+    async function heureDisponible(SalonId) {
         try {
-            const response = await fetch(`/getBabierData/?salonId=${SalonId}`);
+            const response = await fetch(`/getSalonDataBySalonId/?salonId=${SalonId}`);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            const barbers = await response.json();
-            const select = document.getElementById('barber');
-            barbers.forEach(barber => {
+            const heures = await response.json();
+            console.log(heures);
+            const select = document.getElementById('appointmentTime');
+            const heuresDropdown = listeDispo(heures.horairesOuverture);
+            heuresDropdown.forEach(dropdown => {
                 const option = document.createElement('option');
-                option.value = barber.coiffeurId;
-                option.textContent = `${barber.nom} ${barber.prenom}`;
+                option.innerHTML = dropdown;
                 select.appendChild(option);
             });
+
         } catch (error) {
             console.error('Error fetching barbers:', error);
         }
     }
-    */
+
+    function listeDispo(timeRange) {
+        const [startHour, endHour] = timeRange.split(" - ").map(time => parseInt(time.split(":")[0]));
+
+        const dropdowns = [];
+
+        for (let hour = startHour; hour < endHour; hour++) {
+            const dropdown = `<option value="${hour}:00 - ${hour + 1}:00">${hour}:00 - ${hour + 1}:00</option>`;
+            dropdowns.push(dropdown);
+        }
+
+        return dropdowns;
+    }
+
     async function fetchHairstyles() {
         try {
             const response = await fetch('/getCoiffurePreEtablieData');
@@ -103,6 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const description = document.getElementById('description');
             const duration = document.getElementById('duree');
             const SalonId = reservation[0].salonId;
+            heureDisponible(SalonId);
 
             coiffeur.innerHTML = `<strong>Coiffeur:  </strong> ${reservation[0].coiffeurPrenom} ${reservation[0].coiffeurNom}`;
             salon.innerHTML = `<strong>Salon:  </strong> ${reservation[0].nomSalon}`;

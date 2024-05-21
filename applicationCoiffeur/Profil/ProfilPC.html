@@ -29,6 +29,35 @@
 
                     <!-- Salon information content -->
                 </div>
+                <div id="AjoutService" class="box content" style="background-color: lightcyan">
+                    <p class="title is-6 title-margin-adjust" style="background-color: lightcyan"><b>Ajout de service:</b></p>
+                    <div class="buttons" style="display: flex; justify-content: center; flex-direction: column;">
+                        <div class="control" style="margin-bottom: 10px;">
+                            <input class="input" type="text" id="newServiceName" placeholder="Entrez le nom du service">
+                        </div>
+                        <button class="button is-primary" onclick="addService()">Ajouter le service</button>
+                    </div>
+                    <div class="field">
+                        <label class="label">Choisir un service à modifier</label>
+                        <div class="control">
+                            <div class="select" style="display: flex; justify-content: center; flex-direction: column;">
+                                <select id="serviceSelect" >
+                                    <option value="1">Service 1</option>
+                                    <option value="2">Service 2</option>
+                                    <option value="3">Service 3</option>
+                                    <option value="4">Service 4</option>
+                                </select>
+                            </div>
+                            <div>
+                                <input class="input" type="text" id="modifierService" placeholder="style de coiffure et durée estimée" style="margin-top: 5px">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Buttons for adding and modifying services -->
+                    <div class="buttons" style="display: flex; justify-content: center; flex-direction: column;">
+                        <button class="button is-info" onclick="modifyService()">Modifier le service</button>
+                    </div>
+                </div>
             </div>
             <div class="column is-two-fifths">
                 <!-- Salon information box -->
@@ -100,6 +129,13 @@
                     <div class="horaire-container">
                         <!--  -->
                     </div>
+                    <div style="height: 208px">
+                        <p style="margin-top: 10px; margin-bottom: 10px;">Modification de l'horaire:</p>
+                        <input class="input" type="text" placeholder="Entrez votre nouvel horaire" id="NouvelHoraire" style="margin-bottom:10px;">
+                        <div class="buttons" style="display: flex; justify-content: center; flex-direction: column;">
+                            <button class="button is-primary" onclick="ModHoraire()">Modifier l'horaire</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -113,6 +149,52 @@
                     </form>
                 </div>
 
+            </div>
+
+            <div class="column is-full">
+                <div class="box content" style="background-color: lightcyan">
+                    <h3 id="ModProfCoiffeur" class="title is-4 title-margin-adjust">Modification du Profil du coiffeur</h3>
+                    <div class="form-card">
+                        <form id="changeInfoForm">
+                            <div class="field">
+                                <label class="label">Prénom</label>
+                                <div class="control">
+                                    <input class="input" type="text" placeholder="Enter your first name" id="firstNameInput">
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">Nom</label>
+                                <div class="control">
+                                    <input class="input" type="text" placeholder="Enter your last name" id="lastNameInput">
+                                </div>
+                            </div>
+
+
+                            <div class="field">
+                                <label class="label">Numéro de téléphone</label>
+                                <div class="control">
+                                    <input class="input" type="tel" placeholder="Enter your phone number" id="phoneInput">
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="field">
+                                <div class="control">
+                                    <button class="button is-primary" id="BtnSubmit">Save Changes</button>
+                                </div>
+                            </div>
+
+                            <!-- New Delete Account Button -->
+                            <div class="field">
+                                <div class="control">
+                                    <button class="button is-danger" id="BtnDeleteAccount">Delete Account</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

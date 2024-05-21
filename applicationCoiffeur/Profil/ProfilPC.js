@@ -51,7 +51,7 @@ function updateProfileSection({ salonId, nomSalon, adresse, numeroTelephoneSalon
             </p>
             <h3 class="title is-6 has-text-left">Biographie</h3>
             <p>
-                <textarea id="description">${description}</textarea>
+                <textarea id="description" style="width: 300px; height: 395px;">${description}</textarea>
             </p>
             <button id="saveButton">Save</button>
         </div>
